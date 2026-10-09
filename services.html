@@ -1,0 +1,3069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services &amp; Modules | Stackly Supply Chain</title>
+  <meta name="description" content="One platform for the whole flow. Explore Stackly's 6 freight modules: shipment visibility, inventory control, demand forecasting, supplier management, risk alerts, and freight audit.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/webp" href="assets/stackly_logo.webp">
+  <style>
+    /* ==========================================================================
+       SERVICES PAGE STYLES - PIXEL PERFECT TO DESIGN SPEC
+       ========================================================================== */
+    :root {
+      --services-bg: #1c456e;
+      --services-bg-gradient: radial-gradient(circle at 50% 15%, #255483 0%, #1a4269 55%, #133353 100%);
+      --services-teal: #72caa7;
+      --services-teal-dark: #0d382b;
+      --services-card-bg: #ffffff;
+      --services-text-dark: #0f1e2e;
+      --services-text-muted: #52677d;
+      --services-btn-navy: #1d4368;
+      --services-btn-navy-hover: #153655;
+    }
+
+    html, body {
+      overflow-x: hidden !important;
+      max-width: 100vw !important;
+    }
+
+    body {
+      background-color: var(--services-bg);
+      background-image: var(--services-bg-gradient);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Fixed Top Site Header */
+    .services-header-wrap {
+      width: 100%;
+      padding: 16px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .services-header-wrap.scrolled {
+      padding: 10px 20px;
+      background: rgba(28, 69, 110, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    .services-navbar-pill {
+      pointer-events: auto;
+      max-width: 1180px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 9999px;
+      padding: 10px 24px 10px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+
+    .services-brand-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .services-brand-img {
+      height: 42px;
+      max-height: 46px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+
+    .services-brand-img:hover {
+      transform: scale(1.03);
+    }
+
+    .services-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .services-nav-item a {
+      color: #334155;
+      font-size: 14.5px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .services-nav-item a:hover,
+    .services-nav-item a.active {
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    .services-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-pill-signin {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      color: #1e293b;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 24px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-pill-signin:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+      color: #0f172a;
+    }
+
+    .btn-pill-signup {
+      background: var(--services-teal);
+      border: 1.5px solid transparent;
+      color: var(--services-teal-dark);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 8px 24px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(114, 202, 167, 0.35);
+    }
+
+    .btn-pill-signup:hover {
+      background: #5ebf99;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(114, 202, 167, 0.45);
+    }
+
+    /* Mobile Drawer */
+    .services-mobile-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      flex-direction: column;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .services-mobile-btn span {
+      width: 24px;
+      height: 2.5px;
+      background: #1e293b;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .services-mobile-btn.open span:nth-child(1) {
+      transform: translateY(7.5px) rotate(45deg);
+    }
+
+    .services-mobile-btn.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .services-mobile-btn.open span:nth-child(3) {
+      transform: translateY(-7.5px) rotate(-45deg);
+    }
+
+    .services-mobile-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      background: #ffffff;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-shadow: none !important;
+      flex-direction: column;
+      z-index: 999999 !important;
+      pointer-events: auto;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    .services-mobile-drawer.open {
+      display: flex !important;
+    }
+
+    /* ==========================================================================
+       SECTION 1: HERO SECTION (Image 1)
+       ========================================================================== */
+    .services-hero-section {
+      padding: 130px 24px 70px;
+      position: relative;
+      background: linear-gradient(180deg, #173856 0%, #112a42 100%);
+    }
+
+    .services-hero-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-badge-services {
+      display: inline-block;
+      background: #ffffff;
+      color: #1e3a5f;
+      padding: 6px 18px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    }
+
+    .hero-services-title {
+      font-size: 54px;
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+
+    .hero-title-line {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* White bold words: slide in from right one by one */
+    .anim-hero-word-right {
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(80px);
+      animation: heroWordFromRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0.1s) forwards;
+      margin-right: 12px;
+      color: #ffffff;
+    }
+
+    @keyframes heroWordFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(80px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Blue/Teal color words: slide in from right and settle */
+    .anim-hero-word-blue {
+      display: inline-block;
+      color: var(--services-teal);
+      text-shadow: 0 0 25px rgba(114, 202, 167, 0.5);
+      opacity: 0;
+      transform: translateX(70px);
+      animation: heroWordFromRight 0.75s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0.7s) forwards;
+      margin-right: 8px;
+    }
+
+    /* Cursive script word: slide from right */
+    .anim-hero-word-script {
+      display: inline-block;
+      font-family: 'Caveat', cursive, serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.18em;
+      text-transform: lowercase;
+      color: #ffffff;
+      opacity: 0;
+      transform: translateX(60px);
+      animation: heroWordFromRight 0.75s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0.85s) forwards;
+    }
+
+    /* Sentence description: slide from left side */
+    .hero-services-desc {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.82);
+      max-width: 500px;
+      margin-bottom: 34px;
+    }
+
+    .anim-hero-desc-left {
+      opacity: 0;
+      transform: translateX(-60px);
+      animation: heroDescFromLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.95s forwards;
+    }
+
+    @keyframes heroDescFromLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-60px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .hero-services-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero-trial {
+      background: var(--services-teal);
+      color: var(--services-teal-dark);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 13px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(114, 202, 167, 0.4);
+    }
+
+    .btn-hero-trial:hover {
+      background: #5ebf99;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(114, 202, 167, 0.55);
+    }
+
+    /* Start free trial button: slide from left side */
+    .anim-hero-btn-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      animation: heroBtnFromLeft 0.75s cubic-bezier(0.16, 1, 0.3, 1) 1.12s forwards;
+    }
+
+    @keyframes heroBtnFromLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .btn-hero-pricing {
+      background: #ffffff;
+      color: #1e293b;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 13px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-hero-pricing:hover {
+      background: #f1f5f9;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+    }
+
+    /* See pricing button: slide from right side */
+    .anim-hero-btn-right {
+      opacity: 0;
+      transform: translateX(50px);
+      animation: heroBtnFromRight 0.75s cubic-bezier(0.16, 1, 0.3, 1) 1.25s forwards;
+    }
+
+    @keyframes heroBtnFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* ==========================================================================
+       RIGHT-SIDE IMAGE: DIAGONAL SEPARATION AND JOIN ANIMATION
+       - Slices into 2 complementary diagonal halves (.slice-top & .slice-bottom)
+       - Separates diagonally on entry and joins smoothly
+       - Re-separates subtly on hover and snaps back together
+       ========================================================================== */
+    .hero-services-visual-card {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      border-radius: 28px;
+      background: radial-gradient(circle at 60% 40%, #16385a 0%, #0d2238 100%);
+      box-shadow: 0 25px 65px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .visual-slice {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+    }
+
+    /* Slice 1: Top-Left diagonal half */
+    .slice-top {
+      clip-path: polygon(0 0, 100% 0, 0 100%);
+      animation: diagonalJoinTop 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+      opacity: 0;
+      transform: translate(-65px, -45px);
+      z-index: 2;
+    }
+
+    /* Slice 2: Bottom-Right diagonal half */
+    .slice-bottom {
+      clip-path: polygon(100% 0, 100% 100%, 0 100%);
+      animation: diagonalJoinBottom 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+      opacity: 0;
+      transform: translate(65px, 45px);
+      z-index: 1;
+    }
+
+    .visual-slice-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 86% 52%;
+      display: block;
+    }
+
+    /* Keyframes: Top-Left slice enters diagonally and joins */
+    @keyframes diagonalJoinTop {
+      0% {
+        opacity: 0;
+        transform: translate(-70px, -50px) scale(0.96);
+      }
+      70% {
+        opacity: 1;
+        transform: translate(2px, 2px) scale(1.01);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+    }
+
+    /* Keyframes: Bottom-Right slice enters diagonally and joins */
+    @keyframes diagonalJoinBottom {
+      0% {
+        opacity: 0;
+        transform: translate(70px, 50px) scale(0.96);
+      }
+      70% {
+        opacity: 1;
+        transform: translate(-2px, -2px) scale(1.01);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+    }
+
+    /* Interactive Hover: subtle diagonal separation and rejoin */
+    .hero-services-visual-card:hover .slice-top {
+      transform: translate(-14px, -10px);
+      filter: drop-shadow(4px 4px 12px rgba(0, 0, 0, 0.45));
+    }
+
+    .hero-services-visual-card:hover .slice-bottom {
+      transform: translate(14px, 10px);
+      filter: drop-shadow(-4px -4px 12px rgba(0, 0, 0, 0.45));
+    }
+
+    /* ==========================================================================
+       SECTION 2: MODULES (Image 2 - SIX WAYS STACKLY MOVES FREIGHT)
+       ========================================================================== */
+    .modules-section {
+      padding: 70px 24px 80px;
+      position: relative;
+      overflow: hidden;
+      background: #0d2134;
+      border-top: 1px solid rgba(114, 202, 167, 0.12);
+    }
+
+    .modules-container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--services-teal);
+      margin-bottom: 10px;
+      display: inline-block;
+      user-select: none;
+    }
+
+    .section-heading-lg {
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1.15;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 40px;
+      letter-spacing: -0.5px;
+      user-select: none;
+    }
+
+    /* Heading Letter-by-Letter Animation from Right */
+    .modules-heading-letters {
+      display: block;
+      word-break: normal;
+    }
+
+    .modules-heading-letters .anim-word-unit {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .modules-heading-letters .anim-letter-space {
+      display: inline-block;
+      width: 0.28em;
+    }
+
+    .modules-heading-letters .anim-letter-right {
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(45px);
+      will-change: transform, opacity;
+    }
+
+    /* Animate letters only when section scrolls into view */
+    .modules-section:not(.in-view) .modules-heading-letters .anim-letter-right {
+      opacity: 0 !important;
+      transform: translateX(45px) !important;
+      animation: none !important;
+    }
+
+    .modules-section.in-view .modules-heading-letters .anim-letter-right {
+      animation: animLetterRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0s) forwards !important;
+    }
+
+    @keyframes animLetterRight {
+      0% {
+        opacity: 0;
+        transform: translateX(45px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* 6 Cards Grid Layout */
+    .modules-grid-6 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    /* Card Directional Entrances:
+       Row 1: Card 1 (Left), Card 2 (Top), Card 3 (Right)
+       Row 2: Card 4 (Left), Card 5 (Down), Card 6 (Right)
+    */
+    @keyframes moduleFromLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-110px);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes moduleFromTop {
+      0% {
+        opacity: 0;
+        transform: translateY(-95px);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes moduleFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(110px);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes moduleFromDown {
+      0% {
+        opacity: 0;
+        transform: translateY(95px);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    /* Initial state before scroll into view */
+    .modules-section:not(.in-view) .card-from-left {
+      opacity: 0;
+      transform: translateX(-110px);
+    }
+    .modules-section:not(.in-view) .card-from-top {
+      opacity: 0;
+      transform: translateY(-95px);
+    }
+    .modules-section:not(.in-view) .card-from-right {
+      opacity: 0;
+      transform: translateX(110px);
+    }
+    .modules-section:not(.in-view) .card-from-down {
+      opacity: 0;
+      transform: translateY(95px);
+    }
+
+    /* When section is in view: play directional entrance */
+    .modules-section.in-view .card-from-left {
+      animation: moduleFromLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--card-delay, 0.14s) both;
+    }
+    .modules-section.in-view .card-from-top {
+      animation: moduleFromTop 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--card-delay, 0.26s) both;
+    }
+    .modules-section.in-view .card-from-right {
+      animation: moduleFromRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--card-delay, 0.38s) both;
+    }
+    .modules-section.in-view .card-from-down {
+      animation: moduleFromDown 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--card-delay, 0.40s) both;
+    }
+
+    /* Once entrance animation ends, clear animation to enable unhindered hover interaction */
+    .module-card.animation-done {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: translate(0, 0);
+    }
+
+    /* Base Module Card Style */
+    .module-card {
+      background: var(--services-card-bg);
+      border-radius: 28px;
+      padding: 22px 22px 26px;
+      display: flex;
+      flex-direction: column;
+      border: 2.5px solid transparent;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      color: var(--services-text-dark);
+      text-align: left;
+      position: relative;
+      cursor: pointer;
+      will-change: transform, box-shadow, border-color;
+    }
+
+    /* Enlighten with border color & luminous aura glow on hover */
+    .module-card:hover {
+      transform: translateY(-8px) !important;
+      border-color: var(--card-border-enlighten, #72caa7) !important;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28),
+                  0 0 34px var(--card-glow-enlighten, rgba(114, 202, 167, 0.55)),
+                  inset 0 0 16px rgba(255, 255, 255, 0.14) !important;
+    }
+
+    .module-card-img-wrap {
+      width: 100%;
+      height: 190px;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      background: #e2e8f0;
+      position: relative;
+    }
+
+    .module-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .module-card:hover .module-card-img {
+      transform: scale(1.05);
+    }
+
+    .module-card-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--services-text-dark);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .module-card-desc {
+      font-size: 13.5px;
+      color: var(--services-text-muted);
+      line-height: 1.55;
+      margin-bottom: 18px;
+      flex-grow: 1;
+    }
+
+    .module-learn-more {
+      color: #0f766e;
+      font-weight: 700;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .module-learn-more:hover,
+    .module-card:hover .module-learn-more {
+      color: var(--card-border-enlighten, #0d9488);
+      text-decoration: underline;
+    }
+
+    /* ==========================================================================
+       SECTION 2.5: DEEP DIVE (Image 3 - SEE EVERY CONTAINER BEFORE IT IS LATE)
+       - Image wraps/unfolds with 3D perspective and luminous shimmer sweep
+       - Bold heading letters fly in from the right one by one
+       - Sentence 1 & 2 slide in from the right side
+       - 3 Bullet points slide in one by one from the right side
+       - Hover enlightens visual card with glowing blue shade & features with blue tint
+       ========================================================================== */
+    .deepdive-section {
+      padding: 50px 24px 80px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #142f49 0%, #173655 100%);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .deepdive-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    /* Left Visual Card: 3D Wrap Unfold Animation & Hover Enlightenment */
+    .deepdive-visual-card {
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      background: radial-gradient(circle at 50% 50%, #153a5c 0%, #0d2238 100%);
+      position: relative;
+      height: 440px;
+      perspective: 1000px;
+      transform-style: preserve-3d;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+
+    /* Wrap Unfold keyframe for image */
+    @keyframes deepdiveWrapUnfold {
+      0% {
+        opacity: 0;
+        clip-path: inset(0 100% 0 0 round 24px);
+        transform: perspective(900px) rotateY(-26deg) scale(0.92);
+      }
+      65% {
+        opacity: 1;
+        clip-path: inset(0 0% 0 0 round 24px);
+        transform: perspective(900px) rotateY(4deg) scale(1.02);
+      }
+      100% {
+        opacity: 1;
+        clip-path: inset(0 0% 0 0 round 24px);
+        transform: perspective(900px) rotateY(0deg) scale(1);
+      }
+    }
+
+    .deepdive-section:not(.in-view) .deepdive-visual-card {
+      opacity: 0;
+      clip-path: inset(0 100% 0 0 round 24px);
+      transform: perspective(900px) rotateY(-26deg) scale(0.92);
+    }
+
+    .deepdive-section.in-view .deepdive-visual-card {
+      animation: deepdiveWrapUnfold 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+    }
+
+    .deepdive-visual-card.animation-done {
+      animation: none !important;
+      opacity: 1 !important;
+      clip-path: none !important;
+      transform: none !important;
+    }
+
+    /* Shimmer light sweep on entry */
+    .deepdive-wrap-shimmer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.55) 50%, transparent 100%);
+      transform: translateX(-100%);
+    }
+
+    .deepdive-section.in-view .deepdive-wrap-shimmer {
+      animation: shimmerSweep 1s ease-out 0.25s forwards;
+    }
+
+    .deepdive-visual-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Hover Enlightenment on Image: Radiant Blue Shade & Aura */
+    .deepdive-visual-card:hover {
+      transform: translateY(-6px) scale(1.01) !important;
+      border-color: #38bdf8 !important;
+      box-shadow: 0 28px 65px rgba(0, 0, 0, 0.4),
+                  0 0 45px rgba(56, 189, 248, 0.55),
+                  inset 0 0 30px rgba(56, 189, 248, 0.22) !important;
+    }
+
+    .deepdive-visual-card:hover .deepdive-visual-img {
+      transform: scale(1.05);
+    }
+
+    /* Content Column */
+    .deepdive-content-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+    }
+
+    .deepdive-eyebrow {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--services-teal);
+      margin-bottom: 16px;
+      display: inline-block;
+      user-select: none;
+    }
+
+    .deepdive-heading {
+      font-size: 44px;
+      font-weight: 900;
+      line-height: 1.12;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 22px;
+      letter-spacing: -0.5px;
+      user-select: none;
+    }
+
+    /* Deep Dive Heading Letters Streaming from Right */
+    .deepdive-heading-letters {
+      display: block;
+      word-break: normal;
+    }
+
+    .deepdive-heading-letters .anim-word-unit {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .deepdive-heading-letters .anim-letter-space {
+      display: inline-block;
+      width: 0.28em;
+    }
+
+    .deepdive-heading-letters .anim-letter-right {
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(45px);
+      will-change: transform, opacity;
+    }
+
+    .deepdive-section:not(.in-view) .deepdive-heading-letters .anim-letter-right {
+      opacity: 0 !important;
+      transform: translateX(45px) !important;
+      animation: none !important;
+    }
+
+    .deepdive-section.in-view .deepdive-heading-letters .anim-letter-right {
+      animation: animLetterRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0s) forwards !important;
+    }
+
+    /* Paragraphs and Bullets Slide from Right */
+    @keyframes deepdiveSlideRight {
+      0% {
+        opacity: 0;
+        transform: translateX(65px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .deepdive-desc-p1,
+    .deepdive-desc-p2 {
+      font-size: 15.5px;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 16px;
+      will-change: transform, opacity;
+    }
+
+    .deepdive-desc-p2 {
+      margin-bottom: 28px;
+    }
+
+    .deepdive-section:not(.in-view) .deepdive-desc-p1,
+    .deepdive-section:not(.in-view) .deepdive-desc-p2,
+    .deepdive-section:not(.in-view) .deepdive-feature-item {
+      opacity: 0;
+      transform: translateX(65px);
+    }
+
+    .deepdive-section.in-view .deepdive-desc-p1 {
+      animation: deepdiveSlideRight 0.78s cubic-bezier(0.16, 1, 0.3, 1) 0.52s both;
+    }
+
+    .deepdive-section.in-view .deepdive-desc-p2 {
+      animation: deepdiveSlideRight 0.78s cubic-bezier(0.16, 1, 0.3, 1) 0.68s both;
+    }
+
+    .deepdive-features-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .deepdive-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.4;
+      padding: 10px 16px;
+      border-radius: 14px;
+      border: 1.5px solid transparent;
+      background: transparent;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      will-change: transform, opacity, background-color, border-color;
+    }
+
+    .deepdive-section.in-view .deepdive-feature-item {
+      animation: deepdiveSlideRight 0.72s cubic-bezier(0.16, 1, 0.3, 1) var(--item-delay, 0.82s) both;
+    }
+
+    /* Clean up animation properties after completion */
+    .deepdive-section .deepdive-desc-p1.animation-done,
+    .deepdive-section .deepdive-desc-p2.animation-done,
+    .deepdive-section .deepdive-feature-item.animation-done {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    /* Hover Enlightenment on Feature Items: Enlightened Blue Shade */
+    .deepdive-feature-item:hover {
+      background: rgba(56, 189, 248, 0.14) !important;
+      border-color: rgba(56, 189, 248, 0.42) !important;
+      transform: translateX(8px) !important;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25),
+                  0 0 20px rgba(56, 189, 248, 0.35) !important;
+    }
+
+    .deepdive-feature-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--services-teal);
+      box-shadow: 0 0 10px rgba(114, 202, 167, 0.6);
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+
+    .deepdive-feature-item:hover .deepdive-feature-dot {
+      background: #38bdf8;
+      box-shadow: 0 0 16px #38bdf8, 0 0 24px #38bdf8;
+      transform: scale(1.35);
+    }
+
+    /* ==========================================================================
+       SECTION 3: HOW IT WORKS / LIVE IN FOUR STEPS (ZIGZAG TIMELINE)
+       Inherits master styles from style.css (.steps-section, .steps-zigzag-svg, 
+       .steps-cards-grid, .step-card, .step-card-image-box, etc.)
+       ========================================================================== */
+    .steps-section {
+      background: #0b1d2e;
+      border-top: 1px solid rgba(114, 202, 167, 0.12);
+      padding: 80px 0 140px;
+    }
+
+    .steps-header-center .section-desc {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    /* ==========================================================================
+       SECTION 4: PRICING (Image 5 - PICK THE SIZE THAT FITS)
+       ========================================================================== */
+    .pricing-section-wrap {
+      padding: 60px 24px 100px;
+      position: relative;
+      background: linear-gradient(180deg, #122b44 0%, #153452 100%);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .pricing-container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .pricing-header-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .pricing-header-subtext {
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 14.5px;
+      margin-bottom: 6px;
+    }
+
+    .pricing-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    /* Outer Wrapper handles 3D perspective and directional entrance animations */
+    .pricing-card-flip-wrap {
+      perspective: 1200px;
+      -webkit-perspective: 1200px;
+      min-height: 520px;
+      display: flex;
+      position: relative;
+      cursor: pointer;
+    }
+
+    /* Directional Entrances:
+       - First card: from LEFT side
+       - Center card: from DOWN side
+       - Third card: from RIGHT side
+    */
+    .pricing-card-from-left {
+      opacity: 0;
+      transform: translateX(-110px) scale(0.96);
+      will-change: transform, opacity;
+    }
+
+    .pricing-card-from-down {
+      opacity: 0;
+      transform: translateY(110px) scale(0.96);
+      will-change: transform, opacity;
+    }
+
+    .pricing-card-from-right {
+      opacity: 0;
+      transform: translateX(110px) scale(0.96);
+      will-change: transform, opacity;
+    }
+
+    .pricing-section-wrap:not(.in-view) .pricing-card-from-left {
+      opacity: 0;
+      transform: translateX(-110px) scale(0.96);
+    }
+
+    .pricing-section-wrap:not(.in-view) .pricing-card-from-down {
+      opacity: 0;
+      transform: translateY(110px) scale(0.96);
+    }
+
+    .pricing-section-wrap:not(.in-view) .pricing-card-from-right {
+      opacity: 0;
+      transform: translateX(110px) scale(0.96);
+    }
+
+    .pricing-section-wrap.in-view .pricing-card-from-left {
+      animation: pricingCardLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--pricing-delay, 0.10s) both;
+    }
+
+    .pricing-section-wrap.in-view .pricing-card-from-down {
+      animation: pricingCardDown 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--pricing-delay, 0.22s) both;
+    }
+
+    .pricing-section-wrap.in-view .pricing-card-from-right {
+      animation: pricingCardRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--pricing-delay, 0.34s) both;
+    }
+
+    @keyframes pricingCardLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-110px) scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    @keyframes pricingCardDown {
+      0% {
+        opacity: 0;
+        transform: translateY(110px) scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    @keyframes pricingCardRight {
+      0% {
+        opacity: 0;
+        transform: translateX(110px) scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    .pricing-card-flip-wrap.animation-done {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    /* 3D Flipper Container */
+    .pricing-card-flipper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 28px;
+    }
+
+    /* Hover trigger flips the card to reveal the button on back */
+    .pricing-card-flip-wrap:hover .pricing-card-flipper,
+    .pricing-card-flip-wrap.is-flipped .pricing-card-flipper {
+      transform: rotateY(180deg);
+    }
+
+    /* Card Faces */
+    .pricing-card-face {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 28px;
+      padding: 34px 30px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.22);
+      border: 1.5px solid rgba(226, 232, 240, 0.85);
+      background: var(--services-card-bg, #ffffff);
+      text-align: left;
+    }
+
+    .pricing-card-front {
+      transform: rotateY(0deg);
+      z-index: 2;
+    }
+
+    .pricing-card-back {
+      transform: rotateY(180deg);
+      z-index: 1;
+      background: #ffffff;
+      border: 1.5px solid rgba(114, 202, 167, 0.6);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.28), 0 0 35px rgba(114, 202, 167, 0.3);
+      justify-content: space-between;
+    }
+
+    /* Featured/Growth Card Highlight on Back */
+    .pricing-card-flip-wrap:nth-child(2) .pricing-card-back {
+      background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
+      border: 2px solid rgba(16, 185, 129, 0.8);
+      box-shadow: 0 24px 55px rgba(0, 0, 0, 0.3), 0 0 45px rgba(52, 211, 153, 0.4);
+    }
+
+    .pricing-plan-badge {
+      display: inline-block;
+      background: #ccfbf1;
+      color: #0f766e;
+      padding: 4px 14px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      width: fit-content;
+      margin-bottom: 14px;
+    }
+
+    .pricing-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .pricing-price-val {
+      font-size: 38px;
+      font-weight: 900;
+      color: #0f2742;
+      line-height: 1;
+    }
+
+    .pricing-price-period {
+      font-size: 14px;
+      color: var(--services-text-muted);
+      font-weight: 500;
+    }
+
+    .pricing-plan-sub {
+      font-size: 13.5px;
+      color: var(--services-text-muted);
+      line-height: 1.45;
+      margin: 10px 0 20px;
+      min-height: 40px;
+    }
+
+    .pricing-features-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex-grow: 1;
+    }
+
+    .pricing-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #1e293b;
+    }
+
+    .pricing-feature-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--services-teal);
+      flex-shrink: 0;
+    }
+
+    /* Content on Front Bottom (replacing the removed button) */
+    .pricing-front-bottom-badge {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 18px;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .pricing-card-flip-wrap:hover .pricing-front-bottom-badge {
+      border-color: #34d399;
+      background: #ecfdf5;
+    }
+
+    .pricing-front-bottom-left {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .pricing-badge-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .pricing-badge-texts {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+
+    .pricing-badge-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f2742;
+    }
+
+    .pricing-badge-desc {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .pricing-flip-prompt {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #0f766e;
+      background: #ccfbf1;
+      padding: 4px 9px;
+      border-radius: 9999px;
+      flex-shrink: 0;
+      letter-spacing: 0.2px;
+    }
+
+    .flip-icon {
+      font-size: 13px;
+      display: inline-block;
+      transition: transform 0.4s ease;
+    }
+
+    .pricing-card-flip-wrap:hover .flip-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Back Face Styling */
+    .pricing-back-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: space-between;
+    }
+
+    .pricing-back-badge {
+      display: inline-block;
+      background: #0f2742;
+      color: #ffffff;
+      padding: 4px 14px;
+      border-radius: 9999px;
+      font-size: 11.5px;
+      font-weight: 700;
+      width: fit-content;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pricing-card-flip-wrap:nth-child(2) .pricing-back-badge {
+      background: #059669;
+      color: #ffffff;
+    }
+
+    .pricing-back-heading {
+      font-size: 23px;
+      font-weight: 900;
+      color: #0b263d;
+      margin: 0 0 8px 0;
+      line-height: 1.2;
+      letter-spacing: -0.3px;
+    }
+
+    .pricing-back-summary {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.45;
+      margin: 0 0 16px 0;
+    }
+
+    .pricing-back-perks {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .pricing-back-perks li {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pricing-back-perks li::before {
+      content: '✓';
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: #d1fae5;
+      color: #059669;
+      font-size: 11px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .pricing-back-action-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .btn-pricing-flipper-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 13px 24px;
+      border-radius: 9999px;
+      font-size: 15px;
+      font-weight: 800;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      box-sizing: border-box;
+    }
+
+    .btn-flip-starter,
+    .btn-flip-enterprise {
+      background: var(--services-btn-navy, #1d4368);
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(29, 67, 104, 0.35);
+      border: 1.5px solid transparent;
+    }
+
+    .btn-flip-starter:hover,
+    .btn-flip-enterprise:hover {
+      background: var(--services-btn-navy-hover, #153655);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(29, 67, 104, 0.45);
+      color: #ffffff;
+    }
+
+    .btn-flip-growth {
+      background: #0d382b;
+      color: #ffffff;
+      border: 1.5px solid #34d399;
+      box-shadow: 0 6px 20px rgba(13, 56, 43, 0.45);
+    }
+
+    .btn-flip-growth:hover {
+      background: #064e3b;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(13, 56, 43, 0.6);
+      color: #ffffff;
+    }
+
+    .pricing-back-guarantee {
+      font-size: 11px;
+      color: #64748b;
+      text-align: center;
+      font-weight: 500;
+      display: block;
+    }
+
+    /* ==========================================================================
+       SECTION 5: QUESTIONS (Image 1 - BEFORE YOU SIGN.)
+       ========================================================================== */
+    .questions-section-wrap {
+      padding: 60px 24px 70px;
+      position: relative;
+      background: #091929;
+      border-top: 1px solid rgba(114, 202, 167, 0.12);
+    }
+
+    .questions-container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .question-card {
+      background: var(--services-card-bg);
+      border-radius: 22px;
+      padding: 22px 30px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.16);
+      border: 1.5px solid rgba(226, 232, 240, 0.85);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+                  box-shadow 0.35s ease, 
+                  border-color 0.35s ease;
+      color: var(--services-text-dark);
+      text-align: left;
+      cursor: default;
+      will-change: transform, opacity;
+      position: relative;
+    }
+
+    .question-card-from-left {
+      opacity: 0;
+      transform: translateX(-100px) scale(0.98);
+      will-change: transform, opacity;
+    }
+
+    .question-card-from-right {
+      opacity: 0;
+      transform: translateX(100px) scale(0.98);
+      will-change: transform, opacity;
+    }
+
+    .questions-section-wrap:not(.in-view) .question-card-from-left {
+      opacity: 0;
+      transform: translateX(-100px) scale(0.98);
+    }
+
+    .questions-section-wrap:not(.in-view) .question-card-from-right {
+      opacity: 0;
+      transform: translateX(100px) scale(0.98);
+    }
+
+    .questions-section-wrap.in-view .question-card-from-left {
+      animation: faqCardLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--card-delay, 0.15s) both;
+    }
+
+    .questions-section-wrap.in-view .question-card-from-right {
+      animation: faqCardRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--card-delay, 0.30s) both;
+    }
+
+    .question-card.animation-done {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .question-card:hover {
+      transform: translateY(-5px) scale(1.005) !important;
+      border-color: rgba(52, 211, 153, 0.9) !important;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.14), 0 0 32px rgba(88, 196, 158, 0.45), 0 0 0 1px rgba(52, 211, 153, 0.7) !important;
+    }
+
+    .question-bullet-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #0f1e2e;
+      margin-top: 8px;
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .question-card:hover .question-bullet-dot {
+      background: #059669 !important;
+      transform: scale(1.65) !important;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.9) !important;
+    }
+
+    .question-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .question-title {
+      font-size: 16.5px;
+      font-weight: 800;
+      color: var(--services-text-dark);
+      line-height: 1.35;
+      transition: color 0.3s ease;
+    }
+
+    .question-card:hover .question-title {
+      color: #0b1a28 !important;
+    }
+
+    .question-answer {
+      font-size: 14px;
+      color: var(--services-text-muted);
+      line-height: 1.5;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Enlighten the small sentence on hover */
+    .question-card:hover .question-answer {
+      color: #065f46 !important;
+      font-weight: 600 !important;
+      text-shadow: 0 0 12px rgba(52, 211, 153, 0.6), 0 0 24px rgba(16, 185, 129, 0.35) !important;
+      transform: translateX(6px) !important;
+    }
+
+    .faq-heading-replay {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* ==========================================================================
+       SECTION 6: MINT CTA BANNER (Image 2 - START WITH THE MODULE THAT HURTS MOST.)
+       ========================================================================== */
+    .cta-banner-wrap {
+      padding: 20px 24px 90px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      overflow-x: clip;
+    }
+
+    .cta-banner-container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    .cta-mint-banner-card {
+      background: var(--services-teal);
+      border-radius: 36px;
+      padding: 50px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+      will-change: transform, opacity;
+    }
+
+    /* Entire card enters from right side */
+    @keyframes ctaCardFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(100px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .cta-banner-wrap:not(.in-view) .cta-mint-banner-card {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+
+    .cta-banner-wrap.in-view .cta-mint-banner-card {
+      animation: ctaCardFromRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+    }
+
+    .cta-mint-banner-card.animation-done {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+    }
+
+    .cta-mint-banner-card:hover {
+      transform: translateY(-6px) !important;
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.32), 0 0 35px rgba(114, 202, 167, 0.45);
+    }
+
+    .cta-banner-left {
+      max-width: 650px;
+      text-align: left;
+    }
+
+    .cta-banner-heading {
+      font-size: 38px;
+      font-weight: 900;
+      line-height: 1.15;
+      color: #0b263d;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      margin: 0;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: "kern" 1;
+      font-kerning: normal;
+      filter: none !important;
+      transform: none !important;
+    }
+
+    .cta-banner-subtext {
+      font-size: 15px;
+      color: #0c382b;
+      font-weight: 600;
+      margin-top: 14px;
+      margin-bottom: 0;
+    }
+
+    .btn-cta-banner {
+      background: var(--services-btn-navy);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 30px;
+      border-radius: 9999px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(29, 67, 104, 0.4);
+      flex-shrink: 0;
+    }
+
+    .btn-cta-banner:hover {
+      background: var(--services-btn-navy-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(29, 67, 104, 0.55);
+    }
+
+    @media (max-width: 860px) {
+      .cta-mint-banner-card {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 28px;
+      }
+      .cta-banner-left {
+        text-align: center;
+        max-width: 100%;
+      }
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 980px) {
+      .services-navbar-pill {
+        padding: 8px 16px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .services-brand-link {
+        margin-right: auto;
+      }
+      .services-nav-actions {
+        margin-left: auto;
+      }
+      .services-nav-actions .btn-pill-signin,
+      .services-nav-actions .btn-pill-signup,
+      #navSignIn,
+      #navSignUp {
+        display: none !important;
+      }
+      .services-mobile-btn {
+        display: flex !important;
+      }
+      .services-nav-links {
+        display: none !important;
+      }
+      .services-hero-container {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .hero-services-title {
+        font-size: 42px;
+      }
+      .modules-grid-6 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .steps-grid-4,
+      .services-steps-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+      .pricing-grid-3 {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+      .pricing-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .cta-mint-banner-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 38px 32px;
+      }
+      .deepdive-container {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .deepdive-visual-card {
+        height: 340px;
+      }
+      .btn-cta-banner {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .services-header-wrap {
+        padding: 12px 14px;
+      }
+      .services-navbar-pill {
+        padding: 6px 14px;
+      }
+      .services-brand-img {
+        height: 36px;
+      }
+      .services-hero-section {
+        padding: 100px 16px 50px;
+      }
+      .hero-services-title {
+        font-size: 32px;
+      }
+      .section-heading-lg {
+        font-size: 30px;
+      }
+      .deepdive-section {
+        padding: 24px 16px 50px;
+      }
+      .deepdive-heading {
+        font-size: 28px;
+      }
+      .deepdive-visual-card {
+        height: 240px;
+      }
+      .deepdive-desc-p1,
+      .deepdive-desc-p2 {
+        font-size: 14px;
+      }
+      .deepdive-feature-item {
+        font-size: 14px;
+      }
+      .cta-banner-heading {
+        font-size: 28px;
+      }
+      .modules-grid-6 {
+        grid-template-columns: 1fr;
+      }
+      .steps-grid-4,
+      .services-steps-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .module-card-img-wrap {
+        height: 170px;
+      }
+      .question-card {
+        padding: 18px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Preloader for brand consistency -->
+  <div id="preloader" class="preloader" aria-label="Loading Stackly">
+    <div class="preloader-curtain curtain-left"></div>
+    <div class="preloader-curtain curtain-right"></div>
+    <div class="preloader-inner">
+      <div class="preloader-logo-wrap">
+        <span class="preloader-text-part part-left">STACK</span>
+        <span class="preloader-text-part part-right">LY</span>
+      </div>
+      <div class="preloader-caption-wrap">
+        <span class="preloader-caption-part part-left">SUPPLY CHAIN</span>
+        <span class="preloader-caption-part part-right">MANAGEMENT</span>
+      </div>
+      <div class="preloader-bar-wrap">
+        <div class="preloader-bar-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIXED FLOATING PILL NAVBAR -->
+  <header class="services-header-wrap" id="siteHeader">
+    <nav class="services-navbar-pill" aria-label="Main Navigation">
+      <!-- Stackly Logo from assets -->
+      <a href="index.html" class="services-brand-link" aria-label="Stackly Home">
+        <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="services-brand-img">
+      </a>
+
+      <!-- Center Navigation Links -->
+      <ul class="services-nav-links">
+        <li class="services-nav-item"><a href="index.html">Home</a></li>
+        <li class="services-nav-item"><a href="services.html" class="active">Services</a></li>
+        <li class="services-nav-item"><a href="about.html">About</a></li>
+        <li class="services-nav-item"><a href="blog.html">Blog</a></li>
+        <li class="services-nav-item"><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <!-- Right Action Buttons -->
+      <div class="services-nav-actions">
+        <a href="login.html" class="btn-pill-signin" id="navSignIn">Sign in</a>
+        <a href="signup.html" class="btn-pill-signup" id="navSignUp">Sign up</a>
+        <button class="services-mobile-btn" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer: Full-Screen Overlay with Top Header -->
+    <div class="services-mobile-drawer mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
+      <div class="mobile-drawer-header">
+        <a href="index.html" class="mobile-drawer-logo" aria-label="Stackly Home">
+          <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="mobile-drawer-logo-img">
+        </a>
+        <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close navigation menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="mobile-drawer-body">
+        <ul class="mobile-drawer-links">
+          <li><a href="index.html" class="mobile-drawer-link">Home</a></li>
+          <li><a href="services.html" class="mobile-drawer-link active">Services</a></li>
+          <li><a href="about.html" class="mobile-drawer-link">About</a></li>
+          <li><a href="blog.html" class="mobile-drawer-link">Blog</a></li>
+          <li><a href="contact.html" class="mobile-drawer-link">Contact</a></li>
+        </ul>
+        <div class="mobile-drawer-actions">
+          <a href="login.html" class="btn-pill-signin">Sign in</a>
+          <a href="signup.html" class="btn-pill-signup">Sign up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         SECTION 1: HERO (Image 1)
+         ONE PLATFORM FOR THE WHOLE flow.
+         ====================================================================== -->
+    <section class="services-hero-section" id="hero">
+      <div class="services-hero-container">
+        
+        <!-- Left: Copy & CTAs -->
+        <div class="hero-services-content">
+          <span class="hero-badge-services anim-hero-badge">Services</span>
+          <h1 class="hero-services-title" aria-label="One Platform for the whole flow.">
+            <!-- Line 1: White bold words slide in from right one by one -->
+            <span class="hero-title-line">
+              <span class="anim-hero-word-right" style="--delay: 0.10s;">ONE</span>
+              <span class="anim-hero-word-right" style="--delay: 0.25s;">PLATFORM</span>
+              <span class="anim-hero-word-right" style="--delay: 0.40s;">FOR</span>
+            </span>
+            <!-- Line 2: White word "THE" from right, then blue/teal "WHOLE flow." -->
+            <span class="hero-title-line">
+              <span class="anim-hero-word-right" style="--delay: 0.55s;">THE</span>
+              <span class="anim-hero-word-blue" style="--delay: 0.72s;">WHOLE</span>
+              <span class="anim-hero-word-script" style="--delay: 0.88s;">flow.</span>
+            </span>
+          </h1>
+          <p class="hero-services-desc anim-hero-desc-left">
+            Start with the piece that hurts most. Every module shares the same data, so adding the next one takes days, not quarters.
+          </p>
+          <div class="hero-services-cta-group">
+            <a href="404.html" class="btn-hero-trial anim-hero-btn-left" id="btnHeroTrial">
+              <span>Start free trial</span>
+            </a>
+            <a href="404.html" class="btn-hero-pricing anim-hero-btn-right" id="btnHeroPricing">See pricing</a>
+          </div>
+        </div>
+
+        <!-- Right: Real 3D App Mockup Visual (Diagonally sliced & joining animation) -->
+        <div class="hero-services-visual-card" id="heroVisualCard" title="Click to replay diagonal join animation">
+          <!-- Top-Left Diagonal Half -->
+          <div class="visual-slice slice-top">
+            <img 
+              src="assets/services_hero_platform.png" 
+              onerror="if(!this.dataset.step){this.dataset.step=1;this.src='assets/services_hero_flow.webp';}" 
+              alt="Stackly 3D SaaS Freight Flow Platform Visualization" 
+              class="visual-slice-img"
+            >
+          </div>
+          <!-- Bottom-Right Diagonal Half -->
+          <div class="visual-slice slice-bottom">
+            <img 
+              src="assets/services_hero_platform.png" 
+              onerror="if(!this.dataset.step){this.dataset.step=1;this.src='assets/services_hero_flow.webp';}" 
+              alt="Stackly 3D SaaS Freight Flow Platform Visualization" 
+              class="visual-slice-img"
+            >
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 2: MODULES (Image 2)
+         SIX WAYS STACKLY MOVES FREIGHT.
+         ====================================================================== -->
+    <section class="modules-section" id="modules">
+      <div class="modules-container">
+        <span class="section-eyebrow" id="modulesEyebrow" title="Click to replay animation">MODULES</span>
+        <h2 class="section-heading-lg modules-heading-letters white-heading-replay" id="modulesHeading" aria-label="SIX WAYS STACKLY MOVES FREIGHT." title="Click to replay animation">
+          <span class="anim-word-unit">
+            <span class="anim-letter-right" style="--delay: 0.04s;">S</span>
+            <span class="anim-letter-right" style="--delay: 0.065s;">I</span>
+            <span class="anim-letter-right" style="--delay: 0.09s;">X</span>
+          </span>
+          <span class="anim-letter-space">&nbsp;</span>
+          <span class="anim-word-unit">
+            <span class="anim-letter-right" style="--delay: 0.12s;">W</span>
+            <span class="anim-letter-right" style="--delay: 0.145s;">A</span>
+            <span class="anim-letter-right" style="--delay: 0.17s;">Y</span>
+            <span class="anim-letter-right" style="--delay: 0.195s;">S</span>
+          </span>
+          <span class="anim-letter-space">&nbsp;</span>
+          <span class="anim-word-unit">
+            <span class="anim-letter-right" style="--delay: 0.225s;">S</span>
+            <span class="anim-letter-right" style="--delay: 0.25s;">T</span>
+            <span class="anim-letter-right" style="--delay: 0.275s;">A</span>
+            <span class="anim-letter-right" style="--delay: 0.30s;">C</span>
+            <span class="anim-letter-right" style="--delay: 0.325s;">K</span>
+            <span class="anim-letter-right" style="--delay: 0.35s;">L</span>
+            <span class="anim-letter-right" style="--delay: 0.375s;">Y</span>
+          </span>
+          <span class="anim-letter-space">&nbsp;</span>
+          <span class="anim-word-unit">
+            <span class="anim-letter-right" style="--delay: 0.405s;">M</span>
+            <span class="anim-letter-right" style="--delay: 0.43s;">O</span>
+            <span class="anim-letter-right" style="--delay: 0.455s;">V</span>
+            <span class="anim-letter-right" style="--delay: 0.48s;">E</span>
+            <span class="anim-letter-right" style="--delay: 0.505s;">S</span>
+          </span>
+          <span class="anim-letter-space">&nbsp;</span>
+          <span class="anim-word-unit">
+            <span class="anim-letter-right" style="--delay: 0.535s;">F</span>
+            <span class="anim-letter-right" style="--delay: 0.56s;">R</span>
+            <span class="anim-letter-right" style="--delay: 0.585s;">E</span>
+            <span class="anim-letter-right" style="--delay: 0.61s;">I</span>
+            <span class="anim-letter-right" style="--delay: 0.635s;">G</span>
+            <span class="anim-letter-right" style="--delay: 0.66s;">H</span>
+            <span class="anim-letter-right" style="--delay: 0.685s;">T</span>
+            <span class="anim-letter-right" style="--delay: 0.71s;">.</span>
+          </span>
+        </h2>
+
+        <div class="modules-grid-6">
+          
+          <!-- Module 1: Shipment visibility (Direction: LEFT) -->
+          <article class="module-card card-from-left" style="--card-border-enlighten: #38bdf8; --card-glow-enlighten: rgba(56, 189, 248, 0.55); --card-delay: 0.14s;">
+            <div class="module-card-img-wrap">
+              <img 
+                src="assets/service_shipment_visibility.webp" 
+                alt="Shipment Visibility courier delivery driver carrying packages" 
+                class="module-card-img"
+              >
+            </div>
+            <h3 class="module-card-title">Shipment visibility</h3>
+            <p class="module-card-desc">
+              Live position and ETA for every container, parcel and pallet, across ocean, air, rail and road.
+            </p>
+            <a href="404.html" class="module-learn-more">Learn more</a>
+          </article>
+
+          <!-- Module 2: Inventory control (Direction: TOP) -->
+          <article class="module-card card-from-top" style="--card-border-enlighten: #72caa7; --card-glow-enlighten: rgba(114, 202, 167, 0.55); --card-delay: 0.26s;">
+            <div class="module-card-img-wrap">
+              <img 
+                src="assets/service_inventory_control.webp" 
+                alt="Inventory Control modern empty polished logistics warehouse" 
+                class="module-card-img"
+              >
+            </div>
+            <h3 class="module-card-title">Inventory control</h3>
+            <p class="module-card-desc">
+              Reorder points, safety stock and bin-level counts synced across every warehouse and 3PL.
+            </p>
+            <a href="404.html" class="module-learn-more">Learn more</a>
+          </article>
+
+          <!-- Module 3: Demand forecasting (Direction: RIGHT) -->
+          <article class="module-card card-from-right" style="--card-border-enlighten: #818cf8; --card-glow-enlighten: rgba(129, 140, 248, 0.55); --card-delay: 0.38s;">
+            <div class="module-card-img-wrap">
+              <img 
+                src="assets/service_demand_forecasting.webp" 
+                alt="Demand Forecasting analyst reviewing dual dashboard monitors" 
+                class="module-card-img"
+              >
+            </div>
+            <h3 class="module-card-title">Demand forecasting</h3>
+            <p class="module-card-desc">
+              Weekly forecasts by SKU and region that learn from promotions, weather and lead-time drift.
+            </p>
+            <a href="404.html" class="module-learn-more">Learn more</a>
+          </article>
+
+          <!-- Module 4: Supplier management (Direction: LEFT) -->
+          <article class="module-card card-from-left" style="--card-border-enlighten: #34d399; --card-glow-enlighten: rgba(52, 211, 153, 0.55); --card-delay: 0.30s;">
+            <div class="module-card-img-wrap">
+              <img 
+                src="assets/service_supplier_management.webp" 
+                alt="Supplier Management inspector checking warehouse shelves with tablet" 
+                class="module-card-img"
+              >
+            </div>
+            <h3 class="module-card-title">Supplier management</h3>
+            <p class="module-card-desc">
+              Scorecards, contracts and audit dates in one place, with alerts when lead times slip.
+            </p>
+            <a href="404.html" class="module-learn-more">Learn more</a>
+          </article>
+
+          <!-- Module 5: Risk alerts (Direction: DOWN) -->
+          <article class="module-card card-from-down" style="--card-border-enlighten: #f87171; --card-glow-enlighten: rgba(248, 113, 113, 0.6); --card-delay: 0.42s;">
+            <div class="module-card-img-wrap">
+              <img 
+                src="assets/service_risk_alerts.webp" 
+                alt="Risk Alerts 3D red triangular exclamation hazard icon" 
+                class="module-card-img"
+              >
+            </div>
+            <h3 class="module-card-title">Risk alerts</h3>
+            <p class="module-card-desc">
+              Port strikes, storms and customs holds matched to your open orders before they turn late.
+            </p>
+            <a href="404.html" class="module-learn-more">Learn more</a>
+          </article>
+
+          <!-- Module 6: Freight & cost audit (Direction: RIGHT) -->
+          <article class="module-card card-from-right" style="--card-border-enlighten: #2dd4bf; --card-glow-enlighten: rgba(45, 212, 191, 0.55); --card-delay: 0.54s;">
+            <div class="module-card-img-wrap">
+              <img 
+                src="assets/service_freight_audit.webp" 
+                alt="Freight and cost audit invoice financial document" 
+                class="module-card-img"
+              >
+            </div>
+            <h3 class="module-card-title">Freight &amp; cost audit</h3>
+            <p class="module-card-desc">
+              Match invoices to rate cards and flag duplicate, detention and accessorial charges.
+            </p>
+            <a href="404.html" class="module-learn-more">Learn more</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 2.5: DEEP DIVE (Image 3)
+         SEE EVERY CONTAINER BEFORE IT IS LATE.
+         ====================================================================== -->
+    <section class="deepdive-section" id="deep-dive" aria-labelledby="deepdiveHeading">
+      <div class="deepdive-container">
+        
+        <!-- Left Column: Container Ship Visual (3D Wrap Unfold Animation & Blue Shade Glow) -->
+        <div class="deepdive-visual-card" id="deepdiveVisualCard" title="Hover to view blue enlightened shade">
+          <div class="deepdive-wrap-shimmer"></div>
+          <img 
+            src="assets/service_container_ship.webp" 
+            onerror="this.src='assets/service_container_ship.jpg';" 
+            alt="Commercial container ship loaded with cargo docked at ocean port" 
+            class="deepdive-visual-img"
+            loading="lazy"
+          >
+        </div>
+
+        <!-- Right Column: Deep Dive Narrative & Live ETA Bullets -->
+        <div class="deepdive-content-col">
+          <span class="deepdive-eyebrow" id="deepdiveEyebrow" title="Click to replay animation">DEEP DIVE</span>
+          <h2 class="deepdive-heading deepdive-heading-letters white-heading-replay" id="deepdiveHeading" aria-label="SEE EVERY CONTAINER BEFORE IT IS LATE." title="Click to replay animation">
+            <!-- Line 1: SEE EVERY CONTAINER -->
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.04s;">S</span>
+              <span class="anim-letter-right" style="--delay: 0.065s;">E</span>
+              <span class="anim-letter-right" style="--delay: 0.09s;">E</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.115s;">E</span>
+              <span class="anim-letter-right" style="--delay: 0.14s;">V</span>
+              <span class="anim-letter-right" style="--delay: 0.165s;">E</span>
+              <span class="anim-letter-right" style="--delay: 0.19s;">R</span>
+              <span class="anim-letter-right" style="--delay: 0.215s;">Y</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.24s;">C</span>
+              <span class="anim-letter-right" style="--delay: 0.265s;">O</span>
+              <span class="anim-letter-right" style="--delay: 0.29s;">N</span>
+              <span class="anim-letter-right" style="--delay: 0.315s;">T</span>
+              <span class="anim-letter-right" style="--delay: 0.34s;">A</span>
+              <span class="anim-letter-right" style="--delay: 0.365s;">I</span>
+              <span class="anim-letter-right" style="--delay: 0.39s;">N</span>
+              <span class="anim-letter-right" style="--delay: 0.415s;">E</span>
+              <span class="anim-letter-right" style="--delay: 0.44s;">R</span>
+            </span>
+            <br>
+            <!-- Line 2: BEFORE IT IS LATE. -->
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.38s;">B</span>
+              <span class="anim-letter-right" style="--delay: 0.405s;">E</span>
+              <span class="anim-letter-right" style="--delay: 0.43s;">F</span>
+              <span class="anim-letter-right" style="--delay: 0.455s;">O</span>
+              <span class="anim-letter-right" style="--delay: 0.48s;">R</span>
+              <span class="anim-letter-right" style="--delay: 0.505s;">E</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.53s;">I</span>
+              <span class="anim-letter-right" style="--delay: 0.555s;">T</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.58s;">I</span>
+              <span class="anim-letter-right" style="--delay: 0.605s;">S</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.63s;">L</span>
+              <span class="anim-letter-right" style="--delay: 0.655s;">A</span>
+              <span class="anim-letter-right" style="--delay: 0.68s;">T</span>
+              <span class="anim-letter-right" style="--delay: 0.705s;">E</span>
+              <span class="anim-letter-right" style="--delay: 0.73s;">.</span>
+            </span>
+          </h2>
+          <p class="deepdive-desc-p1">
+            Shipment visibility pulls scans from 180+ carriers and port systems, normalises them, and predicts arrival using real transit history rather than the carrier estimate.
+          </p>
+          <p class="deepdive-desc-p2">
+            Planners get one timeline per order, with the next stop, the risk to the promised date and the action to take.
+          </p>
+          <ul class="deepdive-features-list">
+            <li class="deepdive-feature-item" style="--item-delay: 0.82s;">
+              <span class="deepdive-feature-dot" aria-hidden="true"></span>
+              <span>Predicted ETA accurate to within 6 hours on ocean lanes</span>
+            </li>
+            <li class="deepdive-feature-item" style="--item-delay: 0.95s;">
+              <span class="deepdive-feature-dot" aria-hidden="true"></span>
+              <span>Automatic alerts by email, Slack or Teams</span>
+            </li>
+            <li class="deepdive-feature-item" style="--item-delay: 1.08s;">
+              <span class="deepdive-feature-dot" aria-hidden="true"></span>
+              <span>Exports to your ERP with one click</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 3: HOW IT WORKS / LIVE IN FOUR STEPS (Image 3 & 4)
+         Connecting pipeline lines, zigzag cards, 1-by-1 entrance animations,
+         and crisp hover-revealed images matching the homepage.
+         ====================================================================== -->
+    <section class="steps-section" id="how-it-works">
+      <div class="container">
+        <!-- Centered Headings for Live in Four Steps as requested -->
+        <div class="steps-header-center">
+          <span class="section-tag steps-tag-anim">HOW IT WORKS</span>
+          <h2 class="section-title steps-title-anim cta-heading-letters white-heading-replay" id="stepsHeadingServices" aria-label="LIVE IN FOUR STEPS." title="Click to replay animation">
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">L</span><span class="anim-letter-right" style="--delay: 0.065s;">I</span><span class="anim-letter-right" style="--delay: 0.090s;">V</span><span class="anim-letter-right" style="--delay: 0.115s;">E</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.145s;">I</span><span class="anim-letter-right" style="--delay: 0.170s;">N</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.200s;">F</span><span class="anim-letter-right" style="--delay: 0.225s;">O</span><span class="anim-letter-right" style="--delay: 0.250s;">U</span><span class="anim-letter-right" style="--delay: 0.275s;">R</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.305s;">S</span><span class="anim-letter-right" style="--delay: 0.330s;">T</span><span class="anim-letter-right" style="--delay: 0.355s;">E</span><span class="anim-letter-right" style="--delay: 0.380s;">P</span><span class="anim-letter-right" style="--delay: 0.405s;">S</span><span class="anim-letter-right" style="--delay: 0.430s;">.</span></span>
+          </h2>
+          <p class="section-desc steps-desc-anim">Most teams are running in nine working days.</p>
+        </div>
+
+        <!-- Zigzag Timeline Wrapper with Connecting Pipeline Lines -->
+        <div class="steps-timeline-wrap" id="stepsTimeline">
+          <!-- Desktop Zigzag SVG Connecting Line Track -->
+          <svg class="steps-zigzag-svg" viewBox="0 0 1000 160" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="zigzagGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#34d399" />
+                <stop offset="50%" stop-color="#58c49e" />
+                <stop offset="100%" stop-color="#2dd4bf" />
+              </linearGradient>
+            </defs>
+            <!-- Background Dashed Track -->
+            <path class="zigzag-path-bg" d="M 125 35 C 210 35, 290 83, 375 83 C 460 83, 540 35, 625 35 C 710 35, 790 83, 875 83" />
+            <!-- Animated Illuminated Glow Pipeline Path -->
+            <path class="zigzag-path-pulse" d="M 125 35 C 210 35, 290 83, 375 83 C 460 83, 540 35, 625 35 C 710 35, 790 83, 875 83" />
+          </svg>
+
+          <!-- 4 Step Cards: Zigzag Layout, Sequential 1-by-1 Entrance, Clear Image on Hover -->
+          <div class="steps-cards-grid">
+            <!-- Step 1: Connect (Zigzag Up, Arrives 1st) -->
+            <article class="step-card step-zigzag-up step-1" id="step-connect" style="--step-delay: 0.15s;">
+              <div class="step-badge-wrap">
+                <div class="step-number-badge">1</div>
+              </div>
+              <!-- Clear Image on Hover (Zero Fade, Zero Shade) -->
+              <div class="step-card-image-box">
+                <img 
+                  src="assets/meridian_tech.webp" 
+                  alt="Connect prebuilt ERP and carrier connectors" 
+                  class="step-card-img" 
+                  loading="lazy"
+                >
+              </div>
+              <h3 class="step-card-title">Connect</h3>
+              <p class="step-card-desc">Link your ERP, carriers and warehouses with prebuilt connectors.</p>
+            </article>
+
+            <!-- Step 2: Clean (Zigzag Down, Arrives 2nd) -->
+            <article class="step-card step-zigzag-down step-2" id="step-clean" style="--step-delay: 0.45s;">
+              <div class="step-badge-wrap">
+                <div class="step-number-badge">2</div>
+              </div>
+              <!-- Clear Image on Hover (Zero Fade, Zero Shade) -->
+              <div class="step-card-image-box">
+                <img 
+                  src="assets/auto_freight.webp" 
+                  alt="Clean and map SKUs and locations into shared model" 
+                  class="step-card-img" 
+                  loading="lazy"
+                >
+              </div>
+              <h3 class="step-card-title">Clean</h3>
+              <p class="step-card-desc">We map SKUs, locations and carriers into one shared model.</p>
+            </article>
+
+            <!-- Step 3: Plan (Zigzag Up, Arrives 3rd) -->
+            <article class="step-card step-zigzag-up step-3" id="step-plan" style="--step-delay: 0.75s;">
+              <div class="step-badge-wrap">
+                <div class="step-number-badge">3</div>
+              </div>
+              <!-- Clear Image on Hover (Zero Fade, Zero Shade) -->
+              <div class="step-card-image-box">
+                <img 
+                  src="assets/hero_warehouse.webp" 
+                  alt="Automated forecasts and weekly safety stock planning" 
+                  class="step-card-img" 
+                  loading="lazy"
+                >
+              </div>
+              <h3 class="step-card-title">Plan</h3>
+              <p class="step-card-desc">Forecasts and safety stock update automatically each week.</p>
+            </article>
+
+            <!-- Step 4: Improve (Zigzag Down, Arrives 4th) -->
+            <article class="step-card step-zigzag-down step-4" id="step-improve" style="--step-delay: 1.05s;">
+              <div class="step-badge-wrap">
+                <div class="step-number-badge">4</div>
+              </div>
+              <!-- Clear Image on Hover (Zero Fade, Zero Shade) -->
+              <div class="step-card-image-box">
+                <img 
+                  src="assets/about_dock_team.webp" 
+                  alt="Dedicated analyst reviews operational results monthly" 
+                  class="step-card-img" 
+                  loading="lazy"
+                >
+              </div>
+              <h3 class="step-card-title">Improve</h3>
+              <p class="step-card-desc">Your analyst reviews results with you every month.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 4: PRICING (Image 5)
+         PICK THE SIZE THAT FITS.
+         ====================================================================== -->
+    <section class="pricing-section-wrap" id="pricing">
+      <div class="pricing-container">
+        
+        <div class="pricing-header-row">
+          <div>
+            <span class="section-eyebrow">PRICING</span>
+            <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="pricingHeadingServices" style="margin-bottom: 0;" aria-label="PICK THE SIZE THAT FITS." title="Click to replay animation">
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">P</span><span class="anim-letter-right" style="--delay: 0.065s;">I</span><span class="anim-letter-right" style="--delay: 0.090s;">C</span><span class="anim-letter-right" style="--delay: 0.115s;">K</span></span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.145s;">T</span><span class="anim-letter-right" style="--delay: 0.170s;">H</span><span class="anim-letter-right" style="--delay: 0.195s;">E</span></span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.225s;">S</span><span class="anim-letter-right" style="--delay: 0.250s;">I</span><span class="anim-letter-right" style="--delay: 0.275s;">Z</span><span class="anim-letter-right" style="--delay: 0.300s;">E</span></span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.330s;">T</span><span class="anim-letter-right" style="--delay: 0.355s;">H</span><span class="anim-letter-right" style="--delay: 0.380s;">A</span><span class="anim-letter-right" style="--delay: 0.405s;">T</span></span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.435s;">F</span><span class="anim-letter-right" style="--delay: 0.460s;">I</span><span class="anim-letter-right" style="--delay: 0.485s;">T</span><span class="anim-letter-right" style="--delay: 0.510s;">S</span><span class="anim-letter-right" style="--delay: 0.535s;">.</span></span>
+            </h2>
+          </div>
+          <p class="pricing-header-subtext">Every plan includes onboarding and a named analyst.</p>
+        </div>
+
+        <div class="pricing-grid-3" id="pricingGrid">
+          
+          <!-- Plan 1: Starter (Comes from Left Side, Flips on Hover) -->
+          <div class="pricing-card-flip-wrap pricing-card-from-left" id="pricing-card-1" style="--pricing-delay: 0.10s;">
+            <div class="pricing-card-flipper">
+              
+              <!-- Front Face: Visible normally, with new bottom content in place of removed button -->
+              <div class="pricing-card-face pricing-card-front">
+                <div class="pricing-front-top">
+                  <span class="pricing-plan-badge">Starter</span>
+                  <div class="pricing-price-row">
+                    <span class="pricing-price-val">$490</span>
+                    <span class="pricing-price-period">/month</span>
+                  </div>
+                  <p class="pricing-plan-sub">For one warehouse and a handful of carriers.</p>
+                  <ul class="pricing-features-list">
+                    <li class="pricing-feature-item">
+                      <span class="pricing-feature-dot"></span>
+                      <span>Shipment visibility</span>
+                    </li>
+                    <li class="pricing-feature-item">
+                      <span class="pricing-feature-dot"></span>
+                      <span>5 users</span>
+                    </li>
+                    <li class="pricing-feature-item">
+                      <span class="pricing-feature-dot"></span>
+                      <span>Email alerts</span>
+                    </li>
+                  </ul>
+                </div>
+                <!-- Engaging front bottom content replacing the button -->
+                <div class="pricing-front-bottom-badge">
+                  <div class="pricing-front-bottom-left">
+                    <span class="pricing-badge-icon">⚡</span>
+                    <div class="pricing-badge-texts">
+                      <span class="pricing-badge-title">14-Day Free Trial</span>
+                      <span class="pricing-badge-desc">No credit card required</span>
+                    </div>
+                  </div>
+                  <span class="pricing-flip-prompt" aria-hidden="true">
+                    <span>Hover to choose</span>
+                    <span class="flip-icon">↻</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Back Face: Revealed on hover, shows details & Choose Starter button -->
+              <div class="pricing-card-face pricing-card-back">
+                <div class="pricing-back-content">
+                  <div class="pricing-back-top">
+                    <span class="pricing-back-badge">Starter Plan</span>
+                    <h3 class="pricing-back-heading">Fast-Track Setup</h3>
+                    <p class="pricing-back-summary">
+                      Ideal for growing operations looking to eliminate blindspots and automate EDI feeds in under 9 days.
+                    </p>
+                    <ul class="pricing-back-perks">
+                      <li>14-day full access trial</li>
+                      <li>9-day white-glove setup</li>
+                      <li>Direct carrier API & EDI drop</li>
+                      <li>Cancel anytime guarantee</li>
+                    </ul>
+                  </div>
+                  <div class="pricing-back-action-wrap">
+                    <a href="404.html" class="btn-pricing-flipper-cta btn-flip-starter">
+                      <span>Choose Starter</span>
+                    </a>
+                    <span class="pricing-back-guarantee">No card required • Instant activation</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Plan 2: Growth (Comes from Down Side, Center Card, Flips on Hover) -->
+          <div class="pricing-card-flip-wrap pricing-card-from-down" id="pricing-card-2" style="--pricing-delay: 0.22s;">
+            <div class="pricing-card-flipper">
+              
+              <!-- Front Face -->
+              <div class="pricing-card-face pricing-card-front">
+                <div class="pricing-front-top">
+                  <span class="pricing-plan-badge">Growth</span>
+                  <div class="pricing-price-row">
+                    <span class="pricing-price-val">$1,450</span>
+                    <span class="pricing-price-period">/month</span>
+                  </div>
+                  <p class="pricing-plan-sub">For multi-site teams that forecast and audit.</p>
+                  <ul class="pricing-features-list">
+                    <li class="pricing-feature-item">
+                      <span class="pricing-feature-dot"></span>
+                      <span>All six modules</span>
+                    </li>
+                    <li class="pricing-feature-item">
+                      <span class="pricing-feature-dot"></span>
+                      <span>25 users</span>
+                    </li>
+                    <li class="pricing-feature-item">
+                      <span class="pricing-feature-dot"></span>
+                      <span>ERP integration</span>
+                    </li>
+                    <li class="pricing-feature-item">
+                      <span class="pricing-feature-dot"></span>
+                      <span>Monthly analyst review</span>
+                    </li>
+                  </ul>
+                </div>
+                <!-- Engaging front bottom content replacing the button -->
+                <div class="pricing-front-bottom-badge">
+                  <div class="pricing-front-bottom-left">
+                    <span class="pricing-badge-icon">⭐</span>
+                    <div class="pricing-badge-texts">
+                      <span class="pricing-badge-title">Most Popular Choice</span>
+                      <span class="pricing-badge-desc">Full 6-module analytics suite</span>
+                    </div>
+                  </div>
+                  <span class="pricing-flip-prompt" aria-hidden="true">
+                    <span>Hover to choose</span>
+                    <span class="flip-icon">↻</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Back Face: Shows Choose Growth button -->
+              <div class="pricing-card-face pricing-card-back">
+                <div class="pricing-back-content">
+                  <div class="pricing-back-top">
+                    <span class="pricing-back-badge">Growth Plan</span>
+                    <h3 class="pricing-back-heading">Full Predictive Control</h3>
+                    <p class="pricing-back-summary">
+                      Scale multi-warehouse inventory, catch transit bottlenecks before they hit stores, and audit freight automatically.
+                    </p>
+                    <ul class="pricing-back-perks">
+                      <li>Complete 6-module platform</li>
+                      <li>Dedicated analyst check-ins</li>
+                      <li>SAP / NetSuite ERP connector</li>
+                      <li>Priority ticket SLA support</li>
+                    </ul>
+                  </div>
+                  <div class="pricing-back-action-wrap">
+                    <a href="404.html" class="btn-pricing-flipper-cta btn-flip-growth">
+                      <span>Choose Growth</span>
+                    </a>
+                    <span class="pricing-back-guarantee">Most chosen by high-growth brands</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Plan 3: Enterprise (Comes from Right Side, Flips on Hover) -->
+          <div class="pricing-card-flip-wrap pricing-card-from-right" id="pricing-card-3" style="--pricing-delay: 0.34s;">
+            <div class="pricing-card-flipper">
+              
+              <!-- Front Face -->
+              <div class="pricing-card-face pricing-card-front">
+                <div class="pricing-front-top">
+                  <span class="pricing-plan-badge">Enterprise</span>
+                  <div class="pricing-price-row">
+                    <span class="pricing-price-val">Custom</span>
+                    <span class="pricing-price-period">/month</span>
+                  </div>
+                  <p class="pricing-plan-sub">For global networks with custom EDI needs.</p>
+                  <ul class="pricing-features-list">
+                    <li class="pricing-feature-item">
+                      <span class="pricing-feature-dot"></span>
+                      <span>Unlimited users</span>
+                    </li>
+                    <li class="pricing-feature-item">
+                      <span class="pricing-feature-dot"></span>
+                      <span>SSO and audit logs</span>
+                    </li>
+                    <li class="pricing-feature-item">
+                      <span class="pricing-feature-dot"></span>
+                      <span>Dedicated support</span>
+                    </li>
+                  </ul>
+                </div>
+                <!-- Engaging front bottom content replacing the button -->
+                <div class="pricing-front-bottom-badge">
+                  <div class="pricing-front-bottom-left">
+                    <span class="pricing-badge-icon">🛡️</span>
+                    <div class="pricing-badge-texts">
+                      <span class="pricing-badge-title">Enterprise Scale</span>
+                      <span class="pricing-badge-desc">Custom EDI & security review</span>
+                    </div>
+                  </div>
+                  <span class="pricing-flip-prompt" aria-hidden="true">
+                    <span>Hover to choose</span>
+                    <span class="flip-icon">↻</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Back Face: Shows Choose Enterprise button -->
+              <div class="pricing-card-face pricing-card-back">
+                <div class="pricing-back-content">
+                  <div class="pricing-back-top">
+                    <span class="pricing-back-badge">Enterprise Plan</span>
+                    <h3 class="pricing-back-heading">Custom Scale & SLA</h3>
+                    <p class="pricing-back-summary">
+                      Built for complex international supply lines requiring bespoke integration pipelines, multi-org security, and 24/7 coverage.
+                    </p>
+                    <ul class="pricing-back-perks">
+                      <li>Unlimited team members & seats</li>
+                      <li>SSO, SOC2 & immutable audit logs</li>
+                      <li>Named senior logistics consultant</li>
+                      <li>Custom SLA & contract terms</li>
+                    </ul>
+                  </div>
+                  <div class="pricing-back-action-wrap">
+                    <a href="404.html" class="btn-pricing-flipper-cta btn-flip-enterprise">
+                      <span>Choose Enterprise</span>
+                    </a>
+                    <span class="pricing-back-guarantee">Custom invoicing & dedicated kickoff</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 5: QUESTIONS (Image 1)
+         BEFORE YOU SIGN.
+         ====================================================================== -->
+    <section class="questions-section-wrap" id="questions">
+      <div class="questions-container">
+        <span class="section-eyebrow">QUESTIONS</span>
+        <h2 class="section-heading-lg cta-heading-letters faq-heading-replay" id="questionsHeading" aria-label="BEFORE YOU SIGN.">
+          <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">B</span><span class="anim-letter-right" style="--delay: 0.065s;">E</span><span class="anim-letter-right" style="--delay: 0.090s;">F</span><span class="anim-letter-right" style="--delay: 0.115s;">O</span><span class="anim-letter-right" style="--delay: 0.140s;">R</span><span class="anim-letter-right" style="--delay: 0.165s;">E</span></span>
+          <span class="anim-letter-space">&nbsp;</span>
+          <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.195s;">Y</span><span class="anim-letter-right" style="--delay: 0.220s;">O</span><span class="anim-letter-right" style="--delay: 0.245s;">U</span></span>
+          <span class="anim-letter-space">&nbsp;</span>
+          <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.275s;">S</span><span class="anim-letter-right" style="--delay: 0.300s;">I</span><span class="anim-letter-right" style="--delay: 0.325s;">G</span><span class="anim-letter-right" style="--delay: 0.350s;">N</span><span class="anim-letter-right" style="--delay: 0.375s;">.</span></span>
+        </h2>
+
+        <div class="questions-list" id="questionsList">
+          
+          <!-- Question 1: Left Entrance -->
+          <article class="question-card question-card-from-left" id="question-card-1" style="--card-delay: 0.12s;">
+            <span class="question-bullet-dot" aria-hidden="true"></span>
+            <div class="question-content">
+              <h3 class="question-title">How long does setup take?</h3>
+              <p class="question-answer">Most teams are live in nine working days, including ERP and carrier connections.</p>
+            </div>
+          </article>
+
+          <!-- Question 2: Right Entrance -->
+          <article class="question-card question-card-from-right" id="question-card-2" style="--card-delay: 0.24s;">
+            <span class="question-bullet-dot" aria-hidden="true"></span>
+            <div class="question-content">
+              <h3 class="question-title">Can I start with one module?</h3>
+              <p class="question-answer">Yes. Start with the module that hurts most and add others at any time.</p>
+            </div>
+          </article>
+
+          <!-- Question 3: Left Entrance -->
+          <article class="question-card question-card-from-left" id="question-card-3" style="--card-delay: 0.36s;">
+            <span class="question-bullet-dot" aria-hidden="true"></span>
+            <div class="question-content">
+              <h3 class="question-title">Do you support our 3PLs?</h3>
+              <p class="question-answer">We connect to most 3PL systems through API, EDI or file drop.</p>
+            </div>
+          </article>
+
+          <!-- Question 4: Right Entrance -->
+          <article class="question-card question-card-from-right" id="question-card-4" style="--card-delay: 0.48s;">
+            <span class="question-bullet-dot" aria-hidden="true"></span>
+            <div class="question-content">
+              <h3 class="question-title">Is there a free trial?</h3>
+              <p class="question-answer">Every plan starts with a 14-day trial and no card required.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 6: MINT CTA BANNER (Image 2)
+         START WITH THE MODULE THAT HURTS MOST.
+         ====================================================================== -->
+    <section class="cta-banner-wrap" id="cta-banner">
+      <div class="cta-banner-container">
+        <div class="cta-mint-banner-card cta-card-from-right" id="ctaBannerCard">
+          <div class="cta-banner-left">
+            <h2 class="cta-banner-heading" id="ctaBannerHeading" title="Click to replay animation">
+              START WITH THE MODULE THAT HURTS MOST.
+            </h2>
+            <p class="cta-banner-subtext">14 days free. No card required.</p>
+          </div>
+          <a href="signup.html" class="btn-cta-banner" id="btnStartWithStackly" aria-label="Start with Stackly">
+            <span>Start with Stackly</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================================================================
+       FOOTER: Same Comprehensive 4-Column Footer from Homepage
+       ====================================================================== -->
+  <footer class="site-footer" id="siteFooter">
+    <div class="container">
+      <div class="footer-grid-4">
+        
+        <!-- Col 1: Brand & Caption (NO white background box on logo, directly from assets) -->
+        <div class="footer-brand-col">
+          <a href="index.html" class="footer-logo-wrap" aria-label="Stackly Home">
+            <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="footer-logo-img">
+          </a>
+          <p class="footer-caption">
+            Stackly connects suppliers, warehouses, carriers and stores in one unified live view, so planners spot disruptions before they impact shelves.
+          </p>
+          <div class="footer-social-row">
+            <!-- 1. Twitter / X -->
+            <a href="404.html" class="social-icon-btn" aria-label="Twitter X">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <!-- 2. LinkedIn -->
+            <a href="404.html" class="social-icon-btn" aria-label="LinkedIn">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <!-- 3. YouTube -->
+            <a href="404.html" class="social-icon-btn" aria-label="YouTube">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <!-- 4. GitHub -->
+            <a href="404.html" class="social-icon-btn" aria-label="GitHub">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-nav-list">
+            <li class="footer-nav-item"><a href="index.html">Home</a></li>
+            <li class="footer-nav-item"><a href="services.html">Services</a></li>
+            <li class="footer-nav-item"><a href="about.html">About</a></li>
+            <li class="footer-nav-item"><a href="blog.html">Blog</a></li>
+            <li class="footer-nav-item"><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Platform Solutions -->
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title">Platform Solutions</h4>
+          <ul class="footer-nav-list">
+            <li class="footer-nav-item"><a href="services.html#modules">Shipment Visibility</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Inventory Control</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Demand Forecasting</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Supplier Management</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Risk Alerts</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Freight Audit</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Stackly Salem Address -->
+        <div class="footer-address-col">
+          <h4 class="footer-col-title">Salem Headquarters</h4>
+          <div class="footer-address-card">
+            <div class="address-company">Stackly Technologies Hub</div>
+            <p class="address-text">
+              124/B Heritage Enclave, Cherry Road,<br>
+              Hasthampatti, Salem,<br>
+              Tamil Nadu 636007, India.
+            </p>
+            <div class="address-contact-item">
+              <span>Phone:</span>
+              <span style="color:#ffffff;">+91 427 244 8900</span>
+            </div>
+            <div class="address-contact-item">
+              <span>Mobile:</span>
+              <span style="color:#ffffff;">+91 98427 12345</span>
+            </div>
+            <div class="address-contact-item">
+              <span>Email:</span>
+              <span style="color:#ffffff;">support@stackly.com</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Legal Row -->
+      <div class="footer-bottom-bar">
+        <span class="footer-copyright">&copy; 2026 Stackly Technologies Inc. All rights reserved.</span>
+        <div class="footer-legal-links">
+          <a href="404.html">Privacy Policy</a>
+          <a href="404.html">Terms of Service</a>
+          <a href="404.html">Security Protocol</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    (function() {
+      // Fixed navbar header background on scroll
+      var header = document.getElementById('siteHeader');
+      if (header) {
+        var handleHeaderScroll = function() {
+          if (window.scrollY > 8) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
+        };
+        window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+        handleHeaderScroll();
+      }
+
+
+
+      // Replay hero visual diagonal separation and join on click
+      var heroVisual = document.getElementById('heroVisualCard');
+      if (heroVisual) {
+        heroVisual.addEventListener('click', function() {
+          var top = heroVisual.querySelector('.slice-top');
+          var btm = heroVisual.querySelector('.slice-bottom');
+          if (top && btm) {
+            top.style.animation = 'none';
+            btm.style.animation = 'none';
+            void top.offsetWidth;
+            void btm.offsetWidth;
+            top.style.animation = 'diagonalJoinTop 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+            btm.style.animation = 'diagonalJoinBottom 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+          }
+        });
+      }
+
+      // Modules Section (Image 2: SIX WAYS STACKLY MOVES FREIGHT)
+      var modulesSection = document.getElementById('modules');
+      if (modulesSection) {
+        var triggerModulesEntrance = function() {
+          modulesSection.classList.add('in-view');
+        };
+
+        if ('IntersectionObserver' in window) {
+          var modulesObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                triggerModulesEntrance();
+                modulesObserver.unobserve(modulesSection);
+              }
+            });
+          }, { threshold: 0.12 });
+          modulesObserver.observe(modulesSection);
+        } else {
+          triggerModulesEntrance();
+        }
+
+        // Clean up animation on cards when finished to enable unhindered hover interaction
+        var cards = modulesSection.querySelectorAll('.module-card');
+        cards.forEach(function(card) {
+          card.addEventListener('animationend', function() {
+            card.classList.add('animation-done');
+          });
+        });
+
+        // Interactive Replay: Clicking the eyebrow or heading replays the animation sequence
+        var replayTriggers = [
+          document.getElementById('modulesHeading'),
+          document.getElementById('modulesEyebrow')
+        ];
+        replayTriggers.forEach(function(el) {
+          if (!el) return;
+          el.style.cursor = 'pointer';
+          el.addEventListener('click', function() {
+            modulesSection.classList.remove('in-view');
+            cards.forEach(function(card) {
+              card.classList.remove('animation-done');
+            });
+            setTimeout(function() {
+              modulesSection.classList.add('in-view');
+            }, 30);
+          });
+        });
+      }
+
+      // Deep Dive Section (Image 3: SEE EVERY CONTAINER BEFORE IT IS LATE)
+      var deepdiveSection = document.getElementById('deep-dive');
+      if (deepdiveSection) {
+        var triggerDeepdiveEntrance = function() {
+          deepdiveSection.classList.add('in-view');
+        };
+
+        if ('IntersectionObserver' in window) {
+          var deepdiveObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                triggerDeepdiveEntrance();
+                deepdiveObserver.unobserve(deepdiveSection);
+              }
+            });
+          }, { threshold: 0.12 });
+          deepdiveObserver.observe(deepdiveSection);
+        } else {
+          triggerDeepdiveEntrance();
+        }
+
+        // Clean up animation on elements when finished to enable unhindered hover interaction
+        var deepdiveAnimElements = deepdiveSection.querySelectorAll(
+          '.deepdive-visual-card, .deepdive-desc-p1, .deepdive-desc-p2, .deepdive-feature-item'
+        );
+        deepdiveAnimElements.forEach(function(el) {
+          el.addEventListener('animationend', function() {
+            el.classList.add('animation-done');
+          });
+        });
+
+        // Interactive Replay: Clicking the eyebrow, heading, or visual card replays the animation sequence
+        var deepdiveReplayTriggers = [
+          document.getElementById('deepdiveHeading'),
+          document.getElementById('deepdiveEyebrow')
+        ];
+        deepdiveReplayTriggers.forEach(function(el) {
+          if (!el) return;
+          el.style.cursor = 'pointer';
+          el.addEventListener('click', function() {
+            deepdiveSection.classList.remove('in-view');
+            deepdiveAnimElements.forEach(function(card) {
+              card.classList.remove('animation-done');
+            });
+            void deepdiveSection.offsetWidth;
+            setTimeout(function() {
+              deepdiveSection.classList.add('in-view');
+            }, 30);
+          });
+        });
+      }
+
+      // Steps Section (HOW IT WORKS) entrance & pipeline trigger
+      var stepsSection = document.getElementById('how-it-works');
+      if (stepsSection) {
+        if ('IntersectionObserver' in window) {
+          var stepsObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                stepsSection.classList.add('in-view');
+                stepsObserver.unobserve(stepsSection);
+              }
+            });
+          }, { threshold: 0.12 });
+          stepsObserver.observe(stepsSection);
+        } else {
+          stepsSection.classList.add('in-view');
+        }
+      }
+
+      // CTA Banner & Questions Section In-View Trigger
+      var ctaWrap = document.getElementById('cta-banner');
+      var questionsWrap = document.getElementById('faq');
+      [ctaWrap, questionsWrap].forEach(function(sec) {
+        if (!sec) return;
+        if ('IntersectionObserver' in window) {
+          var obs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                sec.classList.add('in-view');
+                obs.unobserve(sec);
+              }
+            });
+          }, { threshold: 0.08 });
+          obs.observe(sec);
+        } else {
+          sec.classList.add('in-view');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

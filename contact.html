@@ -1,0 +1,3296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Stackly Supply Chain</title>
+  <meta name="description" content="Let's stack your supply chain. Tell us where the friction is. A logistics analyst replies within one working day with a plan, not a sales script.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/webp" href="assets/stackly_logo.webp">
+  <style>
+    /* ==========================================================================
+       STACKLY CONTACT PAGE - PIXEL-PERFECT STYLING
+       Aesthetics: Deep Marine Navy (#1c456e), Mint Teal (#72caa7), Pure White
+       Typography: Plus Jakarta Sans & Caveat Script
+       ========================================================================== */
+    :root {
+      --contact-bg: #1c456e;
+      --contact-bg-gradient: radial-gradient(circle at 50% 15%, #255483 0%, #1a4269 55%, #133353 100%);
+      --contact-teal: #72caa7;
+      --contact-teal-dark: #0d382b;
+      --contact-card-bg: #ffffff;
+      --contact-text-dark: #0f1e2e;
+      --contact-text-muted: #52677d;
+      --contact-input-bg: #edf5f2;
+      --contact-btn-navy: #1d4368;
+      --contact-btn-navy-hover: #153655;
+    }
+
+    html, body {
+      overflow-x: hidden !important;
+      max-width: 100vw !important;
+    }
+
+    body {
+      background-color: var(--contact-bg);
+      background-image: var(--contact-bg-gradient);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Fixed Top Site Header */
+    .contact-header-wrap {
+      width: 100%;
+      padding: 16px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .contact-header-wrap.scrolled {
+      padding: 10px 20px;
+      background: rgba(28, 69, 110, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    .contact-navbar-pill {
+      pointer-events: auto;
+      max-width: 1180px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 9999px;
+      padding: 10px 24px 10px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+
+    .contact-brand-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .contact-brand-img {
+      height: 42px;
+      max-height: 46px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+
+    .contact-brand-img:hover {
+      transform: scale(1.03);
+    }
+
+    .contact-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .contact-nav-item a {
+      color: #334155;
+      font-size: 14.5px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .contact-nav-item a:hover,
+    .contact-nav-item a.active {
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    .contact-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-pill-signin {
+      background: #ffffff;
+      color: #0f172a;
+      border: 1.5px solid #cbd5e1;
+      padding: 8px 22px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-pill-signin:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    .btn-pill-signup {
+      background: var(--contact-teal);
+      color: #0f382c;
+      border: none;
+      padding: 8.5px 24px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(114, 202, 167, 0.35);
+    }
+
+    .btn-pill-signup:hover {
+      background: #5ebc9b;
+      transform: translateY(-1px);
+    }
+
+    /* Mobile Menu Toggle */
+    .contact-mobile-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      flex-direction: column;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .contact-mobile-btn span {
+      display: block;
+      width: 24px;
+      height: 2.5px;
+      background: #0f172a;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-mobile-btn.open span:nth-child(1) {
+      transform: translateY(7.5px) rotate(45deg);
+    }
+
+    .contact-mobile-btn.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .contact-mobile-btn.open span:nth-child(3) {
+      transform: translateY(-7.5px) rotate(-45deg);
+    }
+
+    /* Mobile Drawer - Full-Screen Overlay */
+    .contact-mobile-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      background: #ffffff;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-shadow: none !important;
+      flex-direction: column;
+      z-index: 999999 !important;
+      pointer-events: auto;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    .contact-mobile-drawer.open {
+      display: flex !important;
+    }
+
+    /* Common Eyebrow and Heading Styles */
+    .section-eyebrow {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--contact-teal);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .section-heading-lg {
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1.15;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 36px;
+      letter-spacing: -0.5px;
+    }
+
+    /* ==========================================================================
+       SECTION 1: HERO (Screenshot 1)
+       LET'S STACK YOUR SUPPLY chain.
+       ========================================================================== */
+    .contact-hero-section {
+      padding: 130px 24px 40px;
+      position: relative;
+    }
+
+    .contact-hero-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 50px;
+    }
+
+    .contact-hero-content {
+      text-align: left;
+    }
+
+    .hero-badge-contact {
+      display: inline-block;
+      background: #ffffff;
+      color: #1e3a5f;
+      padding: 6px 18px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(-8px);
+      will-change: transform, opacity;
+    }
+
+    @keyframes contactBadgeFadeDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .contact-hero-section.in-view .hero-badge-contact {
+      animation: contactBadgeFadeDown 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .contact-hero-title {
+      font-size: 54px;
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+      color: #ffffff;
+      text-transform: uppercase;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    /* Word units for letter animations to prevent mid-word wrapping */
+    .anim-word-unit {
+      display: inline-block;
+      white-space: nowrap;
+      vertical-align: baseline;
+    }
+
+    .anim-letter-space,
+    .anim-word-space {
+      display: inline-block;
+      width: 0.32em;
+      min-width: 0.32em;
+      pointer-events: none;
+      vertical-align: baseline;
+    }
+
+    .anim-word-unit + .anim-word-unit {
+      margin-left: 0.32em;
+    }
+
+    .anim-word-unit + .anim-letter-space + .anim-word-unit,
+    .anim-word-unit + .anim-word-space + .anim-word-unit {
+      margin-left: 0;
+    }
+
+    /* Sequential bold letter entrance from the right */
+    .anim-letter-right {
+      display: inline-block;
+      vertical-align: baseline;
+      opacity: 0;
+      transform: translateX(45px);
+      filter: none !important;
+      -webkit-filter: none !important;
+      will-change: transform, opacity;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    .contact-hero-section:not(.in-view) .anim-letter-right {
+      opacity: 0 !important;
+      transform: translateX(45px) !important;
+      animation: none !important;
+    }
+
+    @keyframes contactLetterFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(45px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .contact-hero-section.in-view .anim-letter-right {
+      animation: contactLetterFromRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--delay, 0s) + 60ms);
+    }
+
+    .title-highlight-teal {
+      color: var(--contact-teal);
+    }
+
+    .title-highlight-script {
+      font-family: 'Caveat', cursive, serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.18em;
+      text-transform: lowercase;
+      color: #ffffff;
+      letter-spacing: 0;
+      margin-left: 2px;
+    }
+
+    /* Sentence animation streaming from right */
+    .contact-hero-desc {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.82);
+      max-width: 500px;
+      margin-bottom: 34px;
+      opacity: 0;
+      transform: translateX(42px);
+      will-change: transform, opacity;
+    }
+
+    @keyframes contactDescFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(42px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .contact-hero-section.in-view .contact-hero-desc {
+      animation: contactDescFromRight 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.95s forwards;
+    }
+
+    .contact-hero-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(18px);
+      will-change: transform, opacity;
+    }
+
+    @keyframes contactCtaFadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .contact-hero-section.in-view .contact-hero-cta-group {
+      animation: contactCtaFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.2s forwards;
+    }
+
+    .btn-hero-message {
+      background: var(--contact-teal);
+      color: var(--contact-teal-dark);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 13px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 20px rgba(114, 202, 167, 0.35);
+    }
+
+    .btn-hero-message:hover {
+      background: #5ebc9b;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(114, 202, 167, 0.45);
+    }
+
+    .btn-hero-call {
+      background: #ffffff;
+      color: var(--contact-btn-navy);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 13px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-hero-call:hover {
+      background: #f1f5f9;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.22);
+    }
+
+    /* Hero Right Visual Card - Diagonal Separation & Join */
+    .contact-hero-visual-card {
+      background: #07172c;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      position: relative;
+      aspect-ratio: 16 / 10;
+      cursor: pointer;
+      isolation: isolate;
+      border: 1px solid rgba(114, 202, 167, 0.25);
+      transition: box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.5s ease;
+    }
+
+    .contact-hero-visual-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(114, 202, 167, 0.75);
+      box-shadow: 0 26px 65px rgba(0, 0, 0, 0.45), 0 0 35px rgba(114, 202, 167, 0.42), 0 0 70px rgba(114, 202, 167, 0.2);
+    }
+
+    /* Dynamic light sweep sheen */
+    .contact-hero-visual-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.3) 48%, rgba(114, 202, 167, 0.38) 54%, transparent 80%);
+      transform: translateX(-130%);
+      z-index: 7;
+      pointer-events: none;
+      transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .contact-hero-visual-card:hover::after {
+      transform: translateX(130%);
+    }
+
+    /* Diagonal Slices */
+    .diagonal-slice {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      will-change: transform, opacity;
+      transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Top-Left Diagonal Half */
+    .diagonal-slice.slice-top {
+      clip-path: polygon(0 0, 100% 0, 0 100.5%);
+      transform: translate(-50px, -50px);
+      opacity: 0;
+    }
+
+    /* Bottom-Right Diagonal Half */
+    .diagonal-slice.slice-bottom {
+      clip-path: polygon(100% -0.5%, 100% 100%, 0 100%);
+      transform: translate(50px, 50px);
+      opacity: 0;
+    }
+
+    @keyframes contactDiagJoinTop {
+      0% {
+        opacity: 0;
+        transform: translate(-50px, -50px) scale(0.96);
+      }
+      50% {
+        opacity: 0.95;
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+    }
+
+    @keyframes contactDiagJoinBottom {
+      0% {
+        opacity: 0;
+        transform: translate(50px, 50px) scale(0.96);
+      }
+      50% {
+        opacity: 0.95;
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+    }
+
+    .contact-hero-section.in-view .diagonal-slice.slice-top {
+      animation: contactDiagJoinTop 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    }
+
+    .contact-hero-section.in-view .diagonal-slice.slice-bottom {
+      animation: contactDiagJoinBottom 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    }
+
+    /* On hover: two halves micro-separate diagonally */
+    .contact-hero-visual-card:hover .diagonal-slice.slice-top {
+      transform: translate(-8px, -8px);
+    }
+
+    .contact-hero-visual-card:hover .diagonal-slice.slice-bottom {
+      transform: translate(8px, 8px);
+    }
+
+    .contact-hero-visual-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: filter 0.5s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: filter, transform;
+    }
+
+    .contact-hero-visual-card:hover .contact-hero-visual-img {
+      filter: brightness(1.04) contrast(1.02);
+    }
+
+    /* Glowing Diagonal Seam */
+    .diagonal-seam-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 6;
+      opacity: 0;
+      transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      filter: drop-shadow(0 0 6px #72caa7) drop-shadow(0 0 14px rgba(114, 202, 167, 0.7));
+    }
+
+    .contact-hero-visual-card:hover .diagonal-seam-svg {
+      opacity: 1;
+    }
+
+    /* 3 Contact Info Cards Row - Shuffle & Arrange on Hover */
+    .contact-channels-grid {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      perspective: 1200px;
+      position: relative;
+    }
+
+    .channel-card {
+      background: var(--contact-card-bg);
+      border-radius: 28px;
+      padding: 30px 28px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      color: var(--contact-text-dark);
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      user-select: none;
+      will-change: transform, box-shadow;
+      transition: transform 0.65s cubic-bezier(0.2, 0.9, 0.25, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+    }
+
+    .channel-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: #e6f7f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: #0d382b;
+      transition: background 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+    }
+
+    .channel-icon-svg {
+      width: 24px;
+      height: 24px;
+      fill: #1e7d5d;
+      display: block;
+      transition: fill 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Icon Hover Enlightenment & Micro-Animations */
+    .channel-card:hover .channel-icon-wrap {
+      background: linear-gradient(135deg, #72caa7, #48b88f);
+      box-shadow: 0 6px 18px rgba(114, 202, 167, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .channel-card:hover .channel-icon-svg {
+      fill: #0d382b;
+    }
+
+    /* Email Icon Envelope Bounce */
+    .channel-card[data-channel="email"]:hover .channel-icon-svg {
+      animation: iconBounceEmail 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes iconBounceEmail {
+      0% { transform: scale(1) translateY(0); }
+      30% { transform: scale(1.22) translateY(-4px) rotate(-6deg); }
+      60% { transform: scale(1.1) translateY(2px) rotate(3deg); }
+      100% { transform: scale(1.15) translateY(0) rotate(0); }
+    }
+
+    /* Phone Icon Vibration Ring */
+    .channel-card[data-channel="phone"]:hover .channel-icon-svg {
+      animation: iconRingPhone 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    @keyframes iconRingPhone {
+      0%, 100% { transform: scale(1.15) rotate(0); }
+      15%, 45%, 75% { transform: scale(1.18) rotate(-14deg); }
+      30%, 60%, 90% { transform: scale(1.18) rotate(14deg); }
+    }
+
+    /* Headquarters Icon Upward Elevate */
+    .channel-card[data-channel="headquarters"]:hover .channel-icon-svg {
+      animation: iconElevateHQ 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes iconElevateHQ {
+      0% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-5px) scale(1.2); }
+      100% { transform: translateY(-2px) scale(1.16); }
+    }
+
+    .channel-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--contact-text-dark);
+      margin-bottom: 8px;
+    }
+
+    .channel-line {
+      font-size: 14.5px;
+      color: var(--contact-text-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* -------------------------------------------------------------
+       THREE CARDS SHUFFLE & ARRANGE ON HOVER (Three-Column Line)
+       Slot 1 (Left) moves to Slot 2 (Center)
+       Slot 2 (Center) moves to Slot 3 (Right)
+       Slot 3 (Right) loops around to Slot 1 (Left)
+       ------------------------------------------------------------- */
+    .contact-channels-grid.is-shuffled .card-channel-1 {
+      animation: channelShuffleCard1 0.95s cubic-bezier(0.2, 0.9, 0.25, 1) forwards !important;
+    }
+
+    .contact-channels-grid.is-shuffled .card-channel-2 {
+      animation: channelShuffleCard2 0.95s cubic-bezier(0.2, 0.9, 0.25, 1) forwards !important;
+    }
+
+    .contact-channels-grid.is-shuffled .card-channel-3 {
+      animation: channelShuffleCard3 0.95s cubic-bezier(0.2, 0.9, 0.25, 1) forwards !important;
+    }
+
+    /* Fallback / Instant CSS Hover Shuffle */
+    @media (hover: hover) {
+      .contact-channels-grid:hover .card-channel-1 {
+        animation: channelShuffleCard1 0.95s cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
+      }
+      .contact-channels-grid:hover .card-channel-2 {
+        animation: channelShuffleCard2 0.95s cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
+      }
+      .contact-channels-grid:hover .card-channel-3 {
+        animation: channelShuffleCard3 0.95s cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
+      }
+    }
+
+    .contact-channels-grid:hover .channel-card:hover,
+    .contact-channels-grid.is-shuffled .channel-card:hover {
+      z-index: 10 !important;
+      border-color: rgba(114, 202, 167, 0.85);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.32), 0 0 25px rgba(114, 202, 167, 0.35);
+    }
+
+    /* Keyframes for Desktop Shuffle & Arrange */
+    @keyframes channelShuffleCard1 {
+      0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+        z-index: 2;
+      }
+      25% {
+        transform: translate(calc(50% + 14px), -24px) rotate(-6deg) scale(1.04);
+        box-shadow: -15px 25px 48px rgba(0, 0, 0, 0.32);
+        z-index: 4;
+      }
+      60% {
+        transform: translate(calc(112% + 32px), -8px) rotate(2deg) scale(1.02);
+        box-shadow: 0 20px 42px rgba(0, 0, 0, 0.25);
+        z-index: 4;
+      }
+      85% {
+        transform: translate(calc(100% + 28px), 4px) rotate(-1deg) scale(0.995);
+        z-index: 2;
+      }
+      100% {
+        transform: translate(calc(100% + 28px), 0) rotate(0deg) scale(1);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+        z-index: 2;
+      }
+    }
+
+    @keyframes channelShuffleCard2 {
+      0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+        z-index: 2;
+      }
+      25% {
+        transform: translate(calc(50% + 14px), 18px) rotate(4deg) scale(0.97);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
+      60% {
+        transform: translate(calc(108% + 30px), -6px) rotate(-2deg) scale(1.01);
+        box-shadow: 0 18px 38px rgba(0, 0, 0, 0.24);
+        z-index: 2;
+      }
+      85% {
+        transform: translate(calc(100% + 28px), 3px) rotate(1deg) scale(0.995);
+        z-index: 2;
+      }
+      100% {
+        transform: translate(calc(100% + 28px), 0) rotate(0deg) scale(1);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+        z-index: 2;
+      }
+    }
+
+    @keyframes channelShuffleCard3 {
+      0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+        z-index: 2;
+      }
+      25% {
+        transform: translate(calc(-100% - 28px), -32px) rotate(7deg) scale(1.06);
+        box-shadow: 18px 30px 52px rgba(0, 0, 0, 0.35);
+        z-index: 5;
+      }
+      60% {
+        transform: translate(calc(-212% - 62px), -10px) rotate(-3deg) scale(1.02);
+        box-shadow: -10px 22px 42px rgba(0, 0, 0, 0.26);
+        z-index: 5;
+      }
+      85% {
+        transform: translate(calc(-200% - 56px), 4px) rotate(1deg) scale(0.99);
+        z-index: 2;
+      }
+      100% {
+        transform: translate(calc(-200% - 56px), 0) rotate(0deg) scale(1);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+        z-index: 2;
+      }
+    }
+
+    /* Mobile Adaptation for Shuffle (Vertical Stack) */
+    @media (max-width: 980px) {
+      .contact-channels-grid.is-shuffled .card-channel-1,
+      .contact-channels-grid:hover .card-channel-1 {
+        animation: channelShuffleMobile1 0.85s cubic-bezier(0.2, 0.9, 0.25, 1) forwards !important;
+      }
+      .contact-channels-grid.is-shuffled .card-channel-2,
+      .contact-channels-grid:hover .card-channel-2 {
+        animation: channelShuffleMobile2 0.85s cubic-bezier(0.2, 0.9, 0.25, 1) forwards !important;
+      }
+      .contact-channels-grid.is-shuffled .card-channel-3,
+      .contact-channels-grid:hover .card-channel-3 {
+        animation: channelShuffleMobile3 0.85s cubic-bezier(0.2, 0.9, 0.25, 1) forwards !important;
+      }
+
+      @keyframes channelShuffleMobile1 {
+        0% { transform: translateY(0) rotate(0deg); }
+        40% { transform: translate(16px, calc(50% + 14px)) rotate(3deg) scale(1.02); }
+        100% { transform: translateY(calc(100% + 28px)) rotate(0deg) scale(1); }
+      }
+      @keyframes channelShuffleMobile2 {
+        0% { transform: translateY(0) rotate(0deg); }
+        40% { transform: translate(-14px, calc(50% + 14px)) rotate(-2deg) scale(0.98); }
+        100% { transform: translateY(calc(100% + 28px)) rotate(0deg) scale(1); }
+      }
+      @keyframes channelShuffleMobile3 {
+        0% { transform: translateY(0) rotate(0deg); }
+        40% { transform: translate(18px, calc(-100% - 28px)) rotate(4deg) scale(1.03); }
+        100% { transform: translateY(calc(-200% - 56px)) rotate(0deg) scale(1); }
+      }
+    }
+
+    /* ==========================================================================
+       SECTION 2: SEND A MESSAGE (Screenshot 2)
+       TELL US WHAT IS NOT MOVING.
+       ========================================================================== */
+    .contact-form-section {
+      padding: 70px 24px 90px;
+      position: relative;
+    }
+
+    .contact-form-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 60px;
+      align-items: flex-start;
+    }
+
+    .contact-form-left {
+      text-align: left;
+    }
+
+    .contact-form-left .section-eyebrow {
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .contact-form-section.in-view .contact-form-left .section-eyebrow {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .contact-form-heading {
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1.15;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 30px;
+      letter-spacing: -0.5px;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    /* Sequential bold letter entrance from the right */
+    .contact-form-section .anim-letter-right {
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(45px);
+      filter: none !important;
+      -webkit-filter: none !important;
+      will-change: transform, opacity;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    .contact-form-section:not(.in-view) .anim-letter-right {
+      opacity: 0 !important;
+      transform: translateX(45px) !important;
+      animation: none !important;
+    }
+
+    @keyframes formLetterFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(45px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .contact-form-section.in-view .anim-letter-right {
+      animation: formLetterFromRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--delay, 0s) + 60ms);
+    }
+
+    /* Paragraph streaming from right */
+    .contact-form-desc {
+      font-size: 16px;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.88);
+      max-width: 480px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateX(40px);
+      will-change: transform, opacity;
+    }
+
+    @keyframes formDescFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .contact-form-section.in-view .contact-form-desc {
+      animation: formDescFromRight 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.72s forwards;
+    }
+
+    /* Sequential meta items from right */
+    .meta-contact-block {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .meta-contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      opacity: 0;
+      transform: translateX(36px);
+      will-change: transform, opacity;
+    }
+
+    @keyframes metaItemFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(36px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .contact-form-section.in-view .meta-contact-item:nth-child(1) {
+      animation: metaItemFromRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.95s forwards;
+    }
+
+    .contact-form-section.in-view .meta-contact-item:nth-child(2) {
+      animation: metaItemFromRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) 1.12s forwards;
+    }
+
+    .contact-form-section.in-view .meta-contact-item:nth-child(3) {
+      animation: metaItemFromRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) 1.28s forwards;
+    }
+
+    .meta-label {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--contact-teal);
+    }
+
+    .meta-val {
+      font-size: 15px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    .meta-val a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .meta-val a:hover {
+      color: var(--contact-teal);
+    }
+
+    /* Right Form Card - Entrance from Left Downside */
+    .contact-form-card {
+      background: var(--contact-card-bg);
+      border-radius: 28px;
+      padding: 40px 38px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      color: var(--contact-text-dark);
+      text-align: left;
+      opacity: 0;
+      transform: translate(-45px, 50px) scale(0.96);
+      will-change: transform, opacity;
+      cursor: pointer;
+    }
+
+    @keyframes formCardFromLeftDown {
+      0% {
+        opacity: 0;
+        transform: translate(-45px, 50px) scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+    }
+
+    .contact-form-section.in-view .contact-form-card {
+      animation: formCardFromLeftDown 1.05s cubic-bezier(0.2, 0.9, 0.25, 1) 0.3s forwards;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+      position: relative;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .form-input-pill,
+    .form-textarea-pill {
+      width: 100%;
+      background: var(--contact-input-bg);
+      border: 1.5px solid transparent;
+      border-radius: 12px;
+      padding: 13px 18px;
+      font-size: 14.5px;
+      color: #0f172a;
+      outline: none;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .form-input-pill:focus,
+    .form-textarea-pill:focus {
+      background: #ffffff;
+      border-color: var(--contact-teal);
+      box-shadow: 0 0 0 4px rgba(114, 202, 167, 0.2);
+    }
+
+    /* Red Field Validation Highlight (No Browser Popups!) */
+    .form-input-pill.has-error,
+    .form-textarea-pill.has-error {
+      border-color: #ef4444 !important;
+      background: #fff8f8 !important;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+    }
+
+    .field-error-msg {
+      display: none;
+      color: #dc2626;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 6px;
+      padding-left: 2px;
+      line-height: 1.4;
+      animation: fieldErrorShake 0.3s ease;
+    }
+
+    .field-error-msg.visible {
+      display: block;
+    }
+
+    @keyframes fieldErrorShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+
+    /* Custom Dropdown (No HTML <select>) */
+    .custom-select-wrap {
+      position: relative;
+      width: 100%;
+    }
+
+    .custom-select-trigger {
+      width: 100%;
+      background: var(--contact-input-bg);
+      border: 1.5px solid transparent;
+      border-radius: 12px;
+      padding: 13px 18px;
+      font-size: 14.5px;
+      color: #0f172a;
+      font-family: inherit;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+      text-align: left;
+    }
+
+    .custom-select-trigger:hover {
+      background: #e9eff5;
+    }
+
+    .custom-select-trigger:focus,
+    .custom-select-wrap.open .custom-select-trigger {
+      background: #ffffff;
+      border-color: var(--contact-teal);
+      box-shadow: 0 0 0 4px rgba(114, 202, 167, 0.2);
+    }
+
+    .custom-select-chevron {
+      transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.25, 1);
+      stroke: #475569;
+      flex-shrink: 0;
+    }
+
+    .custom-select-wrap.open .custom-select-chevron {
+      transform: rotate(180deg);
+      stroke: #1e7d5d;
+    }
+
+    .custom-select-options {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+      padding: 6px;
+      list-style: none;
+      margin: 0;
+      z-index: 60;
+      display: none;
+      transform: translateY(-8px) scale(0.98);
+      opacity: 0;
+      transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.25, 1), opacity 0.2s ease;
+    }
+
+    .custom-select-wrap.open .custom-select-options {
+      display: block;
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .custom-select-option {
+      padding: 11px 16px;
+      border-radius: 10px;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: #1e293b;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .custom-select-option:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .custom-select-option.selected {
+      background: #e6f7f0;
+      color: #0d382b;
+      font-weight: 700;
+    }
+
+    .custom-select-option .option-check-icon {
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      stroke: #1e7d5d;
+      flex-shrink: 0;
+    }
+
+    .custom-select-option.selected .option-check-icon {
+      opacity: 1;
+    }
+
+    .form-textarea-pill {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* Send Message Button - Clean, No Arrow Mark */
+    .btn-send-message {
+      width: 100%;
+      background: var(--contact-btn-navy);
+      color: #ffffff;
+      border: none;
+      padding: 15px 28px;
+      border-radius: 9999px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(29, 67, 104, 0.35);
+      margin-top: 10px;
+    }
+
+    .btn-send-message:hover {
+      background: var(--contact-btn-navy-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(29, 67, 104, 0.45);
+    }
+
+    /* ==========================================================================
+       SECTION 3: SALEM HEADQUARTERS MAP (Screenshot 3)
+       ========================================================================== */
+    .map-section {
+      padding: 40px 24px 80px;
+      position: relative;
+    }
+
+    .map-container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .map-header-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .map-header-row .section-eyebrow {
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .map-section.in-view .map-header-row .section-eyebrow {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .map-section-heading {
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1.15;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 0;
+      letter-spacing: -0.5px;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .map-section .anim-letter-right {
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(45px);
+      filter: none !important;
+      -webkit-filter: none !important;
+      will-change: transform, opacity;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    .map-section:not(.in-view) .anim-letter-right {
+      opacity: 0 !important;
+      transform: translateX(45px) !important;
+      animation: none !important;
+    }
+
+    @keyframes mapLetterFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(45px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .map-section.in-view .anim-letter-right {
+      animation: mapLetterFromRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--delay, 0s) + 60ms);
+    }
+
+    .map-subtext {
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 14.5px;
+      margin-bottom: 6px;
+      opacity: 0;
+      transform: translateX(35px);
+      will-change: transform, opacity;
+    }
+
+    @keyframes mapSubtextFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(35px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .map-section.in-view .map-subtext {
+      animation: mapSubtextFromRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.65s forwards;
+    }
+
+    /* Map Card - Entrance from Right Side & Hover State */
+    .map-card-outer {
+      background: #0f1d2c;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      position: relative;
+      opacity: 0;
+      transform: translateX(80px);
+      will-change: transform, opacity, box-shadow;
+      cursor: pointer;
+      transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.25, 1), box-shadow 0.5s ease, border-color 0.4s ease;
+    }
+
+    @keyframes mapCardFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(80px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .map-section.in-view .map-card-outer {
+      animation: mapCardFromRight 1s cubic-bezier(0.2, 0.9, 0.25, 1) 0.35s forwards;
+    }
+
+    .map-card-outer:hover {
+      transform: translateY(-4px);
+      border-color: rgba(114, 202, 167, 0.65);
+      box-shadow: 0 26px 65px rgba(0, 0, 0, 0.48), 0 0 35px rgba(114, 202, 167, 0.25);
+    }
+
+    /* Click overlay navigating directly to Home */
+    .map-click-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      cursor: pointer;
+      text-decoration: none;
+      background: transparent;
+    }
+
+    .map-top-address-bar {
+      background: #252830;
+      color: #e2e8f0;
+      padding: 12px 24px;
+      font-size: 13.5px;
+      font-weight: 500;
+      text-align: center;
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 5;
+    }
+
+    .map-top-address-bar::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid #252830;
+    }
+
+    .map-visual-wrap {
+      width: 100%;
+      height: 480px;
+      position: relative;
+      background: #e5f1ea;
+      overflow: hidden;
+    }
+
+    .map-iframe-embed {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      pointer-events: none; /* Allows click through to overlay for instant home navigation */
+    }
+
+    /* ==========================================================================
+       SECTION 4: THREE OFFICES (Screenshot 4)
+       THREE OFFICES, ONE NETWORK.
+       ========================================================================== */
+    .offices-section {
+      padding: 50px 24px 80px;
+      position: relative;
+    }
+
+    .offices-container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .offices-header-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .offices-section .section-eyebrow {
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .offices-section.in-view .section-eyebrow {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .offices-section-heading {
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1.15;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 0;
+      letter-spacing: -0.5px;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .offices-section .anim-letter-right {
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(45px);
+      filter: none !important;
+      -webkit-filter: none !important;
+      will-change: transform, opacity;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    .offices-section:not(.in-view) .anim-letter-right {
+      opacity: 0 !important;
+      transform: translateX(45px) !important;
+      animation: none !important;
+    }
+
+    @keyframes officeLetterFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(45px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .offices-section.in-view .anim-letter-right {
+      animation: officeLetterFromRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--delay, 0s) + 60ms);
+    }
+
+    .offices-subtext {
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 14.5px;
+      margin-bottom: 6px;
+      opacity: 0;
+      transform: translateX(35px);
+      will-change: transform, opacity;
+    }
+
+    @keyframes officeSubtextFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(35px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .offices-section.in-view .offices-subtext {
+      animation: officeSubtextFromRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.65s forwards;
+    }
+
+    .offices-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    /* Keyframes for Alternating Staggered Entrances:
+       Card 1: comes from downside
+       Card 2: comes from upside
+       Card 3: comes from downside */
+    @keyframes officeCardFromDown {
+      0% {
+        opacity: 0;
+        transform: translateY(75px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes officeCardFromUp {
+      0% {
+        opacity: 0;
+        transform: translateY(-75px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .office-card {
+      background: var(--contact-card-bg);
+      border-radius: 28px;
+      padding: 22px 22px 28px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+      display: flex;
+      flex-direction: column;
+      color: var(--contact-text-dark);
+      text-align: left;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      opacity: 0;
+      will-change: transform, opacity, filter, box-shadow;
+      transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.25, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+
+    /* Initial Offsets prior to in-view */
+    .office-card:nth-child(1) {
+      transform: translateY(75px);
+    }
+
+    .office-card:nth-child(2) {
+      transform: translateY(-75px);
+    }
+
+    .office-card:nth-child(3) {
+      transform: translateY(75px);
+    }
+
+    /* In-View Alternating Animations (1st Downside, 2nd Upside, 3rd Downside) */
+    .offices-section.in-view .office-card:nth-child(1) {
+      animation: officeCardFromDown 0.85s cubic-bezier(0.2, 0.9, 0.25, 1) 0.25s forwards;
+    }
+
+    .offices-section.in-view .office-card:nth-child(2) {
+      animation: officeCardFromUp 0.85s cubic-bezier(0.2, 0.9, 0.25, 1) 0.42s forwards;
+    }
+
+    .offices-section.in-view .office-card:nth-child(3) {
+      animation: officeCardFromDown 0.85s cubic-bezier(0.2, 0.9, 0.25, 1) 0.58s forwards;
+    }
+
+    /* Card Hover Elevation and Glowing Mint Aura */
+    .office-card:hover {
+      transform: translateY(-7px) !important;
+      border-color: rgba(114, 202, 167, 0.55);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.26), 0 0 32px rgba(114, 202, 167, 0.25);
+    }
+
+    .office-img-wrap {
+      width: 100%;
+      height: 190px;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      background: #e2e8f0;
+      position: relative;
+    }
+
+    .office-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.25, 1), filter 0.5s ease;
+    }
+
+    .office-card:hover .office-img {
+      transform: scale(1.06);
+      filter: brightness(1.04) contrast(1.02);
+    }
+
+    /* Bold Office Titles with Hover Enlightenment */
+    .office-title {
+      font-size: 18.5px;
+      font-weight: 800;
+      color: var(--contact-text-dark);
+      margin-bottom: 12px;
+      line-height: 1.3;
+      transition: color 0.35s ease, text-shadow 0.35s ease, transform 0.35s cubic-bezier(0.2, 0.9, 0.25, 1), letter-spacing 0.35s ease;
+    }
+
+    /* Enlightenment effect on card hover & title direct hover */
+    .office-card:hover .office-title,
+    .office-title:hover {
+      color: #0b7351;
+      text-shadow: 0 0 12px rgba(114, 202, 167, 0.7), 0 0 26px rgba(114, 202, 167, 0.4);
+      transform: translateX(3px);
+      letter-spacing: 0.25px;
+    }
+
+    .office-address {
+      font-size: 13.5px;
+      color: var(--contact-text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ==========================================================================
+       SECTION 5: QUICK ANSWERS / FAQ (Screenshot 5)
+       CENTERED HEADINGS, ALTERNATING ENTRANCES (LEFT, RIGHT, LEFT),
+       AND GREEN HOVER ENLIGHTENMENT
+       ========================================================================== */
+    .faq-section {
+      padding: 50px 24px 90px;
+      position: relative;
+    }
+
+    .faq-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .faq-header-wrap {
+      text-align: center;
+      margin: 0 auto 36px;
+      max-width: 720px;
+    }
+
+    .faq-section .section-eyebrow {
+      display: inline-block;
+      margin: 0 auto 10px;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .faq-section.in-view .section-eyebrow {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .faq-section-heading {
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1.15;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin: 0 auto;
+      letter-spacing: -0.5px;
+      text-align: center;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .faq-section .anim-letter-right {
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(45px);
+      will-change: transform, opacity;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    @keyframes faqLetterFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(45px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .faq-section:not(.in-view) .anim-letter-right {
+      opacity: 0 !important;
+      transform: translateX(45px) !important;
+      animation: none !important;
+    }
+
+    .faq-section.in-view .anim-letter-right {
+      animation: faqLetterFromRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--delay, 0s) + 60ms);
+    }
+
+    .faq-list-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 36px;
+      text-align: left;
+    }
+
+    /* Directional Entrances:
+       - Card 1: from Left side
+       - Card 2: from Right side
+       - Card 3: from Left side */
+    @keyframes faqCardFromLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-80px) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    @keyframes faqCardFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(80px) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    .faq-card-pill {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 24px 32px;
+      color: var(--contact-text-dark);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      border: 1.5px solid rgba(226, 232, 240, 0.85);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      will-change: transform, opacity, filter, box-shadow, border-color;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+                  box-shadow 0.35s ease, 
+                  border-color 0.35s ease;
+    }
+
+    /* Initial Offsets prior to in-view */
+    .faq-card-pill:nth-child(1) {
+      transform: translateX(-80px) scale(0.98);
+    }
+
+    .faq-card-pill:nth-child(2) {
+      transform: translateX(80px) scale(0.98);
+    }
+
+    .faq-card-pill:nth-child(3) {
+      transform: translateX(-80px) scale(0.98);
+    }
+
+    /* In-View Entrances (1st Left, 2nd Right, 3rd Left) */
+    .faq-section.in-view .faq-card-pill:nth-child(1) {
+      animation: faqCardFromLeft 0.85s cubic-bezier(0.2, 0.9, 0.25, 1) 0.2s forwards;
+    }
+
+    .faq-section.in-view .faq-card-pill:nth-child(2) {
+      animation: faqCardFromRight 0.85s cubic-bezier(0.2, 0.9, 0.25, 1) 0.38s forwards;
+    }
+
+    .faq-section.in-view .faq-card-pill:nth-child(3) {
+      animation: faqCardFromLeft 0.85s cubic-bezier(0.2, 0.9, 0.25, 1) 0.56s forwards;
+    }
+
+    /* FAQ Card Hover: Enlighten the box with radiant green color */
+    .faq-card-pill:hover {
+      transform: translateY(-5px) scale(1.006) !important;
+      border-color: rgba(52, 211, 153, 0.95) !important;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18), 
+                  0 0 35px rgba(88, 196, 158, 0.5), 
+                  0 0 0 1px rgba(52, 211, 153, 0.8) !important;
+    }
+
+    .faq-question-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #0f1e2e;
+      margin: 0 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: color 0.3s ease;
+    }
+
+    .faq-card-pill:hover .faq-question-title {
+      color: #08291d;
+    }
+
+    .faq-question-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #0f1e2e;
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                  background 0.3s ease, 
+                  box-shadow 0.3s ease;
+    }
+
+    .faq-card-pill:hover .faq-question-dot {
+      background: #059669 !important;
+      transform: scale(1.65) !important;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.9) !important;
+    }
+
+    .faq-answer-desc {
+      font-size: 14.5px;
+      color: #52677d;
+      line-height: 1.55;
+      margin: 0;
+      padding-left: 17px;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .faq-card-pill:hover .faq-answer-desc {
+      color: #065f46 !important;
+      font-weight: 600 !important;
+      text-shadow: 0 0 12px rgba(52, 211, 153, 0.55), 0 0 24px rgba(16, 185, 129, 0.3) !important;
+      transform: translateX(5px) !important;
+    }
+
+    /* ==========================================================================
+       SECTION 6: MINT CTA BANNER (START WITH THE MODULE THAT HURTS MOST)
+       CRISP RAZOR-SHARP HEADINGS & ENTRANCE FROM RIGHT SIDE
+       ========================================================================== */
+    .cta-banner-wrap {
+      padding: 20px 24px 100px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      overflow-x: clip;
+    }
+
+    .cta-banner-container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    .cta-banner-wrap .cta-mint-banner-card {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateX(100px);
+      filter: none !important;
+      will-change: transform, opacity;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    @keyframes ctaCardRightSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateX(100px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .cta-banner-wrap.in-view .cta-mint-banner-card {
+      animation: ctaCardRightSlideIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+    }
+
+    .cta-mint-banner-card.animation-done {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+    }
+
+    .cta-banner-heading {
+      font-size: 38px;
+      font-weight: 900;
+      line-height: 1.15;
+      color: #0b263d;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      margin: 0;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: "kern" 1;
+      font-kerning: normal;
+      filter: none !important;
+      transform: none !important;
+    }
+
+    @media (max-width: 860px) {
+      .cta-mint-banner-card {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 28px;
+      }
+      .cta-banner-left {
+        text-align: center;
+        max-width: 100%;
+      }
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 980px) {
+      .contact-navbar-pill {
+        padding: 8px 16px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .contact-brand-link {
+        margin-right: auto;
+      }
+      .contact-nav-actions {
+        margin-left: auto;
+      }
+      .contact-nav-actions .btn-pill-signin,
+      .contact-nav-actions .btn-pill-signup,
+      #navSignIn,
+      #navSignUp {
+        display: none !important;
+      }
+      .contact-mobile-btn {
+        display: flex !important;
+      }
+      .contact-nav-links {
+        display: none !important;
+      }
+      .contact-hero-container,
+      .contact-form-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .contact-channels-grid,
+      .offices-grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .contact-hero-title {
+        font-size: 42px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .contact-header-wrap {
+        padding: 12px 14px;
+      }
+      .contact-navbar-pill {
+        padding: 6px 14px;
+      }
+      .contact-brand-img {
+        height: 36px;
+      }
+      .contact-hero-section {
+        padding: 100px 16px 30px;
+      }
+      .contact-hero-title {
+        font-size: 32px;
+      }
+      .section-heading-lg,
+      .offices-section-heading,
+      .faq-section-heading {
+        font-size: 30px;
+      }
+      .contact-form-card {
+        padding: 28px 22px;
+      }
+      .faq-card-pill {
+        padding: 20px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Preloader for brand consistency -->
+  <div id="preloader" class="preloader" aria-label="Loading Stackly">
+    <div class="preloader-curtain curtain-left"></div>
+    <div class="preloader-curtain curtain-right"></div>
+    <div class="preloader-inner">
+      <div class="preloader-logo-wrap">
+        <span class="preloader-text-part part-left">STACK</span>
+        <span class="preloader-text-part part-right">LY</span>
+      </div>
+      <div class="preloader-caption-wrap">
+        <span class="preloader-caption-part part-left">SUPPLY CHAIN</span>
+        <span class="preloader-caption-part part-right">MANAGEMENT</span>
+      </div>
+      <div class="preloader-bar-wrap">
+        <div class="preloader-bar-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIXED FLOATING PILL NAVBAR -->
+  <header class="contact-header-wrap" id="siteHeader">
+    <nav class="contact-navbar-pill" aria-label="Main Navigation">
+      <!-- Stackly Logo from assets (transparent, directly from assets) -->
+      <a href="index.html" class="contact-brand-link" aria-label="Stackly Home">
+        <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="contact-brand-img">
+      </a>
+
+      <!-- Center Navigation Links -->
+      <ul class="contact-nav-links">
+        <li class="contact-nav-item"><a href="index.html">Home</a></li>
+        <li class="contact-nav-item"><a href="services.html">Services</a></li>
+        <li class="contact-nav-item"><a href="about.html">About</a></li>
+        <li class="contact-nav-item"><a href="blog.html">Blog</a></li>
+        <li class="contact-nav-item"><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+
+      <!-- Right Action Buttons -->
+      <div class="contact-nav-actions">
+        <a href="login.html" class="btn-pill-signin" id="navSignIn">Sign in</a>
+        <a href="signup.html" class="btn-pill-signup" id="navSignUp">Sign up</a>
+        <button class="contact-mobile-btn" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer: Full-Screen Overlay with Top Header -->
+    <div class="contact-mobile-drawer mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
+      <div class="mobile-drawer-header">
+        <a href="index.html" class="mobile-drawer-logo" aria-label="Stackly Home">
+          <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="mobile-drawer-logo-img">
+        </a>
+        <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close navigation menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="mobile-drawer-body">
+        <ul class="mobile-drawer-links">
+          <li><a href="index.html" class="mobile-drawer-link">Home</a></li>
+          <li><a href="services.html" class="mobile-drawer-link">Services</a></li>
+          <li><a href="about.html" class="mobile-drawer-link">About</a></li>
+          <li><a href="blog.html" class="mobile-drawer-link">Blog</a></li>
+          <li><a href="contact.html" class="mobile-drawer-link active">Contact</a></li>
+        </ul>
+        <div class="mobile-drawer-actions">
+          <a href="login.html" class="btn-pill-signin">Sign in</a>
+          <a href="signup.html" class="btn-pill-signup">Sign up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         SECTION 1: HERO & CHANNELS (Screenshot 1)
+         LET'S STACK YOUR SUPPLY chain.
+         ====================================================================== -->
+    <section class="contact-hero-section" id="hero">
+      <div class="contact-hero-container">
+        
+        <!-- Left: Copy & Action CTAs -->
+        <div class="contact-hero-content">
+          <span class="hero-badge-contact">Contact</span>
+          <h1 class="contact-hero-title cta-heading-letters white-heading-replay" id="contactHeroTitle" aria-label="LET'S STACK YOUR SUPPLY chain." title="Click to replay animation">
+            <!-- Line 1: LET'S STACK YOUR -->
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.04s;">L</span>
+              <span class="anim-letter-right" style="--delay: 0.065s;">E</span>
+              <span class="anim-letter-right" style="--delay: 0.09s;">T</span>
+              <span class="anim-letter-right" style="--delay: 0.115s;">'</span>
+              <span class="anim-letter-right" style="--delay: 0.14s;">S</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.175s;">S</span>
+              <span class="anim-letter-right" style="--delay: 0.20s;">T</span>
+              <span class="anim-letter-right" style="--delay: 0.225s;">A</span>
+              <span class="anim-letter-right" style="--delay: 0.25s;">C</span>
+              <span class="anim-letter-right" style="--delay: 0.275s;">K</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.31s;">Y</span>
+              <span class="anim-letter-right" style="--delay: 0.335s;">O</span>
+              <span class="anim-letter-right" style="--delay: 0.36s;">U</span>
+              <span class="anim-letter-right" style="--delay: 0.385s;">R</span>
+            </span>
+            <br>
+            <!-- Line 2: SUPPLY chain. -->
+            <span class="anim-word-unit title-highlight-teal">
+              <span class="anim-letter-right" style="--delay: 0.425s;">S</span>
+              <span class="anim-letter-right" style="--delay: 0.45s;">U</span>
+              <span class="anim-letter-right" style="--delay: 0.475s;">P</span>
+              <span class="anim-letter-right" style="--delay: 0.50s;">P</span>
+              <span class="anim-letter-right" style="--delay: 0.525s;">L</span>
+              <span class="anim-letter-right" style="--delay: 0.55s;">Y</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit title-highlight-script">
+              <span class="anim-letter-right" style="--delay: 0.59s;">c</span>
+              <span class="anim-letter-right" style="--delay: 0.615s;">h</span>
+              <span class="anim-letter-right" style="--delay: 0.64s;">a</span>
+              <span class="anim-letter-right" style="--delay: 0.665s;">i</span>
+              <span class="anim-letter-right" style="--delay: 0.69s;">n</span>
+              <span class="anim-letter-right" style="--delay: 0.715s;">.</span>
+            </span>
+          </h1>
+          <p class="contact-hero-desc">
+            Tell us where the friction is. A logistics analyst replies within one working day with a plan, not a sales script.
+          </p>
+          <div class="contact-hero-cta-group">
+            <a href="404.html" class="btn-hero-message">
+              <span>Send a message</span>
+            </a>
+            <a href="404.html" class="btn-hero-call">Call us</a>
+          </div>
+        </div>
+
+        <!-- Right: Visual Collaboration Card with Diagonal Separation & Join -->
+        <div class="contact-hero-visual-card" id="contactHeroVisualCard" title="Click to replay animation">
+          <!-- Top-Left Diagonal Half -->
+          <div class="diagonal-slice slice-top">
+            <img 
+              src="assets/about_dock_team.webp" 
+              alt="Stackly Logistics Operations Team" 
+              class="contact-hero-visual-img"
+            >
+          </div>
+          <!-- Bottom-Right Diagonal Half -->
+          <div class="diagonal-slice slice-bottom">
+            <img 
+              src="assets/about_dock_team.webp" 
+              alt="Stackly Logistics Operations Team" 
+              class="contact-hero-visual-img"
+            >
+          </div>
+          <!-- Diagonal Seam Glow -->
+          <svg class="diagonal-seam-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="contactDiagGlow" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#72caa7" stop-opacity="0" />
+                <stop offset="25%" stop-color="#72caa7" stop-opacity="0.85" />
+                <stop offset="50%" stop-color="#ffffff" stop-opacity="1" />
+                <stop offset="75%" stop-color="#72caa7" stop-opacity="0.85" />
+                <stop offset="100%" stop-color="#72caa7" stop-opacity="0" />
+              </linearGradient>
+            </defs>
+            <line x1="0" y1="100" x2="100" y2="0" stroke="url(#contactDiagGlow)" stroke-width="1.8" />
+          </svg>
+        </div>
+
+      </div>
+
+      <!-- 3 White Contact Channel Cards (Shuffle & Arrange on Hover) -->
+      <div class="contact-channels-grid" id="contactChannelsGrid">
+        
+        <!-- Card 1: Email (Material Icon: mail) -->
+        <div class="channel-card card-channel-1" data-channel="email" title="Click to shuffle cards">
+          <div class="channel-icon-wrap" aria-hidden="true">
+            <svg class="channel-icon-svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+          </div>
+          <h3 class="channel-title">Email</h3>
+          <p class="channel-line">hello@stackly.com</p>
+          <p class="channel-line">support@stackly.com</p>
+        </div>
+
+        <!-- Card 2: Phone (Material Icon: call / phone) -->
+        <div class="channel-card card-channel-2" data-channel="phone" title="Click to shuffle cards">
+          <div class="channel-icon-wrap" aria-hidden="true">
+            <svg class="channel-icon-svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1.12z"/>
+            </svg>
+          </div>
+          <h3 class="channel-title">Phone</h3>
+          <p class="channel-line">+1 (415) 555-0142</p>
+          <p class="channel-line">Mon–Fri, 8:00–18:00 CET</p>
+        </div>
+
+        <!-- Card 3: Headquarters (Material Icon: business / corporate_fare) -->
+        <div class="channel-card card-channel-3" data-channel="headquarters" title="Click to shuffle cards">
+          <div class="channel-icon-wrap" aria-hidden="true">
+            <svg class="channel-icon-svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
+            </svg>
+          </div>
+          <h3 class="channel-title">Headquarters</h3>
+          <p class="channel-line">MMR Complex, Chinna Thirupathi, Salem,</p>
+          <p class="channel-line">Tamil Nadu 636008</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 2: SEND A MESSAGE (Screenshot 2)
+         TELL US WHAT IS NOT MOVING.
+         ====================================================================== -->
+    <section class="contact-form-section" id="form-section">
+      <div class="contact-form-container">
+        
+        <!-- Left: Copy & Meta details -->
+        <div class="contact-form-left">
+          <span class="section-eyebrow">SEND A MESSAGE</span>
+          <h2 class="contact-form-heading cta-heading-letters white-heading-replay" id="formSectionHeading" aria-label="TELL US WHAT IS NOT MOVING." title="Click to replay animation">
+            <!-- Word 1: TELL -->
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.04s;">T</span>
+              <span class="anim-letter-right" style="--delay: 0.065s;">E</span>
+              <span class="anim-letter-right" style="--delay: 0.09s;">L</span>
+              <span class="anim-letter-right" style="--delay: 0.115s;">L</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <!-- Word 2: US -->
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.145s;">U</span>
+              <span class="anim-letter-right" style="--delay: 0.17s;">S</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <!-- Word 3: WHAT -->
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.20s;">W</span>
+              <span class="anim-letter-right" style="--delay: 0.225s;">H</span>
+              <span class="anim-letter-right" style="--delay: 0.25s;">A</span>
+              <span class="anim-letter-right" style="--delay: 0.275s;">T</span>
+            </span>
+            <br>
+            <!-- Word 4: IS -->
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.305s;">I</span>
+              <span class="anim-letter-right" style="--delay: 0.33s;">S</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <!-- Word 5: NOT -->
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.36s;">N</span>
+              <span class="anim-letter-right" style="--delay: 0.385s;">O</span>
+              <span class="anim-letter-right" style="--delay: 0.41s;">T</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <!-- Word 6: MOVING. -->
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.44s;">M</span>
+              <span class="anim-letter-right" style="--delay: 0.465s;">O</span>
+              <span class="anim-letter-right" style="--delay: 0.49s;">V</span>
+              <span class="anim-letter-right" style="--delay: 0.515s;">I</span>
+              <span class="anim-letter-right" style="--delay: 0.54s;">N</span>
+              <span class="anim-letter-right" style="--delay: 0.565s;">G</span>
+              <span class="anim-letter-right" style="--delay: 0.59s;">.</span>
+            </span>
+          </h2>
+          <p class="contact-form-desc">
+            Share a few details and we will match you with the analyst who knows your lane, carrier or warehouse system best.
+          </p>
+
+          <div class="meta-contact-block">
+            <div class="meta-contact-item">
+              <span class="meta-label">RESPONSE TIME</span>
+              <span class="meta-val">Within one working day</span>
+            </div>
+            <div class="meta-contact-item">
+              <span class="meta-label">SALES</span>
+              <span class="meta-val"><a href="mailto:sales@stackly.com">sales@stackly.com</a></span>
+            </div>
+            <div class="meta-contact-item">
+              <span class="meta-label">PRESS</span>
+              <span class="meta-val"><a href="mailto:press@stackly.com">press@stackly.com</a></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Clean White Form Card (Enters from Left Downside) -->
+        <div class="contact-form-card" id="contactFormCard" title="Click to replay card entrance">
+          <form id="contactForm" novalidate>
+            
+            <div class="form-group">
+              <label for="contactName" class="form-label">Name</label>
+              <input 
+                type="text" 
+                id="contactName" 
+                name="name" 
+                class="form-input-pill" 
+                placeholder="Your full name"
+                autocomplete="name"
+              >
+              <div class="field-error-msg" id="nameError">Please enter the name</div>
+            </div>
+
+            <div class="form-group">
+              <label for="contactEmail" class="form-label">Work email</label>
+              <input 
+                type="email" 
+                id="contactEmail" 
+                name="email" 
+                class="form-input-pill" 
+                placeholder="you@company.com"
+                autocomplete="email"
+              >
+              <div class="field-error-msg" id="emailError">Please enter the work email</div>
+            </div>
+
+            <div class="form-group">
+              <label id="labelContactNeed" class="form-label">What do you need most?</label>
+              <!-- Custom Dropdown (No HTML <select>) -->
+              <div class="custom-select-wrap" id="customSelectNeed">
+                <button 
+                  type="button" 
+                  class="custom-select-trigger" 
+                  id="customSelectTrigger" 
+                  aria-haspopup="listbox" 
+                  aria-expanded="false"
+                  aria-labelledby="labelContactNeed customSelectTrigger"
+                >
+                  <span class="custom-select-value" id="customSelectValue">Shipment visibility</span>
+                  <svg class="custom-select-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <ul class="custom-select-options" id="customSelectOptions" role="listbox" aria-labelledby="labelContactNeed">
+                  <li class="custom-select-option selected" role="option" data-value="visibility" aria-selected="true" tabindex="0">
+                    <span>Shipment visibility</span>
+                    <svg class="option-check-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </li>
+                  <li class="custom-select-option" role="option" data-value="inventory" aria-selected="false" tabindex="0">
+                    <span>Inventory control</span>
+                    <svg class="option-check-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </li>
+                  <li class="custom-select-option" role="option" data-value="forecasting" aria-selected="false" tabindex="0">
+                    <span>Demand forecasting</span>
+                    <svg class="option-check-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </li>
+                  <li class="custom-select-option" role="option" data-value="supplier" aria-selected="false" tabindex="0">
+                    <span>Supplier management</span>
+                    <svg class="option-check-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </li>
+                  <li class="custom-select-option" role="option" data-value="risk" aria-selected="false" tabindex="0">
+                    <span>Risk alerts</span>
+                    <svg class="option-check-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </li>
+                  <li class="custom-select-option" role="option" data-value="audit" aria-selected="false" tabindex="0">
+                    <span>Freight audit</span>
+                    <svg class="option-check-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </li>
+                </ul>
+                <input type="hidden" name="need" id="contactNeedHidden" value="visibility">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="contactMessage" class="form-label">Message</label>
+              <textarea 
+                id="contactMessage" 
+                name="message" 
+                class="form-textarea-pill" 
+                placeholder="Tell us about your lanes, ERP, or current operational bottleneck..."
+              ></textarea>
+              <div class="field-error-msg" id="messageError">Please enter the message</div>
+            </div>
+
+            <button type="submit" class="btn-send-message" id="btnSendMessage">
+              <span>Send message</span>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 3: SALEM HEADQUARTERS MAP (Screenshot 3)
+         ====================================================================== -->
+    <section class="map-section" id="find-us">
+      <div class="map-container">
+        
+        <div class="map-header-row">
+          <div>
+            <span class="section-eyebrow">FIND US</span>
+            <h2 class="map-section-heading cta-heading-letters white-heading-replay" id="mapSectionHeading" aria-label="SALEM HEADQUARTERS." title="Click to replay animation">
+              <!-- Word 1: SALEM -->
+              <span class="anim-word-unit">
+                <span class="anim-letter-right" style="--delay: 0.04s;">S</span>
+                <span class="anim-letter-right" style="--delay: 0.065s;">A</span>
+                <span class="anim-letter-right" style="--delay: 0.09s;">L</span>
+                <span class="anim-letter-right" style="--delay: 0.115s;">E</span>
+                <span class="anim-letter-right" style="--delay: 0.14s;">M</span>
+              </span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <!-- Word 2: HEADQUARTERS. -->
+              <span class="anim-word-unit">
+                <span class="anim-letter-right" style="--delay: 0.175s;">H</span>
+                <span class="anim-letter-right" style="--delay: 0.20s;">E</span>
+                <span class="anim-letter-right" style="--delay: 0.225s;">A</span>
+                <span class="anim-letter-right" style="--delay: 0.25s;">D</span>
+                <span class="anim-letter-right" style="--delay: 0.275s;">Q</span>
+                <span class="anim-letter-right" style="--delay: 0.30s;">U</span>
+                <span class="anim-letter-right" style="--delay: 0.325s;">A</span>
+                <span class="anim-letter-right" style="--delay: 0.35s;">R</span>
+                <span class="anim-letter-right" style="--delay: 0.375s;">T</span>
+                <span class="anim-letter-right" style="--delay: 0.40s;">E</span>
+                <span class="anim-letter-right" style="--delay: 0.425s;">R</span>
+                <span class="anim-letter-right" style="--delay: 0.45s;">S</span>
+                <span class="anim-letter-right" style="--delay: 0.475s;">.</span>
+              </span>
+            </h2>
+          </div>
+          <p class="map-subtext">Drop your map embed into the placeholder below.</p>
+        </div>
+
+        <div class="map-card-outer" id="mapCardOuter" title="Click map to return to Stackly Home">
+          <!-- Click Overlay to Home Page -->
+          <a href="index.html" class="map-click-overlay" aria-label="Open Salem Headquarters Map (Navigate to Home)"></a>
+
+          <!-- Top Black Address Bar matching Screenshot 3 -->
+          <div class="map-top-address-bar">
+            10, Begur - Koppa Rd, Suraksha nagar, Yelenahalli, Akshayanagar, Bengaluru, Karnataka 560114, India
+          </div>
+
+          <!-- Embedded Map View in iframe (retained as requested) -->
+          <div class="map-visual-wrap">
+            <iframe 
+              class="map-iframe-embed" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15557.06554562143!2d77.6105!3d12.8718!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae6b34e44f80eb%3A0x86134b3f88574a44!2sBegur%20-%20Koppa%20Rd%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Stackly Salem / South India Hub Map Location"
+            ></iframe>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 4: THREE OFFICES (Screenshot 4)
+         THREE OFFICES, ONE NETWORK.
+         ====================================================================== -->
+    <section class="offices-section" id="offices">
+      <div class="offices-container">
+        
+        <div class="offices-header-row">
+          <div>
+            <span class="section-eyebrow">OFFICES</span>
+            <h2 class="offices-section-heading cta-heading-letters white-heading-replay" id="officesHeading" aria-label="THREE OFFICES, ONE NETWORK." title="Click to replay animation">
+              <!-- Word 1: THREE -->
+              <span class="anim-word-unit">
+                <span class="anim-letter-right" style="--delay: 0.04s;">T</span>
+                <span class="anim-letter-right" style="--delay: 0.065s;">H</span>
+                <span class="anim-letter-right" style="--delay: 0.09s;">R</span>
+                <span class="anim-letter-right" style="--delay: 0.115s;">E</span>
+                <span class="anim-letter-right" style="--delay: 0.14s;">E</span>
+              </span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <!-- Word 2: OFFICES, -->
+              <span class="anim-word-unit">
+                <span class="anim-letter-right" style="--delay: 0.175s;">O</span>
+                <span class="anim-letter-right" style="--delay: 0.20s;">F</span>
+                <span class="anim-letter-right" style="--delay: 0.225s;">F</span>
+                <span class="anim-letter-right" style="--delay: 0.25s;">I</span>
+                <span class="anim-letter-right" style="--delay: 0.275s;">C</span>
+                <span class="anim-letter-right" style="--delay: 0.30s;">E</span>
+                <span class="anim-letter-right" style="--delay: 0.325s;">S</span>
+                <span class="anim-letter-right" style="--delay: 0.35s;">,</span>
+              </span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <!-- Word 3: ONE -->
+              <span class="anim-word-unit">
+                <span class="anim-letter-right" style="--delay: 0.385s;">O</span>
+                <span class="anim-letter-right" style="--delay: 0.41s;">N</span>
+                <span class="anim-letter-right" style="--delay: 0.435s;">E</span>
+              </span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <!-- Word 4: NETWORK. -->
+              <span class="anim-word-unit">
+                <span class="anim-letter-right" style="--delay: 0.47s;">N</span>
+                <span class="anim-letter-right" style="--delay: 0.495s;">E</span>
+                <span class="anim-letter-right" style="--delay: 0.52s;">T</span>
+                <span class="anim-letter-right" style="--delay: 0.545s;">W</span>
+                <span class="anim-letter-right" style="--delay: 0.57s;">O</span>
+                <span class="anim-letter-right" style="--delay: 0.595s;">R</span>
+                <span class="anim-letter-right" style="--delay: 0.62s;">K</span>
+                <span class="anim-letter-right" style="--delay: 0.645s;">.</span>
+              </span>
+            </h2>
+          </div>
+          <p class="offices-subtext">Visit us at any of our locations.</p>
+        </div>
+
+        <div class="offices-grid-3">
+          
+          <!-- Office 1: Salem Headquarters (Enters from downside, relevant modern building) -->
+          <div class="office-card" id="officeCardSalem">
+            <div class="office-img-wrap">
+              <img 
+                src="assets/salem_hq_building.jpg" 
+                onerror="this.src='assets/hero_warehouse_hd.jpg';"
+                alt="Stackly Headquarters Salem Modern Campus Facility" 
+                class="office-img"
+              >
+            </div>
+            <h3 class="office-title">Headquarters &middot; Salem</h3>
+            <p class="office-address">
+              MMR Complex, Chinna Thirupathi,<br>
+              near Chinna Muniyappan Kovil,<br>
+              Salem, Tamil Nadu 636008
+            </p>
+          </div>
+
+          <!-- Office 2: Bengaluru Branch Office (Enters from upside, modern workstation) -->
+          <div class="office-card" id="officeCardBengaluru">
+            <div class="office-img-wrap">
+              <img 
+                src="assets/service_demand_forecasting.webp" 
+                alt="Stackly Bengaluru Branch Office Workspace" 
+                class="office-img"
+              >
+            </div>
+            <h3 class="office-title">Bengaluru Branch Office</h3>
+            <p class="office-address">
+              Evolve Studio, 4th Floor,<br>
+              Khata No 10, Begur - Koppa Rd,<br>
+              in front of SNN Raj Serenity,<br>
+              Suraksha Nagar, Yelenahalli, Begur,<br>
+              Bengaluru, Karnataka - 560068
+            </p>
+          </div>
+
+          <!-- Office 3: Hyderabad Phase II Branch Office (Enters from downside, modern corporate tech tower) -->
+          <div class="office-card" id="officeCardHyderabad">
+            <div class="office-img-wrap">
+              <img 
+                src="assets/hyderabad_tech_tower.jpg" 
+                onerror="this.src='assets/meridian_tech.webp';"
+                alt="Stackly Hyderabad Phase II Modern Technology Tower Branch" 
+                class="office-img"
+              >
+            </div>
+            <h3 class="office-title">Hyderabad Phase II Branch Office</h3>
+            <p class="office-address">
+              4th floor, R.R. Towers,<br>
+              Plot No. 188 &amp; 189,<br>
+              Kavuri Hills, Madhapur,<br>
+              Hyderabad &ndash; 500033
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 5: QUICK ANSWERS (Screenshot 5)
+         QUICK ANSWERS.
+         ====================================================================== -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        
+        <div class="faq-header-wrap">
+          <span class="section-eyebrow">FAQ</span>
+          <h2 class="faq-section-heading cta-heading-letters white-heading-replay" id="faqHeading" aria-label="QUICK ANSWERS." title="Click to replay animation">
+            <!-- Word 1: QUICK -->
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.04s;">Q</span>
+              <span class="anim-letter-right" style="--delay: 0.065s;">U</span>
+              <span class="anim-letter-right" style="--delay: 0.09s;">I</span>
+              <span class="anim-letter-right" style="--delay: 0.115s;">C</span>
+              <span class="anim-letter-right" style="--delay: 0.14s;">K</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <!-- Word 2: ANSWERS. -->
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.175s;">A</span>
+              <span class="anim-letter-right" style="--delay: 0.20s;">N</span>
+              <span class="anim-letter-right" style="--delay: 0.225s;">S</span>
+              <span class="anim-letter-right" style="--delay: 0.25s;">W</span>
+              <span class="anim-letter-right" style="--delay: 0.275s;">E</span>
+              <span class="anim-letter-right" style="--delay: 0.30s;">R</span>
+              <span class="anim-letter-right" style="--delay: 0.325s;">S</span>
+              <span class="anim-letter-right" style="--delay: 0.35s;">.</span>
+            </span>
+          </h2>
+        </div>
+
+        <div class="faq-list-wrap">
+          
+          <!-- FAQ 1 (Enters from Left side) -->
+          <div class="faq-card-pill" id="faqCard1">
+            <h3 class="faq-question-title">
+              <span class="faq-question-dot" aria-hidden="true"></span>
+              <span>Who will reply to me?</span>
+            </h3>
+            <p class="faq-answer-desc">
+              A logistics analyst, not a sales bot. They will read your message before they write back.
+            </p>
+          </div>
+
+          <!-- FAQ 2 (Enters from Right side) -->
+          <div class="faq-card-pill" id="faqCard2">
+            <h3 class="faq-question-title">
+              <span class="faq-question-dot" aria-hidden="true"></span>
+              <span>Can I book a live demo?</span>
+            </h3>
+            <p class="faq-answer-desc">
+              Yes. Pick a slot in the message and we will send a calendar invite.
+            </p>
+          </div>
+
+          <!-- FAQ 3 (Enters from Left side) -->
+          <div class="faq-card-pill" id="faqCard3">
+            <h3 class="faq-question-title">
+              <span class="faq-question-dot" aria-hidden="true"></span>
+              <span>Do you offer support in other languages?</span>
+            </h3>
+            <p class="faq-answer-desc">
+              Our team supports English, German, Spanish and Mandarin.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 6: MINT CTA BANNER
+         START WITH THE MODULE THAT HURTS MOST.
+         ====================================================================== -->
+    <section class="cta-banner-wrap" id="cta-banner">
+      <div class="cta-banner-container">
+        <div class="cta-mint-banner-card cta-card-from-right" id="ctaBannerCard">
+          <div class="cta-banner-left">
+            <h2 class="cta-banner-heading" id="ctaBannerHeading" title="Click to replay animation">
+              START WITH THE MODULE THAT HURTS MOST.
+            </h2>
+            <p class="cta-banner-subtext">14 days free. No card required.</p>
+          </div>
+          <a href="signup.html" class="btn-cta-banner" id="btnStartWithStackly" aria-label="Start with Stackly">
+            <span>Start with Stackly</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================================================================
+       FOOTER: Same Comprehensive 4-Column Footer from Homepage
+       ====================================================================== -->
+  <footer class="site-footer" id="siteFooter">
+    <div class="container">
+      <div class="footer-grid-4">
+        
+        <!-- Col 1: Brand & Caption (NO white background box on logo, directly from assets) -->
+        <div class="footer-brand-col">
+          <a href="index.html" class="footer-logo-wrap" aria-label="Stackly Home">
+            <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="footer-logo-img">
+          </a>
+          <p class="footer-caption">
+            Stackly connects suppliers, warehouses, carriers and stores in one unified live view, so planners spot disruptions before they impact shelves.
+          </p>
+          <div class="footer-social-row">
+            <!-- 1. Twitter / X -->
+            <a href="404.html" class="social-icon-btn" aria-label="Twitter X">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <!-- 2. LinkedIn -->
+            <a href="404.html" class="social-icon-btn" aria-label="LinkedIn">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <!-- 3. YouTube -->
+            <a href="404.html" class="social-icon-btn" aria-label="YouTube">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <!-- 4. GitHub -->
+            <a href="404.html" class="social-icon-btn" aria-label="GitHub">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-nav-list">
+            <li class="footer-nav-item"><a href="index.html">Home</a></li>
+            <li class="footer-nav-item"><a href="services.html">Services</a></li>
+            <li class="footer-nav-item"><a href="about.html">About</a></li>
+            <li class="footer-nav-item"><a href="blog.html">Blog</a></li>
+            <li class="footer-nav-item"><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Platform Solutions -->
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title">Platform Solutions</h4>
+          <ul class="footer-nav-list">
+            <li class="footer-nav-item"><a href="services.html#modules">Shipment Visibility</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Inventory Control</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Demand Forecasting</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Supplier Management</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Risk Alerts</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Freight Audit</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Stackly Salem Address -->
+        <div class="footer-address-col">
+          <h4 class="footer-col-title">Salem Headquarters</h4>
+          <div class="footer-address-card">
+            <div class="address-company">Stackly Technologies Hub</div>
+            <p class="address-text">
+              124/B Heritage Enclave, Cherry Road,<br>
+              Hasthampatti, Salem,<br>
+              Tamil Nadu 636007, India.
+            </p>
+            <div class="address-contact-item">
+              <span>Phone:</span>
+              <span style="color:#ffffff;">+91 427 244 8900</span>
+            </div>
+            <div class="address-contact-item">
+              <span>Mobile:</span>
+              <span style="color:#ffffff;">+91 98427 12345</span>
+            </div>
+            <div class="address-contact-item">
+              <span>Email:</span>
+              <span style="color:#ffffff;">support@stackly.com</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Legal Row -->
+      <div class="footer-bottom-bar">
+        <span class="footer-copyright">&copy; 2026 Stackly Technologies Inc. All rights reserved.</span>
+        <div class="footer-legal-links">
+          <a href="404.html">Privacy Policy</a>
+          <a href="404.html">Terms of Service</a>
+          <a href="404.html">Security Protocol</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    (function() {
+      // Fixed navbar header background on scroll
+      var header = document.getElementById('siteHeader');
+      if (header) {
+        var handleHeaderScroll = function() {
+          if (window.scrollY > 8) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
+        };
+        window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+        handleHeaderScroll();
+      }
+
+
+      // Hero Section In-View Entrance & Replay Handler
+      var contactHero = document.getElementById('hero');
+      if (contactHero) {
+        var triggerHeroEntrance = function() {
+          contactHero.classList.remove('in-view');
+          void contactHero.offsetWidth; // trigger reflow
+          contactHero.classList.add('in-view');
+        };
+
+        if (document.body.classList.contains('loaded') || document.documentElement.classList.contains('no-preloader')) {
+          triggerHeroEntrance();
+        } else {
+          window.addEventListener('load', function() {
+            setTimeout(triggerHeroEntrance, 480);
+          });
+          setTimeout(triggerHeroEntrance, 780);
+        }
+
+        var heroTitle = document.getElementById('contactHeroTitle');
+        if (heroTitle) {
+          heroTitle.addEventListener('click', triggerHeroEntrance);
+        }
+
+        var visualCard = document.getElementById('contactHeroVisualCard');
+        if (visualCard) {
+          visualCard.addEventListener('click', triggerHeroEntrance);
+        }
+      }
+
+      // 3 Contact Channels Cards Hover Shuffle & Click Arrange Handler
+      var channelsGrid = document.getElementById('contactChannelsGrid');
+      if (channelsGrid) {
+        channelsGrid.addEventListener('mouseenter', function() {
+          channelsGrid.classList.add('is-shuffled');
+        });
+
+        channelsGrid.addEventListener('mouseleave', function() {
+          channelsGrid.classList.remove('is-shuffled');
+        });
+
+        // Click on grid or cards toggles and replays shuffle
+        channelsGrid.addEventListener('click', function() {
+          channelsGrid.classList.remove('is-shuffled');
+          void channelsGrid.offsetWidth; // trigger reflow
+          channelsGrid.classList.add('is-shuffled');
+        });
+      }
+
+      // ======================================================================
+      // SECTION 2: FORM SECTION ENTRANCE & REPLAY
+      // ======================================================================
+      var formSec = document.getElementById('form-section');
+      if (formSec) {
+        var triggerFormEntrance = function() {
+          formSec.classList.remove('in-view');
+          void formSec.offsetWidth; // trigger reflow
+          formSec.classList.add('in-view');
+        };
+
+        if ('IntersectionObserver' in window) {
+          var formObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                formSec.classList.add('in-view');
+                formObs.unobserve(formSec);
+              }
+            });
+          }, { threshold: 0.12 });
+          formObs.observe(formSec);
+        } else {
+          formSec.classList.add('in-view');
+        }
+
+        var formHeading = document.getElementById('formSectionHeading');
+        if (formHeading) {
+          formHeading.addEventListener('click', triggerFormEntrance);
+        }
+
+        var formCard = document.getElementById('contactFormCard');
+        if (formCard) {
+          formCard.addEventListener('click', function(e) {
+            if (e.target === formCard) {
+              triggerFormEntrance();
+            }
+          });
+        }
+      }
+
+      // ======================================================================
+      // CUSTOM DROPDOWN COMPONENT (No HTML <select>)
+      // ======================================================================
+      var selectWrap = document.getElementById('customSelectNeed');
+      var selectTrigger = document.getElementById('customSelectTrigger');
+      var selectValue = document.getElementById('customSelectValue');
+      var selectOptions = document.getElementById('customSelectOptions');
+      var selectHidden = document.getElementById('contactNeedHidden');
+
+      if (selectWrap && selectTrigger && selectOptions) {
+        var toggleDropdown = function(openState) {
+          var isOpen = typeof openState === 'boolean' ? openState : !selectWrap.classList.contains('open');
+          if (isOpen) {
+            selectWrap.classList.add('open');
+            selectTrigger.setAttribute('aria-expanded', 'true');
+          } else {
+            selectWrap.classList.remove('open');
+            selectTrigger.setAttribute('aria-expanded', 'false');
+          }
+        };
+
+        selectTrigger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          toggleDropdown();
+        });
+
+        var options = selectOptions.querySelectorAll('.custom-select-option');
+        options.forEach(function(opt) {
+          opt.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var val = opt.getAttribute('data-value');
+            var text = opt.querySelector('span') ? opt.querySelector('span').textContent : opt.textContent;
+
+            options.forEach(function(o) {
+              o.classList.remove('selected');
+              o.setAttribute('aria-selected', 'false');
+            });
+            opt.classList.add('selected');
+            opt.setAttribute('aria-selected', 'true');
+
+            if (selectValue) selectValue.textContent = text;
+            if (selectHidden) selectHidden.value = val;
+
+            toggleDropdown(false);
+            selectTrigger.focus();
+          });
+
+          opt.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              opt.click();
+            }
+          });
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!selectWrap.contains(e.target)) {
+            toggleDropdown(false);
+          }
+        });
+
+        // Close on Esc key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && selectWrap.classList.contains('open')) {
+            toggleDropdown(false);
+            selectTrigger.focus();
+          }
+        });
+      }
+
+      // ======================================================================
+      // INLINE FORM VALIDATION & REDIRECT TO 404 (No Browser Popups!)
+      // ======================================================================
+      var contactForm = document.getElementById('contactForm');
+      if (contactForm) {
+        var nameInput = document.getElementById('contactName');
+        var nameErr = document.getElementById('nameError');
+        var emailInput = document.getElementById('contactEmail');
+        var emailErr = document.getElementById('emailError');
+        var msgInput = document.getElementById('contactMessage');
+        var msgErr = document.getElementById('messageError');
+
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var isValid = true;
+
+          // 1. Validate Name
+          if (!nameInput.value.trim()) {
+            nameInput.classList.add('has-error');
+            nameErr.classList.add('visible');
+            isValid = false;
+          } else {
+            nameInput.classList.remove('has-error');
+            nameErr.classList.remove('visible');
+          }
+
+          // 2. Validate Email
+          var emailVal = emailInput.value.trim();
+          var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailVal) {
+            emailInput.classList.add('has-error');
+            emailErr.textContent = 'Please enter the work email';
+            emailErr.classList.add('visible');
+            isValid = false;
+          } else if (!emailRegex.test(emailVal)) {
+            emailInput.classList.add('has-error');
+            emailErr.textContent = 'Please enter a valid work email address';
+            emailErr.classList.add('visible');
+            isValid = false;
+          } else {
+            emailInput.classList.remove('has-error');
+            emailErr.classList.remove('visible');
+          }
+
+          // 3. Validate Message
+          if (!msgInput.value.trim()) {
+            msgInput.classList.add('has-error');
+            msgErr.classList.add('visible');
+            isValid = false;
+          } else {
+            msgInput.classList.remove('has-error');
+            msgErr.classList.remove('visible');
+          }
+
+          // Focus first invalid field
+          if (!isValid) {
+            if (nameInput.classList.contains('has-error')) {
+              nameInput.focus();
+            } else if (emailInput.classList.contains('has-error')) {
+              emailInput.focus();
+            } else if (msgInput.classList.contains('has-error')) {
+              msgInput.focus();
+            }
+            return;
+          }
+
+          // If valid -> Navigate immediately to 404.html
+          window.location.href = '404.html';
+        });
+
+        // Clear error as user types
+        if (nameInput) {
+          nameInput.addEventListener('input', function() {
+            if (this.value.trim()) {
+              this.classList.remove('has-error');
+              if (nameErr) nameErr.classList.remove('visible');
+            }
+          });
+        }
+
+        if (emailInput) {
+          emailInput.addEventListener('input', function() {
+            if (this.value.trim()) {
+              this.classList.remove('has-error');
+              if (emailErr) emailErr.classList.remove('visible');
+            }
+          });
+        }
+
+        if (msgInput) {
+          msgInput.addEventListener('input', function() {
+            if (this.value.trim()) {
+              this.classList.remove('has-error');
+              if (msgErr) msgErr.classList.remove('visible');
+            }
+          });
+        }
+      }
+
+      // ======================================================================
+      // SECTION 3: MAP SECTION ENTRANCE & HOME NAVIGATION
+      // ======================================================================
+      var mapSec = document.getElementById('find-us');
+      if (mapSec) {
+        var triggerMapEntrance = function() {
+          mapSec.classList.remove('in-view');
+          void mapSec.offsetWidth; // trigger reflow
+          mapSec.classList.add('in-view');
+        };
+
+        if ('IntersectionObserver' in window) {
+          var mapObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                mapSec.classList.add('in-view');
+                mapObs.unobserve(mapSec);
+              }
+            });
+          }, { threshold: 0.12 });
+          mapObs.observe(mapSec);
+        } else {
+          mapSec.classList.add('in-view');
+        }
+
+        var mapHeading = document.getElementById('mapSectionHeading');
+        if (mapHeading) {
+          mapHeading.addEventListener('click', triggerMapEntrance);
+        }
+      }
+
+      var mapCardOuter = document.getElementById('mapCardOuter');
+      if (mapCardOuter) {
+        mapCardOuter.addEventListener('click', function(e) {
+          if (!e.target.closest('a')) {
+            window.location.href = 'index.html';
+          }
+        });
+        mapCardOuter.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            if (!e.target.closest('a')) {
+              e.preventDefault();
+              window.location.href = 'index.html';
+            }
+          }
+        });
+      }
+
+      // ======================================================================
+      // SECTION 4: THREE OFFICES ENTRANCE & REPLAY
+      // ======================================================================
+      var officesSec = document.getElementById('offices');
+      if (officesSec) {
+        var triggerOfficesEntrance = function() {
+          officesSec.classList.remove('in-view');
+          void officesSec.offsetWidth; // trigger reflow
+          officesSec.classList.add('in-view');
+        };
+
+        if ('IntersectionObserver' in window) {
+          var officesObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                officesSec.classList.add('in-view');
+                officesObs.unobserve(officesSec);
+              }
+            });
+          }, { threshold: 0.12 });
+          officesObs.observe(officesSec);
+        } else {
+          officesSec.classList.add('in-view');
+        }
+
+        var officesHeading = document.getElementById('officesHeading');
+        if (officesHeading) {
+          officesHeading.addEventListener('click', triggerOfficesEntrance);
+        }
+      }
+
+      // ======================================================================
+      // SECTION 5: QUICK ANSWERS / FAQ ENTRANCE & REPLAY
+      // ======================================================================
+      var faqSec = document.getElementById('faq');
+      if (faqSec) {
+        var triggerFaqEntrance = function() {
+          faqSec.classList.remove('in-view');
+          void faqSec.offsetWidth; // trigger reflow
+          faqSec.classList.add('in-view');
+        };
+
+        if ('IntersectionObserver' in window) {
+          var faqObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                faqSec.classList.add('in-view');
+                faqObs.unobserve(faqSec);
+              }
+            });
+          }, { threshold: 0.1 });
+          faqObs.observe(faqSec);
+        } else {
+          faqSec.classList.add('in-view');
+        }
+
+        var faqHeading = document.getElementById('faqHeading');
+        if (faqHeading) {
+          faqHeading.addEventListener('click', triggerFaqEntrance);
+        }
+      }
+
+      // ======================================================================
+      // SECTION 6: MINT CTA BANNER ENTRANCE & SIGNUP ROUTING
+      // ======================================================================
+      var ctaWrap = document.getElementById('cta-banner');
+      var ctaCard = document.getElementById('ctaBannerCard');
+      if (ctaWrap) {
+        if (ctaCard) {
+          ctaCard.addEventListener('animationend', function() {
+            ctaCard.classList.add('animation-done');
+          });
+        }
+
+        var triggerCtaEntrance = function() {
+          ctaWrap.classList.remove('in-view');
+          if (ctaCard) ctaCard.classList.remove('animation-done');
+          void ctaWrap.offsetWidth; // trigger reflow
+          ctaWrap.classList.add('in-view');
+        };
+
+        if ('IntersectionObserver' in window) {
+          var ctaObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                ctaWrap.classList.add('in-view');
+                ctaObs.unobserve(ctaWrap);
+              }
+            });
+          }, { threshold: 0.08 });
+          ctaObs.observe(ctaWrap);
+        } else {
+          ctaWrap.classList.add('in-view');
+        }
+
+        var ctaHeading = document.getElementById('ctaBannerHeading');
+        if (ctaHeading) {
+          ctaHeading.addEventListener('click', triggerCtaEntrance);
+        }
+
+        var btnStartWithStackly = document.getElementById('btnStartWithStackly');
+        if (btnStartWithStackly) {
+          btnStartWithStackly.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'signup.html';
+          });
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

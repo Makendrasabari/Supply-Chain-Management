@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stackly | Supply Chain &amp; Logistics Management</title>
+  <meta name="description" content="Every link in your chain, stacked and in sync. Stackly connects suppliers, warehouses, carriers and stores in one live unified view.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/webp" href="assets/stackly_logo.webp">
+</head>
+<body>
+
+  <!-- ======================================================================
+       PRELOADER: Clean Typography Split (STACK / LY) + Equal Supply Chain Caption Split
+       ====================================================================== -->
+  <div id="preloader" class="preloader" aria-label="Loading Stackly">
+    <div class="preloader-curtain curtain-left"></div>
+    <div class="preloader-curtain curtain-right"></div>
+    <div class="preloader-inner">
+      <div class="preloader-logo-wrap">
+        <span class="preloader-text-part part-left">STACK</span>
+        <span class="preloader-text-part part-right">LY</span>
+      </div>
+      <div class="preloader-caption-wrap">
+        <span class="preloader-caption-part part-left">SUPPLY CHAIN</span>
+        <span class="preloader-caption-part part-right">MANAGEMENT</span>
+      </div>
+      <div class="preloader-bar-wrap">
+        <div class="preloader-bar-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       NAVIGATION BAR: Floating Pill Design with Flexible Extended Logo
+       ====================================================================== -->
+  <header class="site-header">
+    <nav class="navbar-pill" id="navbar" aria-label="Main Navigation">
+      <a href="index.html" class="navbar-brand" aria-label="Stackly Home">
+        <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="navbar-logo-img">
+      </a>
+
+      <ul class="nav-links">
+        <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
+        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="navbar-actions">
+        <a href="login.html" class="btn-pill-signin" id="navSignIn">Sign in</a>
+        <a href="signup.html" class="btn-pill-signup" id="navSignUp">Sign up</a>
+        <button class="mobile-menu-btn" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Drawer Navigation: Full-Screen Overlay with Top Header -->
+    <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
+      <div class="mobile-drawer-header">
+        <a href="index.html" class="mobile-drawer-logo" aria-label="Stackly Home">
+          <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="mobile-drawer-logo-img">
+        </a>
+        <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close navigation menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="mobile-drawer-body">
+        <ul class="mobile-drawer-links">
+          <li><a href="index.html" class="mobile-drawer-link active">Home</a></li>
+          <li><a href="services.html" class="mobile-drawer-link">Services</a></li>
+          <li><a href="about.html" class="mobile-drawer-link">About</a></li>
+          <li><a href="blog.html" class="mobile-drawer-link">Blog</a></li>
+          <li><a href="contact.html" class="mobile-drawer-link">Contact</a></li>
+        </ul>
+        <div class="mobile-drawer-actions">
+          <a href="login.html" class="btn-pill-signin">Sign in</a>
+          <a href="signup.html" class="btn-pill-signup">Sign up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ====================================================================
+         SECTION 1: HERO (Screenshot 1)
+         ==================================================================== -->
+    <section class="hero-section" id="hero">
+      <!-- 5-Image Background Carousel (Cycles every 2 seconds, clear & vibrant) -->
+      <div class="hero-bg-carousel" id="heroBgCarousel" aria-hidden="true">
+        <div class="hero-bg-slide active" style="background-image: url('assets/hero_warehouse.webp');"></div>
+        <div class="hero-bg-slide" style="background-image: url('assets/auto_freight.webp');"></div>
+        <div class="hero-bg-slide" style="background-image: url('assets/food_beverage.webp');"></div>
+        <div class="hero-bg-slide" style="background-image: url('assets/pharma_capsules.webp');"></div>
+        <div class="hero-bg-slide" style="background-image: url('assets/retail_store.webp');"></div>
+        <div class="hero-bg-overlay"></div>
+      </div>
+
+      <div class="container hero-container-center">
+        <!-- Centered Hero Content -->
+        <div class="hero-center-content">
+          <div class="hero-badge-pill">
+            4,200 shipments moving right now
+          </div>
+          
+          <h1 class="hero-heading" aria-label="Every link in your chain, stacked and in sync.">
+            <!-- Line 1: White bold words slide in from right one by one -->
+            <span class="heading-line">
+              <span class="anim-word-right" style="--delay: 0.1s;">EVERY</span>
+              <span class="anim-word-right" style="--delay: 0.2s;">LINK</span>
+              <span class="anim-word-right" style="--delay: 0.3s;">IN</span>
+              <span class="anim-word-right" style="--delay: 0.4s;">YOUR</span>
+            </span>
+            <!-- Line 2: White bold words slide in from right one by one -->
+            <span class="heading-line">
+              <span class="anim-word-right" style="--delay: 0.5s;">CHAIN,</span>
+              <span class="anim-word-right" style="--delay: 0.6s;">STACKED</span>
+              <span class="anim-word-right" style="--delay: 0.7s;">AND</span>
+            </span>
+            <!-- Line 3: Bold blue letters slide in from left one by one -->
+            <span class="heading-line">
+              <span class="hero-blue-group">
+                <span class="anim-letter-left" style="--delay: 0.85s;">I</span>
+                <span class="anim-letter-left" style="--delay: 0.92s;">N</span>
+                <span class="script-word">
+                  <span class="anim-letter-left anim-script" style="--delay: 1.00s;">s</span><span class="anim-letter-left anim-script" style="--delay: 1.07s;">y</span><span class="anim-letter-left anim-script" style="--delay: 1.14s;">n</span><span class="anim-letter-left anim-script" style="--delay: 1.21s;">c</span><span class="anim-letter-left anim-script" style="--delay: 1.28s;">.</span>
+                </span>
+              </span>
+            </span>
+          </h1>
+
+          <!-- Subtext lines animated sequentially (line 1 first, line 2 second, line 3 third) -->
+          <div class="hero-subtext-lines">
+            <span class="subtext-line line-1">Stackly connects suppliers, warehouses, carriers and stores</span>
+            <span class="subtext-line line-2">in one live view, so planners spot a delay at the port</span>
+            <span class="subtext-line line-3">before it empties a shelf.</span>
+          </div>
+
+          <!-- Buttons: Start Free Trial from left, Track a Shipment from right, both navigate to 404.html -->
+          <div class="hero-cta-group">
+            <a href="404.html" class="btn-primary-teal hero-btn-trial" id="btnHeroTrial">Start free trial</a>
+            <a href="404.html" class="btn-secondary-white hero-btn-track" id="btnHeroTrack">Track a shipment</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 2: TRUSTED BY & ABOUT STACKLY (Screenshot 2)
+         ==================================================================== -->
+    <section class="about-section" id="about">
+      <div class="container">
+        <!-- Social Proof Pills Row (Clickable to navigate to respective cards) -->
+        <div class="trusted-wrapper">
+          <div class="trusted-label">TRUSTED BY PLANNERS AT</div>
+          <div class="trusted-badges-row">
+            <a href="#case-norvale" class="client-badge-pill" data-target="case-norvale" role="button">Norvale Foods</a>
+            <a href="#case-kestrel" class="client-badge-pill" data-target="case-kestrel" role="button">Kestrel Auto</a>
+            <a href="#case-bluepine" class="client-badge-pill" data-target="case-bluepine" role="button">Bluepine Retail</a>
+            <a href="#case-halden" class="client-badge-pill" data-target="case-halden" role="button">Halden Pharma</a>
+            <a href="#case-meridian" class="client-badge-pill" data-target="case-meridian" role="button">Meridian Tech</a>
+          </div>
+        </div>
+
+        <!-- About Split Content -->
+        <div class="about-grid">
+          <!-- Left Column: About Copy with Staggered Word & Line Animations -->
+          <div class="about-content-col">
+            <span class="section-tag">ABOUT STACKLY</span>
+            <h2 class="section-title about-title" aria-label="Built by people who have run a dock.">
+              <span class="about-title-line">
+                <span class="about-word-right" style="--delay: 0.1s;">BUILT</span>
+                <span class="about-word-right" style="--delay: 0.18s;">BY</span>
+                <span class="about-word-right" style="--delay: 0.26s;">PEOPLE</span>
+                <span class="about-word-right" style="--delay: 0.34s;">WHO</span>
+              </span>
+              <span class="about-title-line">
+                <span class="about-word-right" style="--delay: 0.44s;">HAVE</span>
+                <span class="about-word-right" style="--delay: 0.52s;">RUN</span>
+                <span class="about-word-right" style="--delay: 0.60s;">A</span>
+                <span class="about-word-right" style="--delay: 0.68s;">DOCK.</span>
+              </span>
+            </h2>
+            
+            <!-- Sentence: First line first, second line second smoothly -->
+            <div class="section-desc about-desc-wrapper">
+              <span class="about-desc-line line-1">Stackly sits between your ERP, your carriers and your warehouses,</span>
+              <span class="about-desc-line line-2">and turns their separate feeds into a single plan.</span>
+            </div>
+
+            <!-- Bullet Points: Both come from left side into position -->
+            <ul class="about-bullets-list">
+              <li class="about-bullet-item bullet-left point-1">
+                <span class="bullet-dot"></span>
+                <span>Connects to SAP, Oracle, NetSuite and EDI in two weeks</span>
+              </li>
+              <li class="about-bullet-item bullet-left point-2">
+                <span class="bullet-dot"></span>
+                <span>A named logistics analyst on every account</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Right Column: Dock Operations Image (Ultra-clear, diagonal separation to respective position) -->
+          <div class="about-image-col">
+            <div class="about-image-container diagonal-split-card" id="aboutImageCard">
+              <div class="diagonal-slice slice-top">
+                <img 
+                  src="assets/about_dock_team.webp" 
+                  alt="Stackly Logistics Operations Analysts Team" 
+                  class="about-image"
+                >
+              </div>
+              <div class="diagonal-seam-glow" aria-hidden="true"></div>
+              <div class="diagonal-slice slice-bottom">
+                <img 
+                  src="assets/about_dock_team.webp" 
+                  alt="Stackly Logistics Operations Analysts Team" 
+                  class="about-image"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 3: SELECTED WORK / CASE STUDIES (Screenshot 3)
+         ==================================================================== -->
+    <section class="cases-section" id="cases">
+      <div class="container">
+        <!-- Header Block: Exactly matches Screenshot 3 layout -->
+        <div class="cases-header-block">
+          <span class="section-tag">SELECTED WORK</span>
+          <h2 class="section-title cases-heading" aria-label="Customers who stopped chasing freight.">
+            <span class="heading-line">CUSTOMERS WHO</span>
+            <span class="heading-line">STOPPED CHASING</span>
+            <span class="heading-line">FREIGHT.</span>
+          </h2>
+          <div class="cases-sub-bar">
+            <span class="section-desc cases-desc">Four teams, four different problems, one shared view.</span>
+            <button type="button" class="btn-cases-view" id="btnViewAllProjects">View all projects</button>
+          </div>
+        </div>
+
+        <!-- 4 Case Study Cards Grid (Interactive Shuffle: Shuffles into 1. Kestrel, 2. Halden, 3. Bluepine, 4. Norvale) -->
+        <div class="cases-cards-grid" id="casesCardsGrid">
+          <!-- Card: Retail (Bluepine) - Initial Slot 1 -> Shuffles to Slot 3 -->
+          <article class="case-card card-bluepine" id="case-bluepine" data-initial-slot="1">
+            <div class="case-image-wrap">
+              <div class="image-wrap-inner">
+                <img 
+                  src="assets/retail_store.webp" 
+                  alt="Bluepine Retail Inventory Fulfillment" 
+                  class="case-image"
+                >
+                <div class="image-wrap-shimmer"></div>
+              </div>
+            </div>
+            <span class="case-category anim-bold-right" style="--bold-delay: 0.35s;">RETAIL</span>
+            <h3 class="case-title anim-bold-right" style="--bold-delay: 0.45s;">Bluepine</h3>
+            <p class="case-impact anim-small-left" style="--small-delay: 0.60s;">Cut stockouts by 31% in 90 days.</p>
+          </article>
+
+          <!-- Card: Food (Norvale) - Initial Slot 2 -> Shuffles to Slot 4 -->
+          <article class="case-card card-norvale" id="case-norvale" data-initial-slot="2">
+            <div class="case-image-wrap">
+              <div class="image-wrap-inner">
+                <img 
+                  src="assets/food_beverage.webp" 
+                  alt="Norvale Cold Beverage Logistics" 
+                  class="case-image"
+                >
+                <div class="image-wrap-shimmer"></div>
+              </div>
+            </div>
+            <span class="case-category anim-bold-right" style="--bold-delay: 0.40s;">FOOD</span>
+            <h3 class="case-title anim-bold-right" style="--bold-delay: 0.50s;">Norvale</h3>
+            <p class="case-impact anim-small-left" style="--small-delay: 0.65s;">Found a port delay days earlier.</p>
+          </article>
+
+          <!-- Card: Auto (Kestrel) - Initial Slot 3 -> Shuffles to Slot 1 -->
+          <article class="case-card card-kestrel" id="case-kestrel" data-initial-slot="3">
+            <div class="case-image-wrap">
+              <div class="image-wrap-inner">
+                <img 
+                  src="assets/auto_freight.webp" 
+                  alt="Kestrel Automotive Rail Container Freight" 
+                  class="case-image"
+                >
+                <div class="image-wrap-shimmer"></div>
+              </div>
+            </div>
+            <span class="case-category anim-bold-right" style="--bold-delay: 0.25s;">AUTO</span>
+            <h3 class="case-title anim-bold-right" style="--bold-delay: 0.35s;">Kestrel</h3>
+            <p class="case-impact anim-small-left" style="--small-delay: 0.50s;">Live in nine days, not nine months.</p>
+          </article>
+
+          <!-- Card: Pharma (Halden) - Initial Slot 4 -> Shuffles to Slot 2 -->
+          <article class="case-card card-halden" id="case-halden" data-initial-slot="4">
+            <div class="case-image-wrap">
+              <div class="image-wrap-inner">
+                <img 
+                  src="assets/pharma_capsules.webp" 
+                  alt="Halden Pharma Temperature Controlled Supply Chain" 
+                  class="case-image"
+                >
+                <div class="image-wrap-shimmer"></div>
+              </div>
+            </div>
+            <span class="case-category anim-bold-right" style="--bold-delay: 0.30s;">PHARMA</span>
+            <h3 class="case-title anim-bold-right" style="--bold-delay: 0.40s;">Halden</h3>
+            <p class="case-impact anim-small-left" style="--small-delay: 0.55s;">Audit-ready temperature tracking.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 4: SERVICES GRID (Screenshot 4)
+         ==================================================================== -->
+    <section class="services-section" id="services">
+      <div class="container">
+        <!-- Header Row -->
+        <div class="services-header-row">
+          <div class="services-header-left">
+            <span class="section-tag">SERVICES</span>
+            <h2 class="section-title">ONE PLATFORM FOR THE WHOLE FLOW.</h2>
+          </div>
+          <div class="services-header-right">
+            <span class="section-desc">Start with the piece that hurts most.</span>
+          </div>
+        </div>
+
+        <!-- 6 Service Cards Grid (3x2: Left/Down/Right Entrances, Background Images, Running Border Light) -->
+        <div class="services-cards-grid" id="servicesCardsGrid">
+          <!-- Card 1: Shipment visibility (Left Column, Row 1 -> Comes from Left) -->
+          <article class="service-card card-from-left" id="service-visibility" style="--delay: 0.15s;">
+            <div class="service-border-beam" aria-hidden="true"></div>
+            <div class="service-card-inner">
+              <div class="service-card-bg" style="background-image: url('assets/service_shipment_visibility.webp');"></div>
+              <div class="service-card-overlay"></div>
+              <div class="service-card-content">
+                <h3 class="service-title">Shipment visibility</h3>
+                <p class="service-description">Live position and ETA for every container and pallet.</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2: Inventory control (Center Column, Row 1 -> Comes from Down) -->
+          <article class="service-card card-from-down" id="service-inventory" style="--delay: 0.25s;">
+            <div class="service-border-beam" aria-hidden="true"></div>
+            <div class="service-card-inner">
+              <div class="service-card-bg" style="background-image: url('assets/service_inventory_control.webp');"></div>
+              <div class="service-card-overlay"></div>
+              <div class="service-card-content">
+                <h3 class="service-title">Inventory control</h3>
+                <p class="service-description">Reorder points and bin counts synced across sites.</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3: Demand forecasting (Right Column, Row 1 -> Comes from Right) -->
+          <article class="service-card card-from-right" id="service-forecasting" style="--delay: 0.35s;">
+            <div class="service-border-beam" aria-hidden="true"></div>
+            <div class="service-card-inner">
+              <div class="service-card-bg" style="background-image: url('assets/service_demand_forecasting.webp');"></div>
+              <div class="service-card-overlay"></div>
+              <div class="service-card-content">
+                <h3 class="service-title">Demand forecasting</h3>
+                <p class="service-description">Weekly SKU forecasts that learn from lead-time drift.</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4: Supplier management (Left Column, Row 2 -> Comes from Left) -->
+          <article class="service-card card-from-left" id="service-suppliers" style="--delay: 0.30s;">
+            <div class="service-border-beam" aria-hidden="true"></div>
+            <div class="service-card-inner">
+              <div class="service-card-bg" style="background-image: url('assets/service_supplier_management.webp');"></div>
+              <div class="service-card-overlay"></div>
+              <div class="service-card-content">
+                <h3 class="service-title">Supplier management</h3>
+                <p class="service-description">Scorecards and alerts when lead times slip.</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 5: Risk alerts (Center Column, Row 2 -> Comes from Down) -->
+          <article class="service-card card-from-down" id="service-risks" style="--delay: 0.40s;">
+            <div class="service-border-beam" aria-hidden="true"></div>
+            <div class="service-card-inner">
+              <div class="service-card-bg" style="background-image: url('assets/service_risk_alerts.webp');"></div>
+              <div class="service-card-overlay"></div>
+              <div class="service-card-content">
+                <h3 class="service-title">Risk alerts</h3>
+                <p class="service-description">Strikes, storms and customs holds matched to open orders.</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 6: Freight audit (Right Column, Row 2 -> Comes from Right) -->
+          <article class="service-card card-from-right" id="service-audit" style="--delay: 0.50s;">
+            <div class="service-border-beam" aria-hidden="true"></div>
+            <div class="service-card-inner">
+              <div class="service-card-bg" style="background-image: url('assets/service_freight_audit.webp');"></div>
+              <div class="service-card-overlay"></div>
+              <div class="service-card-content">
+                <h3 class="service-title">Freight audit</h3>
+                <p class="service-description">Flag duplicate, detention and accessorial charges.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 5: LIVE TRACKING (Screenshot 5)
+         ==================================================================== -->
+    <section class="tracking-section" id="live-tracking">
+      <div class="container">
+        <div class="tracking-card-container">
+          <!-- Left Column Content: Words and lines slide in from left side -->
+          <div class="tracking-left-col">
+            <span class="section-tag section-tag-dark tracking-tag-anim">LIVE TRACKING</span>
+            <h2 class="tracking-title" aria-label="Type a reference. See where it is.">
+              <span class="tracking-title-line">
+                <span class="tracking-word-left" style="--delay: 0.15s;">TYPE</span>
+                <span class="tracking-word-left" style="--delay: 0.23s;">A</span>
+                <span class="tracking-word-left" style="--delay: 0.31s;">REFERENCE.</span>
+              </span>
+              <span class="tracking-title-line">
+                <span class="tracking-word-left" style="--delay: 0.42s;">SEE</span>
+                <span class="tracking-word-left" style="--delay: 0.50s;">WHERE</span>
+                <span class="tracking-word-left" style="--delay: 0.58s;">IT</span>
+                <span class="tracking-word-left" style="--delay: 0.66s;">IS.</span>
+              </span>
+            </h2>
+            <div class="tracking-desc tracking-desc-lines">
+              <span class="tracking-desc-line line-1">Container, PO or bill of lading number.</span>
+              <span class="tracking-desc-line line-2">Stackly shows the last scan, the next stop and</span>
+              <span class="tracking-desc-line line-3">whether it will arrive when promised.</span>
+            </div>
+          </div>
+
+          <!-- Right Column Tracking Widget Card (Enters from Top Side) -->
+          <div class="tracking-right-col">
+            <div class="tracking-widget widget-from-top" id="trackingWidget">
+              <!-- Search Bar: Track navigates to 404 page -->
+              <div class="tracking-search-bar">
+                <input 
+                  type="text" 
+                  class="tracking-input" 
+                  id="trackInput" 
+                  value="STK-4471-MSCU" 
+                  placeholder="Enter reference number..." 
+                  aria-label="Tracking reference number"
+                >
+                <a href="404.html" class="btn-track" id="btnTrack" role="button">Track</a>
+              </div>
+
+              <!-- Milestone Timeline with Live Running Point-to-Point Line -->
+              <div class="tracking-timeline" id="trackingTimeline">
+                <!-- Live Running Directional Track Line -->
+                <div class="timeline-live-track" aria-hidden="true">
+                  <div class="timeline-live-pulse"></div>
+                </div>
+
+                <div class="timeline-step completed">
+                  <span class="step-node"></span>
+                  <span class="step-title">Picked up · Shenzhen</span>
+                  <span class="step-date">12 Sep</span>
+                </div>
+
+                <div class="timeline-step completed">
+                  <span class="step-node"></span>
+                  <span class="step-title">Departed Yantian port</span>
+                  <span class="step-date">15 Sep</span>
+                </div>
+
+                <div class="timeline-step active">
+                  <span class="step-node"></span>
+                  <span class="step-title">At sea · North Sea</span>
+                  <span class="step-date">Today</span>
+                </div>
+
+                <div class="timeline-step pending">
+                  <span class="step-node"></span>
+                  <span class="step-title">Warehouse hub · Frankfurt</span>
+                  <span class="step-date">5 Oct</span>
+                </div>
+
+                <div class="timeline-step pending">
+                  <span class="step-node"></span>
+                  <span class="step-title">Delivered · Paris store</span>
+                  <span class="step-date">7 Oct</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 6: BY THE NUMBERS (Image 1 top)
+         ==================================================================== -->
+    <section class="numbers-section" id="numbers">
+      <div class="container">
+        <!-- Center-aligned Headings as requested -->
+        <div class="numbers-header text-center">
+          <span class="section-tag num-tag-anim">BY THE NUMBERS</span>
+          <h2 class="section-title num-title-anim cta-heading-letters white-heading-replay" id="numbersTitle" aria-label="EXPERIENCE AT SCALE." title="Click to replay animation">
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">E</span><span class="anim-letter-right" style="--delay: 0.065s;">X</span><span class="anim-letter-right" style="--delay: 0.090s;">P</span><span class="anim-letter-right" style="--delay: 0.115s;">E</span><span class="anim-letter-right" style="--delay: 0.140s;">R</span><span class="anim-letter-right" style="--delay: 0.165s;">I</span><span class="anim-letter-right" style="--delay: 0.190s;">E</span><span class="anim-letter-right" style="--delay: 0.215s;">N</span><span class="anim-letter-right" style="--delay: 0.240s;">C</span><span class="anim-letter-right" style="--delay: 0.265s;">E</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.300s;">A</span><span class="anim-letter-right" style="--delay: 0.325s;">T</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.360s;">S</span><span class="anim-letter-right" style="--delay: 0.385s;">C</span><span class="anim-letter-right" style="--delay: 0.410s;">A</span><span class="anim-letter-right" style="--delay: 0.435s;">L</span><span class="anim-letter-right" style="--delay: 0.460s;">E</span><span class="anim-letter-right" style="--delay: 0.485s;">.</span></span>
+          </h2>
+        </div>
+
+        <!-- 4 Stat Cards: First 2 from Left, Next 2 from Right; Live Run Counter -->
+        <div class="numbers-grid" id="numbersGrid">
+          <!-- Card 1: 4.2k (White, Comes from Left Side) -->
+          <article class="number-card card-white num-card-from-left" id="numCard1" style="--num-delay: 0.15s;">
+            <div class="num-val">
+              <span class="num-counter" data-target="4.2" data-decimals="1" data-suffix="k">0.0k</span>
+            </div>
+            <div class="num-label">shipments tracked live</div>
+          </article>
+
+          <!-- Card 2: 180+ (Mint Teal, Comes from Left Side) -->
+          <article class="number-card card-mint num-card-from-left" id="numCard2" style="--num-delay: 0.30s;">
+            <div class="num-val">
+              <span class="num-counter" data-target="180" data-decimals="0" data-suffix="+">0+</span>
+            </div>
+            <div class="num-label">carriers connected</div>
+          </article>
+
+          <!-- Card 3: 62 (White, Comes from Right Side) -->
+          <article class="number-card card-white num-card-from-right" id="numCard3" style="--num-delay: 0.30s;">
+            <div class="num-val">
+              <span class="num-counter" data-target="62" data-decimals="0" data-suffix="">0</span>
+            </div>
+            <div class="num-label">countries covered</div>
+          </article>
+
+          <!-- Card 4: 24% (Pastel Mint, Comes from Right Side) -->
+          <article class="number-card card-pastel num-card-from-right" id="numCard4" style="--num-delay: 0.15s;">
+            <div class="num-val">
+              <span class="num-counter" data-target="24" data-decimals="0" data-suffix="%">0%</span>
+            </div>
+            <div class="num-label">lower holding cost</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 7: HOW IT WORKS / LIVE IN FOUR STEPS (Image 1 bottom)
+         ==================================================================== -->
+    <section class="steps-section" id="how-it-works">
+      <div class="container">
+        <!-- Centered Headings for Live in Four Steps as requested -->
+        <div class="steps-header-center">
+          <span class="section-tag steps-tag-anim">HOW IT WORKS</span>
+          <h2 class="section-title steps-title-anim cta-heading-letters white-heading-replay" id="stepsTitle" aria-label="LIVE IN FOUR STEPS." title="Click to replay animation">
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">L</span><span class="anim-letter-right" style="--delay: 0.065s;">I</span><span class="anim-letter-right" style="--delay: 0.090s;">V</span><span class="anim-letter-right" style="--delay: 0.115s;">E</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.145s;">I</span><span class="anim-letter-right" style="--delay: 0.170s;">N</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.200s;">F</span><span class="anim-letter-right" style="--delay: 0.225s;">O</span><span class="anim-letter-right" style="--delay: 0.250s;">U</span><span class="anim-letter-right" style="--delay: 0.275s;">R</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.305s;">S</span><span class="anim-letter-right" style="--delay: 0.330s;">T</span><span class="anim-letter-right" style="--delay: 0.355s;">E</span><span class="anim-letter-right" style="--delay: 0.380s;">P</span><span class="anim-letter-right" style="--delay: 0.405s;">S</span><span class="anim-letter-right" style="--delay: 0.430s;">.</span></span>
+          </h2>
+          <p class="section-desc steps-desc-anim">Most teams are running in nine working days.</p>
+        </div>
+
+        <!-- Zigzag Timeline Wrapper with Connecting Pipeline Lines -->
+        <div class="steps-timeline-wrap" id="stepsTimeline">
+          <!-- Desktop Zigzag SVG Connecting Line Track -->
+          <svg class="steps-zigzag-svg" viewBox="0 0 1000 160" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="zigzagGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#34d399" />
+                <stop offset="50%" stop-color="#58c49e" />
+                <stop offset="100%" stop-color="#2dd4bf" />
+              </linearGradient>
+            </defs>
+            <!-- Background Dashed Track -->
+            <path class="zigzag-path-bg" d="M 125 35 C 210 35, 290 83, 375 83 C 460 83, 540 35, 625 35 C 710 35, 790 83, 875 83" />
+            <!-- Animated Illuminated Glow Pipeline Path -->
+            <path class="zigzag-path-pulse" d="M 125 35 C 210 35, 290 83, 375 83 C 460 83, 540 35, 625 35 C 710 35, 790 83, 875 83" />
+          </svg>
+
+          <!-- 4 Step Cards: Zigzag Layout, Sequential 1-by-1 Entrance, Clear Image on Hover -->
+          <div class="steps-cards-grid">
+            <!-- Step 1: Connect (Zigzag Up, Arrives 1st) -->
+            <article class="step-card step-zigzag-up step-1" id="step-connect" style="--step-delay: 0.15s;">
+              <div class="step-badge-wrap">
+                <div class="step-number-badge">1</div>
+              </div>
+              <!-- Clear Image on Hover (Zero Fade, Zero Shade) -->
+              <div class="step-card-image-box">
+                <img 
+                  src="assets/meridian_tech.webp" 
+                  alt="Connect prebuilt ERP and carrier connectors" 
+                  class="step-card-img" 
+                  loading="lazy"
+                >
+              </div>
+              <h3 class="step-card-title">Connect</h3>
+              <p class="step-card-desc">Link your ERP, carriers and warehouses with prebuilt connectors.</p>
+            </article>
+
+            <!-- Step 2: Clean (Zigzag Down, Arrives 2nd) -->
+            <article class="step-card step-zigzag-down step-2" id="step-clean" style="--step-delay: 0.45s;">
+              <div class="step-badge-wrap">
+                <div class="step-number-badge">2</div>
+              </div>
+              <!-- Clear Image on Hover (Zero Fade, Zero Shade) -->
+              <div class="step-card-image-box">
+                <img 
+                  src="assets/auto_freight.webp" 
+                  alt="Clean and map SKUs and locations into shared model" 
+                  class="step-card-img" 
+                  loading="lazy"
+                >
+              </div>
+              <h3 class="step-card-title">Clean</h3>
+              <p class="step-card-desc">We map SKUs, locations and carriers into one shared model.</p>
+            </article>
+
+            <!-- Step 3: Plan (Zigzag Up, Arrives 3rd) -->
+            <article class="step-card step-zigzag-up step-3" id="step-plan" style="--step-delay: 0.75s;">
+              <div class="step-badge-wrap">
+                <div class="step-number-badge">3</div>
+              </div>
+              <!-- Clear Image on Hover (Zero Fade, Zero Shade) -->
+              <div class="step-card-image-box">
+                <img 
+                  src="assets/hero_warehouse.webp" 
+                  alt="Automated forecasts and weekly safety stock planning" 
+                  class="step-card-img" 
+                  loading="lazy"
+                >
+              </div>
+              <h3 class="step-card-title">Plan</h3>
+              <p class="step-card-desc">Forecasts and safety stock update automatically each week.</p>
+            </article>
+
+            <!-- Step 4: Improve (Zigzag Down, Arrives 4th) -->
+            <article class="step-card step-zigzag-down step-4" id="step-improve" style="--step-delay: 1.05s;">
+              <div class="step-badge-wrap">
+                <div class="step-number-badge">4</div>
+              </div>
+              <!-- Clear Image on Hover (Zero Fade, Zero Shade) -->
+              <div class="step-card-image-box">
+                <img 
+                  src="assets/about_dock_team.webp" 
+                  alt="Dedicated analyst reviews operational results monthly" 
+                  class="step-card-img" 
+                  loading="lazy"
+                >
+              </div>
+              <h3 class="step-card-title">Improve</h3>
+              <p class="step-card-desc">Your analyst reviews results with you every month.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 8: INDUSTRIES (Image 2)
+         ==================================================================== -->
+    <section class="industries-section" id="industries">
+      <div class="container">
+        <div class="industries-header-row">
+          <div class="industries-header-left">
+            <span class="section-tag industries-tag-anim">INDUSTRIES</span>
+            <h2 class="section-title industries-title-anim cta-heading-letters white-heading-replay" id="industriesTitle" aria-label="BUILT FOR FREIGHT-HEAVY TEAMS." title="Click to replay animation">
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">B</span><span class="anim-letter-right" style="--delay: 0.065s;">U</span><span class="anim-letter-right" style="--delay: 0.090s;">I</span><span class="anim-letter-right" style="--delay: 0.115s;">L</span><span class="anim-letter-right" style="--delay: 0.140s;">T</span></span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.170s;">F</span><span class="anim-letter-right" style="--delay: 0.195s;">O</span><span class="anim-letter-right" style="--delay: 0.220s;">R</span></span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.250s;">F</span><span class="anim-letter-right" style="--delay: 0.275s;">R</span><span class="anim-letter-right" style="--delay: 0.300s;">E</span><span class="anim-letter-right" style="--delay: 0.325s;">I</span><span class="anim-letter-right" style="--delay: 0.350s;">G</span><span class="anim-letter-right" style="--delay: 0.375s;">H</span><span class="anim-letter-right" style="--delay: 0.400s;">T</span><span class="anim-letter-right" style="--delay: 0.425s;">-</span><span class="anim-letter-right" style="--delay: 0.450s;">H</span><span class="anim-letter-right" style="--delay: 0.475s;">E</span><span class="anim-letter-right" style="--delay: 0.500s;">A</span><span class="anim-letter-right" style="--delay: 0.525s;">V</span><span class="anim-letter-right" style="--delay: 0.550s;">Y</span></span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.580s;">T</span><span class="anim-letter-right" style="--delay: 0.605s;">E</span><span class="anim-letter-right" style="--delay: 0.630s;">A</span><span class="anim-letter-right" style="--delay: 0.655s;">M</span><span class="anim-letter-right" style="--delay: 0.680s;">S</span><span class="anim-letter-right" style="--delay: 0.705s;">.</span></span>
+            </h2>
+          </div>
+          <div class="industries-header-right">
+            <span class="section-desc industries-desc-anim">From cold chain to car parts, the same live view.</span>
+          </div>
+        </div>
+
+        <div class="industries-grid" id="industriesGrid">
+          <!-- Card 1: Retail (Arrives 1st, Emerald Enlighten) -->
+          <article class="industry-card industry-1 ind-retail" style="--ind-delay: 0.10s; --industry-color: #059669; --industry-glow: rgba(16, 185, 129, 0.55);">
+            <div class="industry-card-bg" style="background-image: url('assets/retail_store.webp');" aria-hidden="true"></div>
+            <div class="industry-card-overlay" aria-hidden="true"></div>
+            <div class="industry-card-content">
+              <span class="industry-accent-pill">RETAIL</span>
+              <h3 class="industry-title">Retail</h3>
+              <p class="industry-desc">
+                <span class="desc-line-1">Keep shelves full through peak season.</span>
+                <span class="desc-line-2">Prevent stockouts and sync regional store inventory in real time.</span>
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 2: Food & beverage (Arrives 2nd, Fresh Teal Enlighten) -->
+          <article class="industry-card industry-2 ind-food" style="--ind-delay: 0.20s; --industry-color: #0d9488; --industry-glow: rgba(20, 184, 166, 0.55);">
+            <div class="industry-card-bg" style="background-image: url('assets/food_beverage.webp');" aria-hidden="true"></div>
+            <div class="industry-card-overlay" aria-hidden="true"></div>
+            <div class="industry-card-content">
+              <span class="industry-accent-pill">COLD CHAIN</span>
+              <h3 class="industry-title">Food &amp; beverage</h3>
+              <p class="industry-desc">
+                <span class="desc-line-1">Track temperature and expiry end to end.</span>
+                <span class="desc-line-2">Automated cold-chain monitoring with early spoilage prevention.</span>
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 3: Automotive (Arrives 3rd, Azure Enlighten) -->
+          <article class="industry-card industry-3 ind-auto" style="--ind-delay: 0.30s; --industry-color: #0284c7; --industry-glow: rgba(14, 165, 233, 0.55);">
+            <div class="industry-card-bg" style="background-image: url('assets/auto_freight.webp');" aria-hidden="true"></div>
+            <div class="industry-card-overlay" aria-hidden="true"></div>
+            <div class="industry-card-content">
+              <span class="industry-accent-pill">AUTOMOTIVE</span>
+              <h3 class="industry-title">Automotive</h3>
+              <p class="industry-desc">
+                <span class="desc-line-1">Sync just-in-time parts across plants.</span>
+                <span class="desc-line-2">Real-time sub-assembly tracking to avoid assembly line stoppages.</span>
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 4: Pharma (Arrives 4th, Violet Enlighten) -->
+          <article class="industry-card industry-4 ind-pharma" style="--ind-delay: 0.40s; --industry-color: #7c3aed; --industry-glow: rgba(124, 58, 237, 0.55);">
+            <div class="industry-card-bg" style="background-image: url('assets/pharma_capsules.webp');" aria-hidden="true"></div>
+            <div class="industry-card-overlay" aria-hidden="true"></div>
+            <div class="industry-card-content">
+              <span class="industry-accent-pill">PHARMA</span>
+              <h3 class="industry-title">Pharma</h3>
+              <p class="industry-desc">
+                <span class="desc-line-1">Audit-ready chain of custody.</span>
+                <span class="desc-line-2">GDP compliant tracking with calibrated temperature validation.</span>
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 5: Electronics (Arrives 5th, Neon Cyan Enlighten) -->
+          <article class="industry-card industry-5 ind-electronics" style="--ind-delay: 0.50s; --industry-color: #0891b2; --industry-glow: rgba(6, 182, 212, 0.55);">
+            <div class="industry-card-bg" style="background-image: url('assets/meridian_tech.webp');" aria-hidden="true"></div>
+            <div class="industry-card-overlay" aria-hidden="true"></div>
+            <div class="industry-card-content">
+              <span class="industry-accent-pill">HIGH-TECH</span>
+              <h3 class="industry-title">Electronics</h3>
+              <p class="industry-desc">
+                <span class="desc-line-1">Manage long lead times and allocation.</span>
+                <span class="desc-line-2">Component tier alerts and air-freight escalation for high-demand launches.</span>
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 6: Fashion (Arrives 6th, Rose Magenta Enlighten) -->
+          <article class="industry-card industry-6 ind-fashion" style="--ind-delay: 0.60s; --industry-color: #db2777; --industry-glow: rgba(219, 39, 119, 0.55);">
+            <div class="industry-card-bg" style="background-image: url('assets/blog_suppliers.webp');" aria-hidden="true"></div>
+            <div class="industry-card-overlay" aria-hidden="true"></div>
+            <div class="industry-card-content">
+              <span class="industry-accent-pill">FASHION</span>
+              <h3 class="industry-title">Fashion</h3>
+              <p class="industry-desc">
+                <span class="desc-line-1">Balance drops, returns and seasonal stock.</span>
+                <span class="desc-line-2">Fast omnichannel reallocation to maximize full-price sell-through.</span>
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 7: Energy (Arrives 7th, Solar Amber Enlighten) -->
+          <article class="industry-card industry-7 ind-energy" style="--ind-delay: 0.70s; --industry-color: #d97706; --industry-glow: rgba(217, 119, 6, 0.55);">
+            <div class="industry-card-bg" style="background-image: url('assets/blog_detention.webp');" aria-hidden="true"></div>
+            <div class="industry-card-overlay" aria-hidden="true"></div>
+            <div class="industry-card-content">
+              <span class="industry-accent-pill">ENERGY</span>
+              <h3 class="industry-title">Energy</h3>
+              <p class="industry-desc">
+                <span class="desc-line-1">Move heavy equipment to remote sites.</span>
+                <span class="desc-line-2">High-value oversize cargo monitoring with live GPS telemetry.</span>
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 8: E-commerce (Arrives 8th, Royal Blue Enlighten) -->
+          <article class="industry-card industry-8 ind-ecommerce" style="--ind-delay: 0.80s; --industry-color: #2563eb; --industry-glow: rgba(37, 99, 235, 0.55);">
+            <div class="industry-card-bg" style="background-image: url('assets/hero_warehouse.webp');" aria-hidden="true"></div>
+            <div class="industry-card-overlay" aria-hidden="true"></div>
+            <div class="industry-card-content">
+              <span class="industry-accent-pill">E-COMMERCE</span>
+              <h3 class="industry-title">E-commerce</h3>
+              <p class="industry-desc">
+                <span class="desc-line-1">Promise delivery dates you can keep.</span>
+                <span class="desc-line-2">Carrier SLA compliance tracking that protects customer trust.</span>
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 9: TESTIMONIALS / CLIENT LOVE (Image 3)
+         ==================================================================== -->
+    <!-- ====================================================================
+         SECTION 9: TESTIMONIALS / CLIENT LOVE (Continuous Live Running Marquee)
+         ==================================================================== -->
+    <section class="testimonials-section" id="testimonials">
+      <div class="container">
+        <!-- Center-aligned Header as requested -->
+        <div class="testimonials-header text-center">
+          <span class="section-tag testimonials-tag-anim">CLIENT LOVE</span>
+          <h2 class="section-title testimonials-title-anim cta-heading-letters white-heading-replay" id="testimonialsTitle" aria-label="FEWER FIRE DRILLS." title="Click to replay animation">
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">F</span><span class="anim-letter-right" style="--delay: 0.065s;">E</span><span class="anim-letter-right" style="--delay: 0.090s;">W</span><span class="anim-letter-right" style="--delay: 0.115s;">E</span><span class="anim-letter-right" style="--delay: 0.140s;">R</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.170s;">F</span><span class="anim-letter-right" style="--delay: 0.195s;">I</span><span class="anim-letter-right" style="--delay: 0.220s;">R</span><span class="anim-letter-right" style="--delay: 0.245s;">E</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.275s;">D</span><span class="anim-letter-right" style="--delay: 0.300s;">R</span><span class="anim-letter-right" style="--delay: 0.325s;">I</span><span class="anim-letter-right" style="--delay: 0.350s;">L</span><span class="anim-letter-right" style="--delay: 0.375s;">L</span><span class="anim-letter-right" style="--delay: 0.400s;">S</span><span class="anim-letter-right" style="--delay: 0.425s;">.</span></span>
+          </h2>
+        </div>
+      </div>
+
+      <!-- Horizontal Continuous Live-Running Marquee Container -->
+      <div class="testimonials-marquee-wrapper" id="testimonialsMarqueeWrapper">
+        <div class="testimonials-marquee-track" id="testimonialsMarqueeTrack">
+          <!-- Marquee Set 1: 4 Cards -->
+          <div class="testimonials-marquee-group">
+            <!-- Card 1: Maya Rao (Norvale) -->
+            <article 
+              class="testimonial-card test-norvale" 
+              id="testimonial-norvale"
+              style="--test-brand: #059669; --test-glow: rgba(16, 185, 129, 0.55);"
+            >
+              <div class="testimonial-quote-wrap">
+                <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+                <p class="testimonial-quote">
+                  We found out about a port delay on a Tuesday instead of when the shelf went empty.
+                </p>
+              </div>
+              <div class="testimonial-author-row">
+                <img 
+                  src="assets/avatar_maya.webp" 
+                  alt="Maya Rao - Head of Supply at Norvale" 
+                  class="author-avatar"
+                  loading="lazy"
+                >
+                <div class="author-info">
+                  <span class="author-name">Maya Rao</span>
+                  <span class="author-role">
+                    Head of Supply, 
+                    <a href="#case-norvale" class="company-case-link" data-target="case-norvale" role="button">Norvale</a>
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 2: Daniel Krüger (Kestrel Auto) -->
+            <article 
+              class="testimonial-card test-kestrel" 
+              id="testimonial-kestrel"
+              style="--test-brand: #0284c7; --test-glow: rgba(2, 132, 199, 0.55);"
+            >
+              <div class="testimonial-quote-wrap">
+                <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+                <p class="testimonial-quote">
+                  Onboarding took nine days. Our old system took nine months.
+                </p>
+              </div>
+              <div class="testimonial-author-row">
+                <img 
+                  src="assets/avatar_daniel.webp" 
+                  alt="Daniel Krüger - Director at Kestrel Auto" 
+                  class="author-avatar"
+                  loading="lazy"
+                >
+                <div class="author-info">
+                  <span class="author-name">Daniel Krüger</span>
+                  <span class="author-role">
+                    Director, 
+                    <a href="#case-kestrel" class="company-case-link" data-target="case-kestrel" role="button">Kestrel Auto</a>
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 3: Sofia Okafor (Bluepine) -->
+            <article 
+              class="testimonial-card test-bluepine" 
+              id="testimonial-bluepine"
+              style="--test-brand: #0d9488; --test-glow: rgba(13, 148, 136, 0.55);"
+            >
+              <div class="testimonial-quote-wrap">
+                <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+                <p class="testimonial-quote">
+                  The freight audit paid for the platform in the first quarter.
+                </p>
+              </div>
+              <div class="testimonial-author-row">
+                <img 
+                  src="assets/avatar_sofia.webp" 
+                  alt="Sofia Okafor - COO at Bluepine" 
+                  class="author-avatar"
+                  loading="lazy"
+                >
+                <div class="author-info">
+                  <span class="author-name">Sofia Okafor</span>
+                  <span class="author-role">
+                    COO, 
+                    <a href="#case-bluepine" class="company-case-link" data-target="case-bluepine" role="button">Bluepine</a>
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 4: Liam Vance (Halden Pharma) -->
+            <article 
+              class="testimonial-card test-halden" 
+              id="testimonial-halden"
+              style="--test-brand: #7c3aed; --test-glow: rgba(124, 58, 237, 0.55);"
+            >
+              <div class="testimonial-quote-wrap">
+                <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+                <p class="testimonial-quote">
+                  Audit-ready cold chain compliance was taking 20 hours a week. With Stackly, it takes 20 seconds.
+                </p>
+              </div>
+              <div class="testimonial-author-row">
+                <img 
+                  src="assets/avatar_liam.webp" 
+                  alt="Liam Vance - VP Operations at Halden" 
+                  class="author-avatar"
+                  loading="lazy"
+                >
+                <div class="author-info">
+                  <span class="author-name">Liam Vance</span>
+                  <span class="author-role">
+                    VP Operations, 
+                    <a href="#case-halden" class="company-case-link" data-target="case-halden" role="button">Halden</a>
+                  </span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Marquee Set 2: Duplicate 4 Cards for Seamless Infinite Loop -->
+          <div class="testimonials-marquee-group" aria-hidden="true">
+            <!-- Duplicate Card 1 -->
+            <article 
+              class="testimonial-card test-norvale" 
+              style="--test-brand: #059669; --test-glow: rgba(16, 185, 129, 0.55);"
+            >
+              <div class="testimonial-quote-wrap">
+                <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+                <p class="testimonial-quote">
+                  We found out about a port delay on a Tuesday instead of when the shelf went empty.
+                </p>
+              </div>
+              <div class="testimonial-author-row">
+                <img 
+                  src="assets/avatar_maya.webp" 
+                  alt="Maya Rao - Head of Supply at Norvale" 
+                  class="author-avatar"
+                  loading="lazy"
+                >
+                <div class="author-info">
+                  <span class="author-name">Maya Rao</span>
+                  <span class="author-role">
+                    Head of Supply, 
+                    <a href="#case-norvale" class="company-case-link" data-target="case-norvale" role="button" tabindex="-1">Norvale</a>
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Duplicate Card 2 -->
+            <article 
+              class="testimonial-card test-kestrel" 
+              style="--test-brand: #0284c7; --test-glow: rgba(2, 132, 199, 0.55);"
+            >
+              <div class="testimonial-quote-wrap">
+                <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+                <p class="testimonial-quote">
+                  Onboarding took nine days. Our old system took nine months.
+                </p>
+              </div>
+              <div class="testimonial-author-row">
+                <img 
+                  src="assets/avatar_daniel.webp" 
+                  alt="Daniel Krüger - Director at Kestrel Auto" 
+                  class="author-avatar"
+                  loading="lazy"
+                >
+                <div class="author-info">
+                  <span class="author-name">Daniel Krüger</span>
+                  <span class="author-role">
+                    Director, 
+                    <a href="#case-kestrel" class="company-case-link" data-target="case-kestrel" role="button" tabindex="-1">Kestrel Auto</a>
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Duplicate Card 3 -->
+            <article 
+              class="testimonial-card test-bluepine" 
+              style="--test-brand: #0d9488; --test-glow: rgba(13, 148, 136, 0.55);"
+            >
+              <div class="testimonial-quote-wrap">
+                <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+                <p class="testimonial-quote">
+                  The freight audit paid for the platform in the first quarter.
+                </p>
+              </div>
+              <div class="testimonial-author-row">
+                <img 
+                  src="assets/avatar_sofia.webp" 
+                  alt="Sofia Okafor - COO at Bluepine" 
+                  class="author-avatar"
+                  loading="lazy"
+                >
+                <div class="author-info">
+                  <span class="author-name">Sofia Okafor</span>
+                  <span class="author-role">
+                    COO, 
+                    <a href="#case-bluepine" class="company-case-link" data-target="case-bluepine" role="button" tabindex="-1">Bluepine</a>
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Duplicate Card 4 -->
+            <article 
+              class="testimonial-card test-halden" 
+              style="--test-brand: #7c3aed; --test-glow: rgba(124, 58, 237, 0.55);"
+            >
+              <div class="testimonial-quote-wrap">
+                <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+                <p class="testimonial-quote">
+                  Audit-ready cold chain compliance was taking 20 hours a week. With Stackly, it takes 20 seconds.
+                </p>
+              </div>
+              <div class="testimonial-author-row">
+                <img 
+                  src="assets/avatar_liam.webp" 
+                  alt="Liam Vance - VP Operations at Halden" 
+                  class="author-avatar"
+                  loading="lazy"
+                >
+                <div class="author-info">
+                  <span class="author-name">Liam Vance</span>
+                  <span class="author-role">
+                    VP Operations, 
+                    <a href="#case-halden" class="company-case-link" data-target="case-halden" role="button" tabindex="-1">Halden</a>
+                  </span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 10: FROM THE BLOG (Image 4)
+         ==================================================================== -->
+    <section class="blog-section" id="blog">
+      <div class="container">
+        <div class="blog-header-row">
+          <div class="blog-header-left">
+            <span class="section-tag blog-tag-anim">FROM THE BLOG</span>
+            <h2 class="section-title blog-title-anim cta-heading-letters white-heading-replay" id="blogTitle" aria-label="NOTES FROM THE NETWORK." title="Click to replay animation">
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">N</span><span class="anim-letter-right" style="--delay: 0.065s;">O</span><span class="anim-letter-right" style="--delay: 0.090s;">T</span><span class="anim-letter-right" style="--delay: 0.115s;">E</span><span class="anim-letter-right" style="--delay: 0.140s;">S</span></span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.170s;">F</span><span class="anim-letter-right" style="--delay: 0.195s;">R</span><span class="anim-letter-right" style="--delay: 0.220s;">O</span><span class="anim-letter-right" style="--delay: 0.245s;">M</span></span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.275s;">T</span><span class="anim-letter-right" style="--delay: 0.300s;">H</span><span class="anim-letter-right" style="--delay: 0.325s;">E</span></span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.355s;">N</span><span class="anim-letter-right" style="--delay: 0.380s;">E</span><span class="anim-letter-right" style="--delay: 0.405s;">T</span><span class="anim-letter-right" style="--delay: 0.430s;">W</span><span class="anim-letter-right" style="--delay: 0.455s;">O</span><span class="anim-letter-right" style="--delay: 0.480s;">R</span><span class="anim-letter-right" style="--delay: 0.505s;">K</span><span class="anim-letter-right" style="--delay: 0.530s;">.</span></span>
+            </h2>
+          </div>
+          <div class="blog-header-right">
+            <span class="section-desc blog-desc-anim">Practical writing from our logistics analysts.</span>
+            <a href="404.html" class="btn-blog-all blog-btn-anim">All articles</a>
+          </div>
+        </div>
+
+        <div class="blog-cards-grid" id="blogCardsGrid">
+          <!-- Blog Card 1: Left Entrance (Forecasting) -->
+          <article 
+            class="blog-card blog-card-from-left" 
+            id="blog-forecasting"
+            style="--blog-delay: 0.15s; --blog-border-color: #06b6d4; --blog-glow: rgba(6, 182, 212, 0.45);"
+          >
+            <div class="blog-img-wrap">
+              <img 
+                src="assets/blog_forecasting.webp" 
+                alt="Forecasting and safety stock calculations" 
+                class="blog-img"
+                loading="lazy"
+              >
+            </div>
+            <span class="blog-meta">FORECASTING &middot; 6 MIN</span>
+            <h3 class="blog-card-title">Why safety stock formulas fall in a volatile year</h3>
+            <p class="blog-excerpt">Lead times moved 40% last quarter. Here is how to size buffers when the average stops meaning anything.</p>
+            <a href="404.html" class="blog-link">Read article</a>
+          </article>
+
+          <!-- Blog Card 2: Down Entrance (Logistics) -->
+          <article 
+            class="blog-card blog-card-from-down" 
+            id="blog-detention"
+            style="--blog-delay: 0.30s; --blog-border-color: #0284c7; --blog-glow: rgba(2, 132, 199, 0.45);"
+          >
+            <div class="blog-img-wrap">
+              <img 
+                src="assets/blog_detention.webp" 
+                alt="Port detention fees and container logistics" 
+                class="blog-img"
+                loading="lazy"
+              >
+            </div>
+            <span class="blog-meta">LOGISTICS &middot; 5 MIN</span>
+            <h3 class="blog-card-title">Cutting detention fees: a dock scheduling checklist</h3>
+            <p class="blog-excerpt">Four changes a Dutch retailer made to stop paying carriers to wait at the gate.</p>
+            <a href="404.html" class="blog-link">Read article</a>
+          </article>
+
+          <!-- Blog Card 3: Right Entrance (Suppliers) -->
+          <article 
+            class="blog-card blog-card-from-right" 
+            id="blog-suppliers"
+            style="--blog-delay: 0.45s; --blog-border-color: #8b5cf6; --blog-glow: rgba(139, 92, 246, 0.45);"
+          >
+            <div class="blog-img-wrap">
+              <img 
+                src="assets/blog_suppliers.webp" 
+                alt="Mapping tier-2 suppliers in global freight" 
+                class="blog-img"
+                loading="lazy"
+              >
+            </div>
+            <span class="blog-meta">SUPPLIERS &middot; 7 MIN</span>
+            <h3 class="blog-card-title">Mapping tier-2 suppliers before they become problems</h3>
+            <p class="blog-excerpt">You cannot manage a risk you cannot see. A practical way to map the suppliers behind your suppliers.</p>
+            <a href="404.html" class="blog-link">Read article</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 11: FAQ / BEFORE YOU SIGN (Image 5 top)
+         ==================================================================== -->
+    <section class="faq-section" id="faq">
+      <div class="container">
+        <!-- Center-aligned Headings as requested -->
+        <div class="faq-header text-center">
+          <span class="section-tag faq-tag-anim">FAQ</span>
+          <h2 class="section-title faq-title-anim cta-heading-letters faq-heading-replay" id="faqTitle" aria-label="BEFORE YOU SIGN.">
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">B</span><span class="anim-letter-right" style="--delay: 0.065s;">E</span><span class="anim-letter-right" style="--delay: 0.090s;">F</span><span class="anim-letter-right" style="--delay: 0.115s;">O</span><span class="anim-letter-right" style="--delay: 0.140s;">R</span><span class="anim-letter-right" style="--delay: 0.165s;">E</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.195s;">Y</span><span class="anim-letter-right" style="--delay: 0.220s;">O</span><span class="anim-letter-right" style="--delay: 0.245s;">U</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.275s;">S</span><span class="anim-letter-right" style="--delay: 0.300s;">I</span><span class="anim-letter-right" style="--delay: 0.325s;">G</span><span class="anim-letter-right" style="--delay: 0.350s;">N</span><span class="anim-letter-right" style="--delay: 0.375s;">.</span></span>
+          </h2>
+        </div>
+
+        <div class="faq-list" id="faqList">
+          <!-- Card 1: Left Entrance -->
+          <div class="faq-card faq-card-from-left" id="faq-card-1" style="--faq-delay: 0.15s;">
+            <div class="faq-question-row">
+              <span class="faq-bullet"></span>
+              <h3 class="faq-question">How long does setup take?</h3>
+            </div>
+            <p class="faq-answer">Most teams are live in nine working days, including ERP and carrier connections.</p>
+          </div>
+
+          <!-- Card 2: Right Entrance -->
+          <div class="faq-card faq-card-from-right" id="faq-card-2" style="--faq-delay: 0.30s;">
+            <div class="faq-question-row">
+              <span class="faq-bullet"></span>
+              <h3 class="faq-question">Can I start with one module?</h3>
+            </div>
+            <p class="faq-answer">Yes. Start with the module that hurts most and add others at any time.</p>
+          </div>
+
+          <!-- Card 3: Left Entrance -->
+          <div class="faq-card faq-card-from-left" id="faq-card-3" style="--faq-delay: 0.45s;">
+            <div class="faq-question-row">
+              <span class="faq-bullet"></span>
+              <h3 class="faq-question">Do you support our 3PLs?</h3>
+            </div>
+            <p class="faq-answer">We connect to most 3PL systems through API, EDI or file drop.</p>
+          </div>
+
+          <!-- Card 4: Right Entrance -->
+          <div class="faq-card faq-card-from-right" id="faq-card-4" style="--faq-delay: 0.60s;">
+            <div class="faq-question-row">
+              <span class="faq-bullet"></span>
+              <h3 class="faq-question">Is there a free trial?</h3>
+            </div>
+            <p class="faq-answer">Every plan starts with a 14-day trial and no card required.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 12: CTA BANNER (Image 5 middle)
+         ==================================================================== -->
+    <section class="cta-banner-section" id="contact">
+      <div class="container">
+        <!-- Whole Card comes from Right -->
+        <div class="cta-banner-card cta-card-from-right" id="ctaBannerCard">
+          <div class="cta-banner-left">
+            <h2 class="cta-banner-title cta-heading-letters white-heading-replay" id="ctaBannerTitle" aria-label="LET'S BUILD SOMETHING AMAZING." title="Click to replay animation">
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">L</span><span class="anim-letter-right" style="--delay: 0.065s;">E</span><span class="anim-letter-right" style="--delay: 0.090s;">T</span><span class="anim-letter-right" style="--delay: 0.115s;">'</span><span class="anim-letter-right" style="--delay: 0.140s;">S</span></span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.170s;">B</span><span class="anim-letter-right" style="--delay: 0.195s;">U</span><span class="anim-letter-right" style="--delay: 0.220s;">I</span><span class="anim-letter-right" style="--delay: 0.245s;">L</span><span class="anim-letter-right" style="--delay: 0.270s;">D</span></span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.300s;">S</span><span class="anim-letter-right" style="--delay: 0.325s;">O</span><span class="anim-letter-right" style="--delay: 0.350s;">M</span><span class="anim-letter-right" style="--delay: 0.375s;">E</span><span class="anim-letter-right" style="--delay: 0.400s;">T</span><span class="anim-letter-right" style="--delay: 0.425s;">H</span><span class="anim-letter-right" style="--delay: 0.450s;">I</span><span class="anim-letter-right" style="--delay: 0.475s;">N</span><span class="anim-letter-right" style="--delay: 0.500s;">G</span></span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.530s;">A</span><span class="anim-letter-right" style="--delay: 0.555s;">M</span><span class="anim-letter-right" style="--delay: 0.580s;">A</span><span class="anim-letter-right" style="--delay: 0.605s;">Z</span><span class="anim-letter-right" style="--delay: 0.630s;">I</span><span class="anim-letter-right" style="--delay: 0.655s;">N</span><span class="anim-letter-right" style="--delay: 0.680s;">G</span><span class="anim-letter-right" style="--delay: 0.705s;">.</span></span>
+            </h2>
+            <p class="cta-banner-sub">Have a project in mind? Tell us where the friction is.</p>
+          </div>
+          <div class="cta-banner-right">
+            <!-- Navigates directly to 404 page -->
+            <a href="404.html" class="btn-cta-touch" id="btnCtaTouch" role="button">Get in touch</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================================================================
+       SITE FOOTER (4-Column Layout with Salem Office Address)
+       ====================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid-4">
+        <!-- Col 1: Brand Logo, Caption & 4 Social Media Icons -->
+        <div class="footer-brand-col">
+          <a href="index.html" class="footer-logo-wrap" aria-label="Stackly Home">
+            <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="footer-logo-img">
+          </a>
+          <p class="footer-caption">
+            Stackly connects suppliers, warehouses, carriers and stores in one unified live view, so planners spot disruptions before they impact shelves.
+          </p>
+          <div class="footer-social-row">
+            <!-- 1. Twitter / X -->
+            <a href="404.html" class="social-icon-btn" aria-label="Twitter X">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <!-- 2. LinkedIn -->
+            <a href="404.html" class="social-icon-btn" aria-label="LinkedIn">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <!-- 3. YouTube -->
+            <a href="404.html" class="social-icon-btn" aria-label="YouTube">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <!-- 4. GitHub -->
+            <a href="404.html" class="social-icon-btn" aria-label="GitHub">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links (Navbar items) -->
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-nav-list">
+            <li class="footer-nav-item"><a href="index.html">Home</a></li>
+            <li class="footer-nav-item"><a href="services.html">Services</a></li>
+            <li class="footer-nav-item"><a href="about.html">About</a></li>
+            <li class="footer-nav-item"><a href="blog.html">Blog</a></li>
+            <li class="footer-nav-item"><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Platform Solutions -->
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title">Platform Solutions</h4>
+          <ul class="footer-nav-list">
+            <li class="footer-nav-item"><a href="404.html">Shipment Visibility</a></li>
+            <li class="footer-nav-item"><a href="404.html">Inventory Control</a></li>
+            <li class="footer-nav-item"><a href="404.html">Demand Forecasting</a></li>
+            <li class="footer-nav-item"><a href="404.html">Supplier Management</a></li>
+            <li class="footer-nav-item"><a href="404.html">Risk Alerts</a></li>
+            <li class="footer-nav-item"><a href="404.html">Freight Audit</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Stackly Salem Address -->
+        <div class="footer-address-col">
+          <h4 class="footer-col-title">Salem Headquarters</h4>
+          <div class="footer-address-card">
+            <div class="address-company">Stackly Technologies Hub</div>
+            <p class="address-text">
+              124/B Heritage Enclave, Cherry Road,<br>
+              Hasthampatti, Salem,<br>
+              Tamil Nadu 636007, India.
+            </p>
+            <div class="address-contact-item">
+              <span>Phone:</span>
+              <span style="color:#ffffff;">+91 427 244 8900</span>
+            </div>
+            <div class="address-contact-item">
+              <span>Mobile:</span>
+              <span style="color:#ffffff;">+91 98427 12345</span>
+            </div>
+            <div class="address-contact-item">
+              <span>Email:</span>
+              <span style="color:#ffffff;">support@stackly.com</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Legal Row -->
+      <div class="footer-bottom-bar">
+        <span class="footer-copyright">&copy; 2026 Stackly Technologies Inc. All rights reserved.</span>
+        <div class="footer-legal-links">
+          <a href="404.html">Privacy Policy</a>
+          <a href="404.html">Terms of Service</a>
+          <a href="404.html">Security Protocol</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,2313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog &amp; Analyst Insights | Stackly Supply Chain</title>
+  <meta name="description" content="Practical writing on forecasting, freight and warehouse operations from the analysts who run them. Fresh insights and data-driven logistics guides.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/webp" href="assets/stackly_logo.webp">
+  <style>
+    /* ==========================================================================
+       STACKLY BLOG PAGE - PIXEL-PERFECT STYLING
+       Aesthetics: Deep Marine Navy (#1c456e), Mint Teal (#72caa7), Pure White
+       Typography: Plus Jakarta Sans & Caveat Script
+       ========================================================================== */
+    :root {
+      --blog-bg: #1c456e;
+      --blog-bg-gradient: radial-gradient(circle at 50% 15%, #255483 0%, #1a4269 55%, #133353 100%);
+      --blog-teal: #72caa7;
+      --blog-teal-dark: #0d382b;
+      --blog-card-bg: #ffffff;
+      --blog-text-dark: #0f1e2e;
+      --blog-text-muted: #52677d;
+      --blog-btn-navy: #1d4368;
+      --blog-btn-navy-hover: #153655;
+    }
+
+    html, body {
+      overflow-x: hidden !important;
+      max-width: 100vw !important;
+    }
+
+    body {
+      background-color: var(--blog-bg);
+      background-image: var(--blog-bg-gradient);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Fixed Top Site Header */
+    .blog-header-wrap {
+      width: 100%;
+      padding: 16px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .blog-header-wrap.scrolled {
+      padding: 10px 20px;
+      background: rgba(28, 69, 110, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    .blog-navbar-pill {
+      pointer-events: auto;
+      max-width: 1180px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 9999px;
+      padding: 10px 24px 10px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+
+    .blog-brand-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .blog-brand-img {
+      height: 42px;
+      max-height: 46px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+
+    .blog-brand-img:hover {
+      transform: scale(1.03);
+    }
+
+    .blog-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .blog-nav-item a {
+      color: #334155;
+      font-size: 14.5px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .blog-nav-item a:hover,
+    .blog-nav-item a.active {
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    .blog-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-pill-signin {
+      background: #ffffff;
+      color: #0f172a;
+      border: 1.5px solid #cbd5e1;
+      padding: 8px 22px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-pill-signin:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    .btn-pill-signup {
+      background: var(--blog-teal);
+      color: #0f382c;
+      border: none;
+      padding: 8.5px 24px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(114, 202, 167, 0.35);
+    }
+
+    .btn-pill-signup:hover {
+      background: #5ebc9b;
+      transform: translateY(-1px);
+    }
+
+    /* Mobile Menu Toggle */
+    .blog-mobile-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      flex-direction: column;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .blog-mobile-btn span {
+      display: block;
+      width: 24px;
+      height: 2.5px;
+      background: #0f172a;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .blog-mobile-btn.open span:nth-child(1) {
+      transform: translateY(7.5px) rotate(45deg);
+    }
+
+    .blog-mobile-btn.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .blog-mobile-btn.open span:nth-child(3) {
+      transform: translateY(-7.5px) rotate(-45deg);
+    }
+
+    /* Mobile Drawer - Full-Screen Overlay */
+    .blog-mobile-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      background: #ffffff;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-shadow: none !important;
+      flex-direction: column;
+      z-index: 999999 !important;
+      pointer-events: auto;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    .blog-mobile-drawer.open {
+      display: flex !important;
+    }
+
+
+    /* Common Eyebrow and Heading Styles */
+    .section-eyebrow {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blog-teal);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .section-heading-lg {
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1.15;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 36px;
+      letter-spacing: -0.5px;
+    }
+
+    /* ==========================================================================
+       SECTION 1: HERO (Screenshot 1)
+       NOTES FROM THE network.
+       ========================================================================== */
+    .blog-hero-section {
+      padding: 130px 24px 40px;
+      position: relative;
+      background: linear-gradient(180deg, #163654 0%, #102942 100%);
+    }
+
+    .blog-hero-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .blog-hero-content {
+      text-align: left;
+    }
+
+    .hero-badge-blog {
+      display: inline-block;
+      background: rgba(114, 202, 167, 0.2);
+      color: #a7f3d0;
+      border: 1px solid rgba(114, 202, 167, 0.4);
+      padding: 5px 18px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 24px;
+      letter-spacing: 0.5px;
+    }
+
+    .blog-hero-title {
+      font-size: 54px;
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+      color: #ffffff;
+      text-transform: uppercase;
+      user-select: none;
+    }
+
+    /* Word units for letter animations to prevent mid-word wrapping */
+    .anim-word-unit {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    /* Sequential bold letter entrance from the right */
+    .anim-letter-right {
+      display: inline-block;
+      vertical-align: baseline;
+      opacity: 0;
+      transform: translateX(45px);
+      filter: none !important;
+      -webkit-filter: none !important;
+      will-change: transform, opacity;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    .blog-hero-section:not(.in-view) .anim-letter-right,
+    .latest-articles-section:not(.in-view) .anim-letter-right,
+    .editors-pick-section:not(.in-view) .anim-letter-right,
+    .popular-section-block:not(.in-view) .anim-letter-right {
+      opacity: 0 !important;
+      transform: translateX(45px) !important;
+      animation: none !important;
+    }
+
+    @keyframes blogLetterFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(45px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .blog-hero-section.in-view .anim-letter-right,
+    .latest-articles-section.in-view .anim-letter-right {
+      animation: blogLetterFromRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--delay, 0ms) + 60ms);
+    }
+
+    .title-highlight-teal {
+      color: var(--blog-teal);
+    }
+
+    .title-highlight-script {
+      font-family: 'Caveat', cursive, serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.18em;
+      text-transform: lowercase;
+      color: #ffffff;
+      letter-spacing: 0;
+      margin-left: 2px;
+    }
+
+    /* Sentence animation streaming from right */
+    .blog-hero-desc {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.82);
+      max-width: 500px;
+      margin-bottom: 34px;
+      opacity: 0;
+      transform: translateX(42px);
+      will-change: transform, opacity;
+    }
+
+    @keyframes blogDescFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(42px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .blog-hero-section.in-view .blog-hero-desc {
+      animation: blogDescFromRight 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.95s forwards;
+    }
+
+    .blog-hero-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(18px);
+      will-change: transform, opacity;
+    }
+
+    @keyframes blogCtaFadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .blog-hero-section.in-view .blog-hero-cta-group {
+      animation: blogCtaFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.2s forwards;
+    }
+
+    .btn-hero-read {
+      background: var(--blog-teal);
+      color: var(--blog-teal-dark);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 13px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 20px rgba(114, 202, 167, 0.35);
+    }
+
+    .btn-hero-read:hover {
+      background: #5ebc9b;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(114, 202, 167, 0.45);
+    }
+
+    .btn-hero-subscribe {
+      background: #ffffff;
+      color: var(--blog-btn-navy);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 13px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-hero-subscribe:hover {
+      background: #f1f5f9;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.22);
+    }
+
+    /* Hero Right Visual Card - Center Split, Join & Hover Enlightenment */
+    .blog-hero-visual-card {
+      background: #07172c;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      position: relative;
+      aspect-ratio: 16 / 10;
+      cursor: pointer;
+      isolation: isolate;
+      transition: box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.5s ease;
+      border: 1px solid rgba(114, 202, 167, 0.22);
+    }
+
+    /* Luminous radiant aura on hover */
+    .blog-hero-visual-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(114, 202, 167, 0.7);
+      box-shadow: 0 26px 65px rgba(0, 0, 0, 0.45), 0 0 35px rgba(114, 202, 167, 0.42), 0 0 70px rgba(114, 202, 167, 0.2);
+    }
+
+    /* Center glowing split energy seam */
+    .blog-hero-visual-card::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      transform: translateX(-50%) scaleY(0);
+      background: linear-gradient(180deg, transparent, #72caa7 30%, #a7f3d0 50%, #72caa7 70%, transparent);
+      z-index: 6;
+      opacity: 0;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease;
+      box-shadow: 0 0 16px #72caa7, 0 0 32px #72caa7;
+      pointer-events: none;
+    }
+
+    .blog-hero-visual-card:hover::before {
+      transform: translateX(-50%) scaleY(1);
+      opacity: 1;
+    }
+
+    /* Dynamic light sweep sheen */
+    .blog-hero-visual-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.32) 48%, rgba(114, 202, 167, 0.38) 54%, transparent 80%);
+      transform: translateX(-130%);
+      z-index: 7;
+      pointer-events: none;
+      transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .blog-hero-visual-card:hover::after {
+      transform: translateX(130%);
+    }
+
+    /* Slices for Center-Half Separation & Join */
+    .blog-slice {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      will-change: transform, opacity;
+      transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Left half: clipped to left 50.4% */
+    .blog-slice.slice-left {
+      clip-path: polygon(0 0, 50.4% 0, 50.4% 100%, 0 100%);
+      transform: translateX(-60px);
+      opacity: 0;
+    }
+
+    /* Right half: clipped to right 50.4% (starts at 49.6%) */
+    .blog-slice.slice-right {
+      clip-path: polygon(49.6% 0, 100% 0, 100% 100%, 49.6% 100%);
+      transform: translateX(60px);
+      opacity: 0;
+    }
+
+    @keyframes blogCenterJoinLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-60px) scale(0.96);
+      }
+      50% {
+        opacity: 0.95;
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    @keyframes blogCenterJoinRight {
+      0% {
+        opacity: 0;
+        transform: translateX(60px) scale(0.96);
+      }
+      50% {
+        opacity: 0.95;
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    .blog-hero-section.in-view .blog-slice.slice-left {
+      animation: blogCenterJoinLeft 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    }
+
+    .blog-hero-section.in-view .blog-slice.slice-right {
+      animation: blogCenterJoinRight 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    }
+
+    /* On hover: two center halves separate gently outward */
+    .blog-hero-visual-card:hover .blog-slice.slice-left {
+      transform: translateX(-12px);
+    }
+
+    .blog-hero-visual-card:hover .blog-slice.slice-right {
+      transform: translateX(12px);
+    }
+
+    .blog-hero-visual-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.92) contrast(1.02) saturate(1.05);
+      transition: filter 0.5s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: filter, transform;
+    }
+
+    /* On hover: enlightened image radiance, contrast, saturation, and subtle depth zoom */
+    .blog-hero-visual-card:hover .blog-hero-visual-img {
+      filter: brightness(1.18) contrast(1.12) saturate(1.24);
+      transform: scale(1.035);
+    }
+
+    .sr-only-img {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Filter Categories Row */
+    .blog-filters-section {
+      padding: 10px 24px 30px;
+    }
+
+    .blog-filters-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill-btn {
+      background: #ffffff;
+      color: #1e293b;
+      border: none;
+      padding: 9px 24px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .filter-pill-btn:hover {
+      background: #f8fafc;
+      transform: translateY(-1px);
+    }
+
+    .filter-pill-btn.active {
+      background: var(--blog-teal);
+      color: var(--blog-teal-dark);
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(114, 202, 167, 0.35);
+    }
+
+    /* ==========================================================================
+       SECTION 2: LATEST ARTICLES (Screenshot 2 - FRESH FROM OUR ANALYSTS)
+       ========================================================================== */
+    .latest-articles-section {
+      padding: 40px 24px 80px;
+      position: relative;
+      background: #0d2033;
+      border-top: 1px solid rgba(114, 202, 167, 0.12);
+    }
+
+    .latest-articles-container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .articles-grid-6 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .article-card {
+      background: var(--blog-card-bg);
+      border-radius: 28px;
+      padding: 22px 22px 26px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+      color: var(--blog-text-dark);
+      text-align: left;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .article-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.28);
+    }
+
+    .article-card-img-wrap {
+      width: 100%;
+      height: 190px;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      background: #e2e8f0;
+      position: relative;
+    }
+
+    .article-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .article-card:hover .article-card-img {
+      transform: scale(1.05);
+    }
+
+    .article-meta-badge {
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .article-card-title {
+      font-size: 18.5px;
+      font-weight: 800;
+      color: var(--blog-text-dark);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+
+    .article-card-desc {
+      font-size: 13.5px;
+      color: var(--blog-text-muted);
+      line-height: 1.55;
+      margin-bottom: 18px;
+      flex-grow: 1;
+    }
+
+    .article-read-link {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--blog-btn-navy);
+      text-decoration: underline;
+      transition: color 0.2s ease;
+      display: inline-block;
+      align-self: flex-start;
+    }
+
+    .article-read-link:hover {
+      color: #0b1a29;
+    }
+
+    /* ==========================================================================
+       SECTION 3: EDITOR'S PICK & MOST READ (Screenshot 3)
+       ========================================================================== */
+    .editors-pick-section {
+      padding: 50px 24px 80px;
+      position: relative;
+      background: linear-gradient(180deg, #132d47 0%, #163654 100%);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .editors-pick-container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .editors-grid-top {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+      margin-bottom: 90px;
+    }
+
+    .editors-copy-col {
+      text-align: left;
+    }
+
+    /* Section eyebrow entrance */
+    .editors-pick-section .section-eyebrow {
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(30px);
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .editors-pick-section.in-view .section-eyebrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Editor's pick headline letters animation */
+    .editors-pick-section .section-heading-lg {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .editors-pick-section.in-view .anim-letter-right,
+    .popular-section-block.in-view .anim-letter-right {
+      animation: blogLetterFromRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--delay, 0ms) + 60ms);
+    }
+
+    /* First sentence animation from right */
+    .editors-body-text.anim-sentence-1 {
+      font-size: 16px;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 16px;
+      max-width: 580px;
+      opacity: 0;
+      transform: translateX(45px);
+      will-change: transform, opacity;
+    }
+
+    @keyframes editorSentence1FromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(45px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .editors-pick-section.in-view .editors-body-text.anim-sentence-1 {
+      animation: editorSentence1FromRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.75s forwards;
+    }
+
+    /* Second sentence animation from right */
+    .editors-body-text.anim-sentence-2 {
+      font-size: 16px;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.82);
+      margin-bottom: 16px;
+      max-width: 580px;
+      opacity: 0;
+      transform: translateX(45px);
+      will-change: transform, opacity;
+    }
+
+    @keyframes editorSentence2FromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(45px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .editors-pick-section.in-view .editors-body-text.anim-sentence-2 {
+      animation: editorSentence2FromRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) 1.05s forwards;
+    }
+
+    .editors-bullets-list {
+      list-style: none;
+      padding: 0;
+      margin: 28px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .editors-bullet-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: #ffffff;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateX(35px);
+      will-change: transform, opacity;
+    }
+
+    @keyframes editorBulletFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(35px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .editors-pick-section.in-view .editors-bullet-item:nth-child(1) {
+      animation: editorBulletFromRight 0.65s cubic-bezier(0.22, 1, 0.36, 1) 1.35s forwards;
+    }
+
+    .editors-pick-section.in-view .editors-bullet-item:nth-child(2) {
+      animation: editorBulletFromRight 0.65s cubic-bezier(0.22, 1, 0.36, 1) 1.55s forwards;
+    }
+
+    .editors-pick-section.in-view .editors-bullet-item:nth-child(3) {
+      animation: editorBulletFromRight 0.65s cubic-bezier(0.22, 1, 0.36, 1) 1.75s forwards;
+    }
+
+    .editors-bullet-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--blog-teal);
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(114, 202, 167, 0.6);
+    }
+
+    /* Right: Visual Card with Entrance from Right and High Clarity */
+    .editors-visual-card {
+      background: #07172c;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      aspect-ratio: 16 / 10;
+      position: relative;
+      border: 1px solid rgba(114, 202, 167, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateX(65px);
+      will-change: transform, opacity, box-shadow;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.5s ease;
+    }
+
+    @keyframes editorCardFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(65px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .editors-pick-section.in-view .editors-visual-card {
+      animation: editorCardFromRight 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+    }
+
+    .editors-visual-card:hover {
+      transform: translateY(-4px) scale(1.015);
+      border-color: rgba(114, 202, 167, 0.7);
+      box-shadow: 0 26px 65px rgba(0, 0, 0, 0.45), 0 0 35px rgba(114, 202, 167, 0.38), 0 0 70px rgba(114, 202, 167, 0.2);
+    }
+
+    .editors-visual-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.95) contrast(1.05) saturate(1.08);
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease;
+      will-change: transform, filter;
+    }
+
+    .editors-visual-card:hover .editors-visual-img {
+      transform: scale(1.04);
+      filter: brightness(1.12) contrast(1.1) saturate(1.18);
+    }
+
+    /* Popular Most Read List - Centered Zigzag Timeline */
+    .popular-section-block {
+      text-align: center;
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .popular-section-block .section-eyebrow {
+      margin: 0 auto 10px;
+    }
+
+    .popular-section-block .section-heading-lg {
+      text-align: center;
+      margin: 0 auto 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .popular-timeline-wrap {
+      position: relative;
+      margin: 24px auto 0;
+      width: 100%;
+      max-width: 840px;
+      padding: 12px 0 20px;
+    }
+
+    /* Central vertical timeline spine */
+    .popular-vertical-line {
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%) scaleY(0);
+      transform-origin: top;
+      width: 2px;
+      background: linear-gradient(180deg, var(--blog-teal), rgba(114, 202, 167, 0.45) 85%, transparent);
+      box-shadow: 0 0 10px rgba(114, 202, 167, 0.4);
+      transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .popular-section-block.in-view .popular-vertical-line {
+      transform: translateX(-50%) scaleY(1);
+    }
+
+    .popular-nodes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 34px;
+      width: 100%;
+      position: relative;
+    }
+
+    .popular-node-item {
+      position: relative;
+      width: calc(50% - 36px);
+      padding: 16px 22px;
+      border-radius: 18px;
+      background: rgba(14, 34, 56, 0.72);
+      border: 1px solid rgba(114, 202, 167, 0.2);
+      backdrop-filter: blur(8px);
+      text-decoration: none;
+      display: block;
+      color: inherit;
+      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+      will-change: transform, opacity;
+    }
+
+    .popular-node-item:hover {
+      transform: translateY(-3px);
+      border-color: rgba(114, 202, 167, 0.65);
+      background: rgba(18, 44, 72, 0.92);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 22px rgba(114, 202, 167, 0.28);
+    }
+
+    .popular-node-item:hover .popular-node-title {
+      color: var(--blog-teal);
+    }
+
+    /* Left-side node in zigzag */
+    .popular-node-item.node-left {
+      align-self: flex-start;
+      text-align: right;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateX(-45px);
+    }
+
+    /* Right-side node in zigzag */
+    .popular-node-item.node-right {
+      align-self: flex-end;
+      text-align: left;
+      margin-left: auto;
+      opacity: 0;
+      transform: translateX(45px);
+    }
+
+    /* Markers at center spine */
+    .popular-node-item.node-left .popular-circle-marker {
+      position: absolute;
+      right: -45px;
+      top: 50%;
+      transform: translateY(-50%) scale(0);
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #0b1a29;
+      border: 3.5px solid var(--blog-teal);
+      box-shadow: 0 0 12px rgba(114, 202, 167, 0.75);
+      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .popular-node-item.node-right .popular-circle-marker {
+      position: absolute;
+      left: -45px;
+      top: 50%;
+      transform: translateY(-50%) scale(0);
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #0b1a29;
+      border: 3.5px solid var(--blog-teal);
+      box-shadow: 0 0 12px rgba(114, 202, 167, 0.75);
+      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Horizontal branch connectors to center spine */
+    .popular-node-item.node-left::after {
+      content: '';
+      position: absolute;
+      right: -36px;
+      top: 50%;
+      width: 36px;
+      height: 1px;
+      background: rgba(114, 202, 167, 0.35);
+    }
+
+    .popular-node-item.node-right::after {
+      content: '';
+      position: absolute;
+      left: -36px;
+      top: 50%;
+      width: 36px;
+      height: 1px;
+      background: rgba(114, 202, 167, 0.35);
+    }
+
+    /* Keyframes for sliding entrance */
+    @keyframes popularSlideFromLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-45px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes popularSlideFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(45px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* One-by-one sequential entrance for 4 points */
+    .popular-section-block.in-view .popular-node-item:nth-child(1) {
+      animation: popularSlideFromLeft 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    }
+    .popular-section-block.in-view .popular-node-item:nth-child(1) .popular-circle-marker {
+      transition-delay: 0.55s;
+      transform: translateY(-50%) scale(1);
+    }
+
+    .popular-section-block.in-view .popular-node-item:nth-child(2) {
+      animation: popularSlideFromRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.65s forwards;
+    }
+    .popular-section-block.in-view .popular-node-item:nth-child(2) .popular-circle-marker {
+      transition-delay: 0.9s;
+      transform: translateY(-50%) scale(1);
+    }
+
+    .popular-section-block.in-view .popular-node-item:nth-child(3) {
+      animation: popularSlideFromLeft 0.75s cubic-bezier(0.22, 1, 0.36, 1) 1.0s forwards;
+    }
+    .popular-section-block.in-view .popular-node-item:nth-child(3) .popular-circle-marker {
+      transition-delay: 1.25s;
+      transform: translateY(-50%) scale(1);
+    }
+
+    .popular-section-block.in-view .popular-node-item:nth-child(4) {
+      animation: popularSlideFromRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) 1.35s forwards;
+    }
+    .popular-section-block.in-view .popular-node-item:nth-child(4) .popular-circle-marker {
+      transition-delay: 1.6s;
+      transform: translateY(-50%) scale(1);
+    }
+
+    .popular-node-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 5px;
+      line-height: 1.35;
+      transition: color 0.25s ease;
+    }
+
+    .popular-node-sub {
+      font-size: 13.5px;
+      color: rgba(255, 255, 255, 0.72);
+      margin: 0;
+    }
+
+    @media (max-width: 640px) {
+      .popular-timeline-wrap {
+        padding-left: 32px;
+      }
+      .popular-vertical-line {
+        left: 12px;
+        transform: none !important;
+      }
+      .popular-node-item {
+        width: 100% !important;
+        text-align: left !important;
+        margin: 0 !important;
+        align-self: flex-start !important;
+      }
+      .popular-node-item.node-left .popular-circle-marker,
+      .popular-node-item.node-right .popular-circle-marker {
+        left: -30px !important;
+        right: auto !important;
+        top: 24px !important;
+        transform: scale(1) !important;
+      }
+      .popular-node-item.node-left::after,
+      .popular-node-item.node-right::after {
+        display: none;
+      }
+    }
+
+    /* ==========================================================================
+       SECTION 4: TWO MINT CALLOUT BANNERS (Screenshot 4)
+       ========================================================================== */
+    .blog-cta-banners-section {
+      padding: 50px 24px 90px;
+      position: relative;
+      background: #0a1b2c;
+      border-top: 1px solid rgba(114, 202, 167, 0.15);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      overflow-x: clip;
+    }
+
+    .blog-cta-banners-container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      box-sizing: border-box;
+    }
+
+    .mint-banner-card {
+      background: var(--blog-teal);
+      border-radius: 28px;
+      padding: 38px 46px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Card 1: Slide in from Left */
+    @keyframes ctaCardFromLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-120px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Slide in from Right */
+    @keyframes ctaCardFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(100px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .blog-cta-banners-section:not(.in-view) .mint-banner-card {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+
+    .blog-cta-banners-section.in-view .mint-banner-card {
+      animation: ctaCardFromRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.12s forwards;
+    }
+
+    .mint-banner-card.animation-done {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+    }
+
+    .mint-banner-card:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 24px 55px rgba(0, 0, 0, 0.3), 0 0 30px rgba(114, 202, 167, 0.4);
+    }
+
+    .mint-banner-left {
+      text-align: left;
+    }
+
+    .mint-banner-eyebrow {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #0b263d;
+      opacity: 0.85;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .mint-banner-heading {
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1.18;
+      color: #0b263d;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      margin: 0;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-feature-settings: "kern" 1;
+      font-kerning: normal;
+      filter: none !important;
+      transform: none !important;
+    }
+
+    .mint-banner-subtext {
+      font-size: 15px;
+      color: #0c382b;
+      font-weight: 600;
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+
+    /* Newsletter Subscribe Form */
+    .newsletter-form-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .newsletter-input-group {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .newsletter-input-field {
+      background: #ffffff;
+      border: 2px solid transparent;
+      outline: none;
+      padding: 14px 24px;
+      border-radius: 9999px;
+      font-size: 14px;
+      color: #0f172a;
+      width: 250px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      font-family: inherit;
+      box-sizing: border-box;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    .newsletter-input-field:focus {
+      border-color: #0b263d;
+    }
+
+    .newsletter-input-field.input-error {
+      border-color: #dc2626 !important;
+      background-color: #fffaf0 !important;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.25) !important;
+    }
+
+    .newsletter-input-field::placeholder {
+      color: #94a3b8;
+    }
+
+    .newsletter-error-msg {
+      display: none;
+      color: #b91c1c;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 6px;
+      padding-left: 14px;
+      text-align: left;
+    }
+
+    .newsletter-error-msg.show {
+      display: block;
+      animation: fadeInError 0.2s ease;
+    }
+
+    @keyframes fadeInError {
+      from { opacity: 0; transform: translateY(-3px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn-mint-card-action {
+      background: var(--blog-btn-navy);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(29, 67, 104, 0.4);
+      flex-shrink: 0;
+      font-family: inherit;
+      box-sizing: border-box;
+      height: 49px;
+    }
+
+    .btn-mint-card-action:hover {
+      background: var(--blog-btn-navy-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(29, 67, 104, 0.55);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 980px) {
+      .blog-navbar-pill {
+        padding: 8px 16px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .blog-brand-link {
+        margin-right: auto;
+      }
+      .blog-nav-actions {
+        margin-left: auto;
+      }
+      .blog-nav-actions .btn-pill-signin,
+      .blog-nav-actions .btn-pill-signup,
+      #navSignIn,
+      #navSignUp {
+        display: none !important;
+      }
+      .blog-mobile-btn {
+        display: flex !important;
+      }
+      .blog-nav-links {
+        display: none !important;
+      }
+      .blog-hero-container,
+      .editors-grid-top {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .blog-hero-title {
+        font-size: 42px;
+      }
+      .articles-grid-6 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .mint-banner-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 34px 28px;
+      }
+      .newsletter-form-row {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .newsletter-input-group {
+        width: 100%;
+      }
+      .newsletter-input-field {
+        width: 100%;
+      }
+      .btn-mint-card-action {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .blog-header-wrap {
+        padding: 12px 14px;
+      }
+      .blog-navbar-pill {
+        padding: 6px 14px;
+      }
+      .blog-brand-img {
+        height: 36px;
+      }
+      .blog-hero-section {
+        padding: 100px 16px 30px;
+      }
+      .blog-hero-title {
+        font-size: 32px;
+      }
+      .section-heading-lg {
+        font-size: 30px;
+      }
+      .mint-banner-heading {
+        font-size: 26px;
+      }
+      .articles-grid-6 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Preloader for brand consistency -->
+  <div id="preloader" class="preloader" aria-label="Loading Stackly">
+    <div class="preloader-curtain curtain-left"></div>
+    <div class="preloader-curtain curtain-right"></div>
+    <div class="preloader-inner">
+      <div class="preloader-logo-wrap">
+        <span class="preloader-text-part part-left">STACK</span>
+        <span class="preloader-text-part part-right">LY</span>
+      </div>
+      <div class="preloader-caption-wrap">
+        <span class="preloader-caption-part part-left">SUPPLY CHAIN</span>
+        <span class="preloader-caption-part part-right">MANAGEMENT</span>
+      </div>
+      <div class="preloader-bar-wrap">
+        <div class="preloader-bar-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIXED FLOATING PILL NAVBAR -->
+  <header class="blog-header-wrap" id="siteHeader">
+    <nav class="blog-navbar-pill" aria-label="Main Navigation">
+      <!-- Stackly Logo from assets -->
+      <a href="index.html" class="blog-brand-link" aria-label="Stackly Home">
+        <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="blog-brand-img">
+      </a>
+
+      <!-- Center Navigation Links -->
+      <ul class="blog-nav-links">
+        <li class="blog-nav-item"><a href="index.html">Home</a></li>
+        <li class="blog-nav-item"><a href="services.html">Services</a></li>
+        <li class="blog-nav-item"><a href="about.html">About</a></li>
+        <li class="blog-nav-item"><a href="blog.html" class="active">Blog</a></li>
+        <li class="blog-nav-item"><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <!-- Right Action Buttons -->
+      <div class="blog-nav-actions">
+        <a href="login.html" class="btn-pill-signin" id="navSignIn">Sign in</a>
+        <a href="signup.html" class="btn-pill-signup" id="navSignUp">Sign up</a>
+        <button class="blog-mobile-btn" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer: Full-Screen Overlay with Top Header -->
+    <div class="blog-mobile-drawer mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
+      <div class="mobile-drawer-header">
+        <a href="index.html" class="mobile-drawer-logo" aria-label="Stackly Home">
+          <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="mobile-drawer-logo-img">
+        </a>
+        <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close navigation menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="mobile-drawer-body">
+        <ul class="mobile-drawer-links">
+          <li><a href="index.html" class="mobile-drawer-link">Home</a></li>
+          <li><a href="services.html" class="mobile-drawer-link">Services</a></li>
+          <li><a href="about.html" class="mobile-drawer-link">About</a></li>
+          <li><a href="blog.html" class="mobile-drawer-link active">Blog</a></li>
+          <li><a href="contact.html" class="mobile-drawer-link">Contact</a></li>
+        </ul>
+        <div class="mobile-drawer-actions">
+          <a href="login.html" class="btn-pill-signin">Sign in</a>
+          <a href="signup.html" class="btn-pill-signup">Sign up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         SECTION 1: HERO (Screenshot 1)
+         NOTES FROM THE network.
+         ====================================================================== -->
+    <section class="blog-hero-section in-view" id="hero">
+      <div class="blog-hero-container">
+        
+        <!-- Left: Copy & CTAs -->
+        <div class="blog-hero-content">
+          <span class="hero-badge-blog">Blog</span>
+          <h1 class="blog-hero-title cta-heading-letters white-heading-replay" id="blogHeroTitle" aria-label="NOTES FROM THE network." title="Click to replay entrance animation">
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.040s;">N</span><span class="anim-letter-right" style="--delay: 0.065s;">O</span><span class="anim-letter-right" style="--delay: 0.090s;">T</span><span class="anim-letter-right" style="--delay: 0.115s;">E</span><span class="anim-letter-right" style="--delay: 0.140s;">S</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit">
+              <span class="anim-letter-right" style="--delay: 0.170s;">F</span><span class="anim-letter-right" style="--delay: 0.195s;">R</span><span class="anim-letter-right" style="--delay: 0.220s;">O</span><span class="anim-letter-right" style="--delay: 0.245s;">M</span>
+            </span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit title-highlight-teal">
+              <span class="anim-letter-right" style="--delay: 0.275s;">T</span><span class="anim-letter-right" style="--delay: 0.300s;">H</span><span class="anim-letter-right" style="--delay: 0.325s;">E</span>
+            </span><br>
+            <span class="anim-word-unit title-highlight-script">
+              <span class="anim-letter-right" style="--delay: 0.360s;">n</span><span class="anim-letter-right" style="--delay: 0.385s;">e</span><span class="anim-letter-right" style="--delay: 0.410s;">t</span><span class="anim-letter-right" style="--delay: 0.435s;">w</span><span class="anim-letter-right" style="--delay: 0.460s;">o</span><span class="anim-letter-right" style="--delay: 0.485s;">r</span><span class="anim-letter-right" style="--delay: 0.510s;">k</span><span class="anim-letter-right" style="--delay: 0.535s;">.</span>
+            </span>
+          </h1>
+          <p class="blog-hero-desc">
+            Practical writing on forecasting, freight and warehouse operations from the analysts who run them.
+          </p>
+          <div class="blog-hero-cta-group">
+            <a href="404.html" class="btn-hero-read">
+              <span>Read the latest</span>
+            </a>
+            <a href="404.html" class="btn-hero-subscribe">Subscribe</a>
+          </div>
+        </div>
+
+        <!-- Right: Editorial Visual Card with Real Image & Center-Half Split Animation -->
+        <div class="blog-hero-visual-card" id="blogHeroVisualCard">
+          <!-- Left 50% Slice -->
+          <div class="blog-slice slice-left" aria-hidden="true">
+            <img 
+              src="assets/auto_freight.webp" 
+              alt="Intermodal Freight and Logistics Operations" 
+              class="blog-hero-visual-img"
+            >
+          </div>
+          <!-- Right 50% Slice -->
+          <div class="blog-slice slice-right" aria-hidden="true">
+            <img 
+              src="assets/auto_freight.webp" 
+              alt="Intermodal Freight and Logistics Operations" 
+              class="blog-hero-visual-img"
+            >
+          </div>
+          <!-- Screen-reader accessible semantic image -->
+          <img 
+            src="assets/auto_freight.webp" 
+            alt="Real intermodal freight terminal with container rail and logistics carriers" 
+            class="blog-hero-visual-img sr-only-img"
+          >
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Filter Category Pills (Screenshot 1 Bottom) -->
+    <section class="blog-filters-section" aria-label="Filter articles by topic">
+      <div class="blog-filters-container">
+        <button class="filter-pill-btn active" data-filter="all">All</button>
+        <button class="filter-pill-btn" data-filter="forecasting">Forecasting</button>
+        <button class="filter-pill-btn" data-filter="logistics">Logistics</button>
+        <button class="filter-pill-btn" data-filter="suppliers">Suppliers</button>
+        <button class="filter-pill-btn" data-filter="freight">Freight</button>
+        <button class="filter-pill-btn" data-filter="risk">Risk</button>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 2: LATEST ARTICLES (Screenshot 2)
+         FRESH FROM OUR ANALYSTS.
+         ====================================================================== -->
+    <section class="latest-articles-section" id="latest">
+      <div class="latest-articles-container">
+        
+        <span class="section-eyebrow">LATEST</span>
+        <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="latestArticlesTitle" aria-label="FRESH FROM OUR ANALYSTS." title="Click to replay animation">
+          <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">F</span><span class="anim-letter-right" style="--delay: 0.065s;">R</span><span class="anim-letter-right" style="--delay: 0.090s;">E</span><span class="anim-letter-right" style="--delay: 0.115s;">S</span><span class="anim-letter-right" style="--delay: 0.140s;">H</span></span>
+          <span class="anim-letter-space">&nbsp;</span>
+          <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.170s;">F</span><span class="anim-letter-right" style="--delay: 0.195s;">R</span><span class="anim-letter-right" style="--delay: 0.220s;">O</span><span class="anim-letter-right" style="--delay: 0.245s;">M</span></span>
+          <span class="anim-letter-space">&nbsp;</span>
+          <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.275s;">O</span><span class="anim-letter-right" style="--delay: 0.300s;">U</span><span class="anim-letter-right" style="--delay: 0.325s;">R</span></span>
+          <span class="anim-letter-space">&nbsp;</span>
+          <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.355s;">A</span><span class="anim-letter-right" style="--delay: 0.380s;">N</span><span class="anim-letter-right" style="--delay: 0.405s;">A</span><span class="anim-letter-right" style="--delay: 0.430s;">L</span><span class="anim-letter-right" style="--delay: 0.455s;">Y</span><span class="anim-letter-right" style="--delay: 0.480s;">S</span><span class="anim-letter-right" style="--delay: 0.505s;">T</span><span class="anim-letter-right" style="--delay: 0.530s;">S</span><span class="anim-letter-right" style="--delay: 0.555s;">.</span></span>
+        </h2>
+
+        <div class="articles-grid-6" id="articlesGrid">
+          
+          <!-- Article 1: Forecasting -->
+          <article class="article-card" data-category="forecasting">
+            <div class="article-card-img-wrap">
+              <img 
+                src="assets/blog_forecasting.webp" 
+                alt="Why safety stock formulas fail in a volatile year" 
+                class="article-card-img"
+                loading="lazy"
+              >
+            </div>
+            <span class="article-meta-badge">FORECASTING &middot; 6 MIN</span>
+            <h3 class="article-card-title">Why safety stock formulas fail in a volatile year</h3>
+            <p class="article-card-desc">
+              Lead times moved 40% last quarter. Here is how to size buffers when the average stops meaning anything.
+            </p>
+            <a href="404.html" class="article-read-link">Read article</a>
+          </article>
+
+          <!-- Article 2: Logistics -->
+          <article class="article-card" data-category="logistics">
+            <div class="article-card-img-wrap">
+              <img 
+                src="assets/blog_detention.webp" 
+                alt="Cutting detention fees: a dock scheduling checklist" 
+                class="article-card-img"
+                loading="lazy"
+              >
+            </div>
+            <span class="article-meta-badge">LOGISTICS &middot; 5 MIN</span>
+            <h3 class="article-card-title">Cutting detention fees: a dock scheduling checklist</h3>
+            <p class="article-card-desc">
+              Four changes a Dutch retailer made to stop paying carriers to wait at the gate.
+            </p>
+            <a href="404.html" class="article-read-link">Read article</a>
+          </article>
+
+          <!-- Article 3: Suppliers -->
+          <article class="article-card" data-category="suppliers">
+            <div class="article-card-img-wrap">
+              <img 
+                src="assets/blog_suppliers.webp" 
+                alt="Mapping tier-2 suppliers before they become problems" 
+                class="article-card-img"
+                loading="lazy"
+              >
+            </div>
+            <span class="article-meta-badge">SUPPLIERS &middot; 7 MIN</span>
+            <h3 class="article-card-title">Mapping tier-2 suppliers before they become problems</h3>
+            <p class="article-card-desc">
+              You cannot manage a risk you cannot see. A practical way to map the suppliers behind your suppliers.
+            </p>
+            <a href="404.html" class="article-read-link">Read article</a>
+          </article>
+
+          <!-- Article 4: Freight -->
+          <article class="article-card" data-category="freight">
+            <div class="article-card-img-wrap">
+              <img 
+                src="assets/auto_freight.webp" 
+                alt="Reading a freight invoice line by line" 
+                class="article-card-img"
+                loading="lazy"
+              >
+            </div>
+            <span class="article-meta-badge">FREIGHT &middot; 4 MIN</span>
+            <h3 class="article-card-title">Reading a freight invoice line by line</h3>
+            <p class="article-card-desc">
+              The six accessorial charges that quietly add 8% to your spend.
+            </p>
+            <a href="404.html" class="article-read-link">Read article</a>
+          </article>
+
+          <!-- Article 5: Data / Forecasting -->
+          <article class="article-card" data-category="forecasting">
+            <div class="article-card-img-wrap">
+              <img 
+                src="assets/service_demand_forecasting.webp" 
+                alt="Cleaning SKU data before you forecast" 
+                class="article-card-img"
+                loading="lazy"
+              >
+            </div>
+            <span class="article-meta-badge">DATA &middot; 8 MIN</span>
+            <h3 class="article-card-title">Cleaning SKU data before you forecast</h3>
+            <p class="article-card-desc">
+              A weekend of tidy-up that improved forecast accuracy by 11 points.
+            </p>
+            <a href="404.html" class="article-read-link">Read article</a>
+          </article>
+
+          <!-- Article 6: Risk -->
+          <article class="article-card" data-category="risk">
+            <div class="article-card-img-wrap">
+              <img 
+                src="assets/service_risk_alerts.webp" 
+                alt="What a port strike really costs" 
+                class="article-card-img"
+                loading="lazy"
+              >
+            </div>
+            <span class="article-meta-badge">RISK &middot; 6 MIN</span>
+            <h3 class="article-card-title">What a port strike really costs</h3>
+            <p class="article-card-desc">
+              Modelling three weeks of delay for a mid-size retailer.
+            </p>
+            <a href="404.html" class="article-read-link">Read article</a>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 3: EDITOR'S PICK & MOST READ (Screenshot 3)
+         ====================================================================== -->
+    <section class="editors-pick-section" id="editors-pick">
+      <div class="editors-pick-container">
+        
+        <!-- Editor's Pick Feature -->
+        <div class="editors-grid-top">
+          <!-- Left: Copy & Bullets -->
+          <div class="editors-copy-col">
+            <span class="section-eyebrow">EDITOR'S PICK</span>
+            <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="editorsPickTitle" aria-label="THE ONE CHART EVERY PLANNER SHOULD BUILD." title="Click to replay entrance animation">
+              <span class="anim-word-unit">
+                <span class="anim-letter-right" style="--delay: 0.040s;">T</span><span class="anim-letter-right" style="--delay: 0.065s;">H</span><span class="anim-letter-right" style="--delay: 0.090s;">E</span>
+              </span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit">
+                <span class="anim-letter-right" style="--delay: 0.120s;">O</span><span class="anim-letter-right" style="--delay: 0.145s;">N</span><span class="anim-letter-right" style="--delay: 0.170s;">E</span>
+              </span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit">
+                <span class="anim-letter-right" style="--delay: 0.200s;">C</span><span class="anim-letter-right" style="--delay: 0.225s;">H</span><span class="anim-letter-right" style="--delay: 0.250s;">A</span><span class="anim-letter-right" style="--delay: 0.275s;">R</span><span class="anim-letter-right" style="--delay: 0.300s;">T</span>
+              </span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit">
+                <span class="anim-letter-right" style="--delay: 0.330s;">E</span><span class="anim-letter-right" style="--delay: 0.355s;">V</span><span class="anim-letter-right" style="--delay: 0.380s;">E</span><span class="anim-letter-right" style="--delay: 0.405s;">R</span><span class="anim-letter-right" style="--delay: 0.430s;">Y</span>
+              </span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit">
+                <span class="anim-letter-right" style="--delay: 0.460s;">P</span><span class="anim-letter-right" style="--delay: 0.485s;">L</span><span class="anim-letter-right" style="--delay: 0.510s;">A</span><span class="anim-letter-right" style="--delay: 0.535s;">N</span><span class="anim-letter-right" style="--delay: 0.560s;">N</span><span class="anim-letter-right" style="--delay: 0.585s;">E</span><span class="anim-letter-right" style="--delay: 0.610s;">R</span>
+              </span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit">
+                <span class="anim-letter-right" style="--delay: 0.640s;">S</span><span class="anim-letter-right" style="--delay: 0.665s;">H</span><span class="anim-letter-right" style="--delay: 0.690s;">O</span><span class="anim-letter-right" style="--delay: 0.715s;">U</span><span class="anim-letter-right" style="--delay: 0.740s;">L</span><span class="anim-letter-right" style="--delay: 0.765s;">D</span>
+              </span>
+              <span class="anim-letter-space">&nbsp;</span>
+              <span class="anim-word-unit">
+                <span class="anim-letter-right" style="--delay: 0.795s;">B</span><span class="anim-letter-right" style="--delay: 0.820s;">U</span><span class="anim-letter-right" style="--delay: 0.845s;">I</span><span class="anim-letter-right" style="--delay: 0.870s;">L</span><span class="anim-letter-right" style="--delay: 0.895s;">D</span><span class="anim-letter-right" style="--delay: 0.920s;">.</span>
+              </span>
+            </h2>
+            
+            <p class="editors-body-text anim-sentence-1">
+              Plot promised lead time against actual lead time for your top 50 suppliers. The gap is your real safety stock.
+            </p>
+            <p class="editors-body-text anim-sentence-2">
+              We walk through the exact steps in a 12-minute read with a free spreadsheet template.
+            </p>
+
+            <ul class="editors-bullets-list">
+              <li class="editors-bullet-item">
+                <span class="editors-bullet-dot"></span>
+                <span>Works with any ERP export</span>
+              </li>
+              <li class="editors-bullet-item">
+                <span class="editors-bullet-dot"></span>
+                <span>Template included</span>
+              </li>
+              <li class="editors-bullet-item">
+                <span class="editors-bullet-dot"></span>
+                <span>Written by a former dock manager</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Right: Visual Card with Entrance from Right & High-Clarity Image -->
+          <div class="editors-visual-card" id="editorsVisualCard" title="Supply Chain Lead Time and Operational Forecasting Analytics">
+            <img 
+              src="assets/service_demand_forecasting.webp" 
+              alt="High clarity supply chain planner workstation displaying supplier lead time charts, operational efficiency, and forecasting analytics" 
+              class="editors-visual-img"
+            >
+          </div>
+        </div>
+
+        <!-- Most Read This Month Timeline (Centered Zigzag Layout) -->
+        <div class="popular-section-block" id="popularBlock">
+          <span class="section-eyebrow">POPULAR</span>
+          <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="popularSectionTitle" aria-label="MOST READ THIS MONTH." title="Click to replay sequence">
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">M</span><span class="anim-letter-right" style="--delay: 0.065s;">O</span><span class="anim-letter-right" style="--delay: 0.090s;">S</span><span class="anim-letter-right" style="--delay: 0.115s;">T</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.145s;">R</span><span class="anim-letter-right" style="--delay: 0.170s;">E</span><span class="anim-letter-right" style="--delay: 0.195s;">A</span><span class="anim-letter-right" style="--delay: 0.220s;">D</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.250s;">T</span><span class="anim-letter-right" style="--delay: 0.275s;">H</span><span class="anim-letter-right" style="--delay: 0.300s;">I</span><span class="anim-letter-right" style="--delay: 0.325s;">S</span></span>
+            <span class="anim-letter-space">&nbsp;</span>
+            <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.355s;">M</span><span class="anim-letter-right" style="--delay: 0.380s;">O</span><span class="anim-letter-right" style="--delay: 0.405s;">N</span><span class="anim-letter-right" style="--delay: 0.430s;">T</span><span class="anim-letter-right" style="--delay: 0.455s;">H</span><span class="anim-letter-right" style="--delay: 0.480s;">.</span></span>
+          </h2>
+
+          <div class="popular-timeline-wrap">
+            <div class="popular-vertical-line" aria-hidden="true"></div>
+
+            <div class="popular-nodes-list">
+              
+              <!-- Item 1: Zigzag Left -->
+              <a href="404.html" class="popular-node-item node-left">
+                <div class="popular-circle-marker" aria-hidden="true"></div>
+                <h3 class="popular-node-title">How to negotiate detention terms</h3>
+                <p class="popular-node-sub">Logistics &middot; 6 min</p>
+              </a>
+
+              <!-- Item 2: Zigzag Right -->
+              <a href="404.html" class="popular-node-item node-right">
+                <div class="popular-circle-marker" aria-hidden="true"></div>
+                <h3 class="popular-node-title">Tier-2 supplier mapping template</h3>
+                <p class="popular-node-sub">Suppliers &middot; 5 min</p>
+              </a>
+
+              <!-- Item 3: Zigzag Left -->
+              <a href="404.html" class="popular-node-item node-left">
+                <div class="popular-circle-marker" aria-hidden="true"></div>
+                <h3 class="popular-node-title">Forecasting promotions without overfitting</h3>
+                <p class="popular-node-sub">Forecasting &middot; 9 min</p>
+              </a>
+
+              <!-- Item 4: Zigzag Right (Added 4th Point) -->
+              <a href="404.html" class="popular-node-item node-right">
+                <div class="popular-circle-marker" aria-hidden="true"></div>
+                <h3 class="popular-node-title">Warehouse slotting heuristics for peak season</h3>
+                <p class="popular-node-sub">Warehouse &middot; 7 min</p>
+              </a>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 4: TWO MINT CALLOUT BANNERS (Screenshot 4)
+         ====================================================================== -->
+    <section class="blog-cta-banners-section" id="newsletter">
+      <div class="blog-cta-banners-container">
+        
+        <!-- Banner 1: Newsletter (Slides in from Right) -->
+        <div class="mint-banner-card cta-card-from-right">
+          <div class="mint-banner-left">
+            <span class="mint-banner-eyebrow">NEWSLETTER</span>
+            <h2 class="mint-banner-heading">ONE USEFUL EMAIL A MONTH.</h2>
+            <p class="mint-banner-subtext">Join 12,000 planners. No promotions, no spam.</p>
+          </div>
+          <form class="newsletter-form-row" id="newsletterForm" novalidate>
+            <div class="newsletter-input-group">
+              <input 
+                type="email" 
+                id="newsletterEmail" 
+                placeholder="you@gmail.com" 
+                class="newsletter-input-field" 
+                autocomplete="email"
+                aria-label="Email address"
+              >
+              <div class="newsletter-error-msg" id="newsletterError" role="alert"></div>
+            </div>
+            <button type="submit" class="btn-mint-card-action" id="newsletterSubmitBtn">
+              Subscribe
+            </button>
+          </form>
+        </div>
+
+        <!-- Banner 2: Book a Demo CTA (Slides in from Right) -->
+        <div class="mint-banner-card cta-card-from-right">
+          <div class="mint-banner-left">
+            <h2 class="mint-banner-heading">PUT THE IDEAS TO WORK.</h2>
+            <p class="mint-banner-subtext">See how Stackly turns these techniques into automatic alerts.</p>
+          </div>
+          <a href="404.html" class="btn-mint-card-action">
+            Book a demo
+          </a>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================================================================
+       FOOTER: Same Comprehensive 4-Column Footer from Homepage
+       ====================================================================== -->
+  <footer class="site-footer" id="siteFooter">
+    <div class="container">
+      <div class="footer-grid-4">
+        
+        <!-- Col 1: Brand & Caption (NO white background box on logo, directly from assets) -->
+        <div class="footer-brand-col">
+          <a href="index.html" class="footer-logo-wrap" aria-label="Stackly Home">
+            <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="footer-logo-img">
+          </a>
+          <p class="footer-caption">
+            Stackly connects suppliers, warehouses, carriers and stores in one unified live view, so planners spot disruptions before they impact shelves.
+          </p>
+          <div class="footer-social-row">
+            <!-- 1. Twitter / X -->
+            <a href="404.html" class="social-icon-btn" aria-label="Twitter X">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <!-- 2. LinkedIn -->
+            <a href="404.html" class="social-icon-btn" aria-label="LinkedIn">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <!-- 3. YouTube -->
+            <a href="404.html" class="social-icon-btn" aria-label="YouTube">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <!-- 4. GitHub -->
+            <a href="404.html" class="social-icon-btn" aria-label="GitHub">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-nav-list">
+            <li class="footer-nav-item"><a href="index.html">Home</a></li>
+            <li class="footer-nav-item"><a href="services.html">Services</a></li>
+            <li class="footer-nav-item"><a href="about.html">About</a></li>
+            <li class="footer-nav-item"><a href="blog.html">Blog</a></li>
+            <li class="footer-nav-item"><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Platform Solutions -->
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title">Platform Solutions</h4>
+          <ul class="footer-nav-list">
+            <li class="footer-nav-item"><a href="services.html#modules">Shipment Visibility</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Inventory Control</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Demand Forecasting</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Supplier Management</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Risk Alerts</a></li>
+            <li class="footer-nav-item"><a href="services.html#modules">Freight Audit</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Stackly Salem Address -->
+        <div class="footer-address-col">
+          <h4 class="footer-col-title">Salem Headquarters</h4>
+          <div class="footer-address-card">
+            <div class="address-company">Stackly Technologies Hub</div>
+            <p class="address-text">
+              124/B Heritage Enclave, Cherry Road,<br>
+              Hasthampatti, Salem,<br>
+              Tamil Nadu 636007, India.
+            </p>
+            <div class="address-contact-item">
+              <span>Phone:</span>
+              <span style="color:#ffffff;">+91 427 244 8900</span>
+            </div>
+            <div class="address-contact-item">
+              <span>Mobile:</span>
+              <span style="color:#ffffff;">+91 98427 12345</span>
+            </div>
+            <div class="address-contact-item">
+              <span>Email:</span>
+              <span style="color:#ffffff;">support@stackly.com</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Legal Row -->
+      <div class="footer-bottom-bar">
+        <span class="footer-copyright">&copy; 2026 Stackly Technologies Inc. All rights reserved.</span>
+        <div class="footer-legal-links">
+          <a href="404.html">Privacy Policy</a>
+          <a href="404.html">Terms of Service</a>
+          <a href="404.html">Security Protocol</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    (function() {
+      // Fixed navbar header background on scroll
+      var header = document.getElementById('siteHeader');
+      if (header) {
+        var handleHeaderScroll = function() {
+          if (window.scrollY > 8) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
+        };
+        window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+        handleHeaderScroll();
+      }
+
+
+      // Interactive Category Filter Pills
+      var filterButtons = document.querySelectorAll('.filter-pill-btn');
+      var cards = document.querySelectorAll('.article-card');
+
+      filterButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var filter = this.getAttribute('data-filter');
+
+          filterButtons.forEach(function(b) { b.classList.remove('active'); });
+          this.classList.add('active');
+
+          cards.forEach(function(card) {
+            var category = card.getAttribute('data-category');
+            if (filter === 'all' || category === filter) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // Blog CTA Banners Section In-View Trigger & Entrance Management
+      var blogCta = document.getElementById('newsletter');
+      if (blogCta) {
+        var mintCards = blogCta.querySelectorAll('.mint-banner-card');
+        mintCards.forEach(function(card) {
+          card.addEventListener('animationend', function() {
+            card.classList.add('animation-done');
+          });
+        });
+
+        if ('IntersectionObserver' in window) {
+          var obs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                blogCta.classList.add('in-view');
+                obs.unobserve(blogCta);
+              }
+            });
+          }, { threshold: 0.08 });
+          obs.observe(blogCta);
+        } else {
+          blogCta.classList.add('in-view');
+        }
+      }
+
+      // Newsletter Form: Strict @gmail.com Validation & 404 Redirection
+      var newsletterForm = document.getElementById('newsletterForm');
+      var newsletterEmail = document.getElementById('newsletterEmail');
+      var newsletterError = document.getElementById('newsletterError');
+
+      if (newsletterForm && newsletterEmail && newsletterError) {
+        var clearNewsletterError = function() {
+          newsletterError.classList.remove('show');
+          newsletterError.textContent = '';
+          newsletterEmail.classList.remove('input-error');
+        };
+
+        var showNewsletterError = function(msg) {
+          newsletterError.textContent = msg;
+          newsletterError.classList.add('show');
+          newsletterEmail.classList.add('input-error');
+          newsletterEmail.focus();
+        };
+
+        newsletterEmail.addEventListener('input', function() {
+          if (newsletterEmail.classList.contains('input-error')) {
+            clearNewsletterError();
+          }
+        });
+
+        newsletterForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var rawEmail = newsletterEmail.value.trim();
+
+          if (!rawEmail) {
+            showNewsletterError('Please enter your email address');
+            return;
+          }
+
+          // Strict validation: Only @gmail.com is allowed
+          var gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+          if (!gmailRegex.test(rawEmail)) {
+            showNewsletterError('Please enter a valid @gmail.com address');
+            return;
+          }
+
+          // Valid @gmail.com entered -> navigate to 404 page
+          clearNewsletterError();
+          window.location.href = '404.html';
+        });
+      }
+
+      // Blog Hero Section In-View Trigger & Replay
+      var blogHero = document.getElementById('hero');
+      if (blogHero) {
+        var triggerHeroEntrance = function() {
+          blogHero.classList.remove('in-view');
+          void blogHero.offsetWidth; // trigger reflow
+          blogHero.classList.add('in-view');
+        };
+
+        if (document.body.classList.contains('loaded') || document.documentElement.classList.contains('no-preloader')) {
+          triggerHeroEntrance();
+        } else {
+          window.addEventListener('load', function() {
+            setTimeout(triggerHeroEntrance, 480);
+          });
+          setTimeout(triggerHeroEntrance, 780);
+        }
+
+        var heroTitle = document.getElementById('blogHeroTitle');
+        if (heroTitle) {
+          heroTitle.addEventListener('click', triggerHeroEntrance);
+        }
+
+        var visualCard = document.getElementById('blogHeroVisualCard');
+        if (visualCard) {
+          visualCard.addEventListener('click', triggerHeroEntrance);
+        }
+      }
+
+      // Latest Articles Section In-View Trigger & Replay
+      var latestSec = document.getElementById('latest');
+      if (latestSec) {
+        var triggerLatestEntrance = function() {
+          latestSec.classList.remove('in-view');
+          void latestSec.offsetWidth; // trigger reflow
+          latestSec.classList.add('in-view');
+        };
+
+        if ('IntersectionObserver' in window) {
+          var latestObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                latestSec.classList.add('in-view');
+                latestObs.unobserve(latestSec);
+              }
+            });
+          }, { threshold: 0.12 });
+          latestObs.observe(latestSec);
+        } else {
+          latestSec.classList.add('in-view');
+        }
+
+        var latestTitle = document.getElementById('latestArticlesTitle');
+        if (latestTitle) {
+          latestTitle.addEventListener('click', triggerLatestEntrance);
+        }
+      }
+
+      // Editor's Pick Section In-View Trigger & Replay
+      var editorsPick = document.getElementById('editors-pick');
+      if (editorsPick) {
+        var triggerEditorsEntrance = function() {
+          editorsPick.classList.remove('in-view');
+          void editorsPick.offsetWidth; // trigger reflow
+          editorsPick.classList.add('in-view');
+        };
+
+        if ('IntersectionObserver' in window) {
+          var editObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                editorsPick.classList.add('in-view');
+                editObs.unobserve(editorsPick);
+              }
+            });
+          }, { threshold: 0.12 });
+          editObs.observe(editorsPick);
+        } else {
+          editorsPick.classList.add('in-view');
+        }
+
+        var editorTitle = document.getElementById('editorsPickTitle');
+        if (editorTitle) {
+          editorTitle.addEventListener('click', triggerEditorsEntrance);
+        }
+
+        var editorCard = document.getElementById('editorsVisualCard');
+        if (editorCard) {
+          editorCard.addEventListener('click', triggerEditorsEntrance);
+        }
+      }
+
+      // Popular / Most Read This Month Section In-View Trigger & Replay
+      var popularBlock = document.getElementById('popularBlock');
+      if (popularBlock) {
+        var triggerPopularEntrance = function() {
+          popularBlock.classList.remove('in-view');
+          void popularBlock.offsetWidth; // trigger reflow
+          popularBlock.classList.add('in-view');
+        };
+
+        if ('IntersectionObserver' in window) {
+          var popObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                popularBlock.classList.add('in-view');
+                popObs.unobserve(popularBlock);
+              }
+            });
+          }, { threshold: 0.12 });
+          popObs.observe(popularBlock);
+        } else {
+          popularBlock.classList.add('in-view');
+        }
+
+        var popTitle = document.getElementById('popularSectionTitle');
+        if (popTitle) {
+          popTitle.addEventListener('click', triggerPopularEntrance);
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up | Stackly Supply Chain</title>
+  <meta name="description" content="Start your 14-day free trial on Stackly. No card required. Connect your supply chain and shipments in minutes.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/webp" href="assets/stackly_logo.webp">
+  <style>
+    /* ==========================================================================
+       SIGN UP PAGE SPECIFIC STYLES - PIXEL PERFECT TO DESIGN
+       ========================================================================== */
+    :root {
+      --signup-page-bg: #19446c;
+      --signup-card-bg: #ffffff;
+      --signup-input-bg: #eef4f6;
+      --signup-input-border: #e2e8f0;
+      --signup-btn-navy: #1d4368;
+      --signup-btn-navy-hover: #153655;
+      --signup-btn-signup-bg: #72caa7;
+      --signup-btn-signup-hover: #5ebf99;
+      --signup-btn-signup-text: #0d382b;
+      --signup-text-dark: #0f1e2e;
+      --signup-text-sub: #52677d;
+      --signup-teal: #0f766e;
+    }
+
+    html, body {
+      overflow-x: hidden !important;
+      max-width: 100vw !important;
+    }
+
+    body {
+      background-color: var(--signup-page-bg);
+      background-image: radial-gradient(circle at 50% 20%, #204f7c 0%, #173d63 70%, #133454 100%);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Top Floating Pill Header - Fixed on scroll */
+    .signup-header-wrap {
+      width: 100%;
+      padding: 16px 24px 10px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      pointer-events: none;
+      box-sizing: border-box;
+      transition: padding 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .signup-header-wrap.scrolled {
+      padding: 10px 24px;
+      background: rgba(25, 68, 108, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    .signup-navbar-pill {
+      pointer-events: auto;
+      max-width: 1160px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 9999px;
+      padding: 10px 24px 10px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+
+    .signup-brand-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .signup-brand-img {
+      height: 42px;
+      max-height: 46px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+
+    .signup-brand-img:hover {
+      transform: scale(1.03);
+    }
+
+    .signup-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .signup-nav-item a {
+      color: #334155;
+      font-size: 14.5px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .signup-nav-item a:hover {
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    .signup-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-pill-signin {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      color: #1e293b;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 24px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-pill-signin:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+      color: #0f172a;
+    }
+
+    .btn-pill-signup {
+      background: var(--signup-btn-signup-bg);
+      border: 1.5px solid transparent;
+      color: var(--signup-btn-signup-text);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 8px 24px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(114, 202, 167, 0.35);
+    }
+
+    .btn-pill-signup:hover {
+      background: var(--signup-btn-signup-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(114, 202, 167, 0.45);
+    }
+
+    /* Mobile Hamburger */
+    .signup-mobile-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      flex-direction: column;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .signup-mobile-btn span {
+      width: 24px;
+      height: 2.5px;
+      background: #1e293b;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .signup-mobile-btn.open span:nth-child(1) {
+      transform: translateY(7.5px) rotate(45deg);
+    }
+
+    .signup-mobile-btn.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .signup-mobile-btn.open span:nth-child(3) {
+      transform: translateY(-7.5px) rotate(-45deg);
+    }
+
+    /* Mobile Nav Drawer - Full-Screen Overlay */
+    .signup-mobile-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      background: #ffffff;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-shadow: none !important;
+      flex-direction: column;
+      z-index: 999999 !important;
+      pointer-events: auto;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    .signup-mobile-drawer.open {
+      display: flex !important;
+    }
+
+    /* Main Container (Two Columns: White Card + Airport Image) */
+    .signup-main-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 110px 24px 50px;
+    }
+
+    .signup-content-grid {
+      width: 100%;
+      max-width: 1160px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    /* Left: White Sign Up Card */
+    .signup-card {
+      background: var(--signup-card-bg);
+      border-radius: 32px;
+      padding: 44px 44px 40px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.24);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: var(--signup-text-dark);
+    }
+
+    .signup-heading {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--signup-text-dark);
+      letter-spacing: -0.5px;
+      margin: 0 0 6px 0;
+      text-transform: uppercase;
+      line-height: 1.15;
+    }
+
+    .signup-subheading {
+      font-size: 14.5px;
+      color: var(--signup-text-sub);
+      margin: 0 0 22px 0;
+      line-height: 1.4;
+    }
+
+    .signup-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* 2-Column Row for Full Name & Company */
+    .form-row-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .signup-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      text-align: left;
+    }
+
+    .signup-form-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--signup-text-dark);
+    }
+
+    .signup-form-input {
+      width: 100%;
+      background: var(--signup-input-bg);
+      border: 1.5px solid transparent;
+      border-radius: 13px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: var(--signup-text-dark);
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .signup-form-input::placeholder {
+      color: #94a3b8;
+    }
+
+    .signup-form-input:focus {
+      background: #ffffff;
+      border-color: #6ecaa9;
+      box-shadow: 0 0 0 3px rgba(110, 202, 169, 0.2);
+    }
+
+    .signup-form-input.input-error {
+      border-color: #ef4444 !important;
+      background: #fef2f2 !important;
+    }
+
+    .error-line {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #ef4444;
+      display: none;
+      margin-top: 2px;
+    }
+
+    .error-line.show {
+      display: block;
+    }
+
+    /* Terms & Privacy Policy Checkbox */
+    .signup-checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 2px;
+      margin-bottom: 4px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .custom-checkbox-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      cursor: pointer;
+    }
+
+    .custom-checkbox-wrapper input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    .custom-checkbox-box {
+      width: 17px;
+      height: 17px;
+      background-color: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 5px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .custom-checkbox-wrapper input:checked ~ .custom-checkbox-box {
+      background-color: var(--signup-btn-navy);
+      border-color: var(--signup-btn-navy);
+    }
+
+    .custom-checkbox-wrapper input:checked ~ .custom-checkbox-box::after {
+      content: "";
+      width: 4px;
+      height: 8px;
+      border: solid #ffffff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      margin-bottom: 2px;
+    }
+
+    .custom-checkbox-label {
+      font-size: 13px;
+      color: #475569;
+      font-weight: 500;
+    }
+
+    /* Create Account Primary Button */
+    .btn-signup-primary {
+      width: 100%;
+      background: var(--signup-btn-navy);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 9999px;
+      padding: 14px 26px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(29, 67, 104, 0.3);
+      margin-top: 2px;
+    }
+
+    .btn-signup-primary:hover {
+      background: var(--signup-btn-navy-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(29, 67, 104, 0.45);
+    }
+
+    .btn-signup-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-arrow-icon {
+      font-size: 16px;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-signup-primary:hover .btn-arrow-icon {
+      transform: translateX(3px);
+    }
+
+    /* Bottom Prompt: Already have an account? Sign in */
+    .signup-footer-prompt {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 13.5px;
+      color: #475569;
+    }
+
+    .link-signin-switch {
+      color: var(--signup-teal);
+      font-weight: 700;
+      text-decoration: none;
+      transition: color 0.2s ease;
+      margin-left: 4px;
+    }
+
+    .link-signin-switch:hover {
+      color: #0d9488;
+      text-decoration: underline;
+    }
+
+    /* Right: Airport Control Tower Visual Card */
+    .signup-visual-card {
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.24);
+      position: relative;
+      display: flex;
+      min-height: 520px;
+      background: #11283d;
+    }
+
+    .signup-visual-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .signup-visual-card:hover .signup-visual-img {
+      transform: scale(1.02);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 980px) {
+      .signup-navbar-pill {
+        padding: 8px 16px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .signup-brand-link {
+        margin-right: auto;
+      }
+      .signup-nav-actions {
+        margin-left: auto;
+      }
+      .signup-nav-actions .btn-pill-signin,
+      .signup-nav-actions .btn-pill-signup,
+      #navSignIn,
+      #navSignUp {
+        display: none !important;
+      }
+      .signup-mobile-btn {
+        display: flex !important;
+      }
+      .signup-nav-links {
+        display: none !important;
+      }
+      .signup-content-grid {
+        grid-template-columns: 1fr;
+        max-width: 520px;
+        margin: 0 auto;
+      }
+      .signup-visual-card {
+        display: none !important;
+      }
+      .signup-card {
+        padding: 38px 30px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .signup-header-wrap {
+        padding: 12px 14px;
+      }
+      .signup-header-wrap.scrolled {
+        padding: 8px 14px;
+      }
+      .signup-navbar-pill {
+        padding: 6px 14px;
+      }
+      .signup-brand-img {
+        height: 36px;
+      }
+      .form-row-two-col {
+        grid-template-columns: 1fr;
+      }
+      .signup-main-section {
+        padding: 90px 16px 36px;
+      }
+      .signup-card {
+        padding: 30px 20px;
+        border-radius: 24px;
+      }
+      .signup-heading {
+        font-size: 26px;
+      }
+      .signup-visual-card {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Preloader for smooth brand intro -->
+  <div id="preloader" class="preloader" aria-label="Loading Stackly">
+    <div class="preloader-curtain curtain-left"></div>
+    <div class="preloader-curtain curtain-right"></div>
+    <div class="preloader-inner">
+      <div class="preloader-logo-wrap">
+        <span class="preloader-text-part part-left">STACK</span>
+        <span class="preloader-text-part part-right">LY</span>
+      </div>
+      <div class="preloader-caption-wrap">
+        <span class="preloader-caption-part part-left">SUPPLY CHAIN</span>
+        <span class="preloader-caption-part part-right">MANAGEMENT</span>
+      </div>
+      <div class="preloader-bar-wrap">
+        <div class="preloader-bar-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOP HEADER: Floating Pill Navbar -->
+  <header class="signup-header-wrap" id="siteHeader">
+    <nav class="signup-navbar-pill" aria-label="Main Navigation">
+      <!-- Stackly Logo from assets (as instructed) -->
+      <a href="index.html" class="signup-brand-link" aria-label="Stackly Home">
+        <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="signup-brand-img">
+      </a>
+
+      <!-- Center Nav Links -->
+      <ul class="signup-nav-links">
+        <li class="signup-nav-item"><a href="index.html">Home</a></li>
+        <li class="signup-nav-item"><a href="services.html">Services</a></li>
+        <li class="signup-nav-item"><a href="about.html">About</a></li>
+        <li class="signup-nav-item"><a href="blog.html">Blog</a></li>
+        <li class="signup-nav-item"><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <!-- Right Action Buttons -->
+      <div class="signup-nav-actions">
+        <a href="login.html" class="btn-pill-signin" id="navSignIn">Sign in</a>
+        <a href="signup.html" class="btn-pill-signup" id="navSignUp">Sign up</a>
+        <button class="signup-mobile-btn" id="mobileMenuToggle" aria-label="Toggle menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer: Full-Screen Overlay with Top Header -->
+    <div class="signup-mobile-drawer mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
+      <div class="mobile-drawer-header">
+        <a href="index.html" class="mobile-drawer-logo" aria-label="Stackly Home">
+          <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="mobile-drawer-logo-img">
+        </a>
+        <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close navigation menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="mobile-drawer-body">
+        <ul class="mobile-drawer-links">
+          <li><a href="index.html" class="mobile-drawer-link">Home</a></li>
+          <li><a href="services.html" class="mobile-drawer-link">Services</a></li>
+          <li><a href="about.html" class="mobile-drawer-link">About</a></li>
+          <li><a href="blog.html" class="mobile-drawer-link">Blog</a></li>
+          <li><a href="contact.html" class="mobile-drawer-link">Contact</a></li>
+        </ul>
+        <div class="mobile-drawer-actions">
+          <a href="login.html" class="btn-pill-signin">Sign in</a>
+          <a href="signup.html" class="btn-pill-signup active">Sign up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN SECTION: Split Content (Sign Up Card + Airport ATC Visual) -->
+  <main class="signup-main-section">
+    <div class="signup-content-grid">
+
+      <!-- LEFT: White Sign Up Card -->
+      <section class="signup-card" aria-labelledby="signupHeading">
+        <h1 class="signup-heading" id="signupHeading">START YOUR FREE TRIAL.</h1>
+        <p class="signup-subheading">14 days free. No card required.</p>
+
+        <form id="signupForm" class="signup-form" novalidate>
+          
+          <!-- Row 1: Full name & Company -->
+          <div class="form-row-two-col">
+            <!-- Full Name -->
+            <div class="signup-form-group">
+              <label for="fullNameInput" class="signup-form-label">Full name</label>
+              <input 
+                type="text" 
+                id="fullNameInput" 
+                name="fullName" 
+                class="signup-form-input" 
+                placeholder="Enter full name" 
+                autocomplete="name" 
+                required
+              >
+              <span id="nameError" class="error-line">Please enter your full name</span>
+            </div>
+
+            <!-- Company -->
+            <div class="signup-form-group">
+              <label for="companyInput" class="signup-form-label">Company</label>
+              <input 
+                type="text" 
+                id="companyInput" 
+                name="company" 
+                class="signup-form-input" 
+                placeholder="Enter company name" 
+                autocomplete="organization" 
+                required
+              >
+              <span id="companyError" class="error-line">Please enter your company name</span>
+            </div>
+          </div>
+
+          <!-- Row 2: Work email -->
+          <div class="signup-form-group">
+            <label for="emailInput" class="signup-form-label">Work email</label>
+            <input 
+              type="text" 
+              inputmode="email"
+              id="emailInput" 
+              name="workEmailAddress" 
+              class="signup-form-input" 
+              placeholder="Enter your email" 
+              autocomplete="one-time-code" 
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              readonly
+              onfocus="this.removeAttribute('readonly');"
+              onmousedown="this.removeAttribute('readonly');"
+              ontouchstart="this.removeAttribute('readonly');"
+              value="" 
+              required
+            >
+            <span id="emailError" class="error-line">Please enter a valid @gmail.com address</span>
+          </div>
+
+          <!-- Row 3: Password -->
+          <div class="signup-form-group">
+            <label for="passwordInput" class="signup-form-label">Password</label>
+            <input 
+              type="password" 
+              id="passwordInput" 
+              name="password" 
+              class="signup-form-input" 
+              placeholder="Enter the password" 
+              autocomplete="new-password" 
+              required
+            >
+            <span id="passwordError" class="error-line">Password must be at least 8 characters</span>
+          </div>
+
+          <!-- Row 4: Re-Enter Password -->
+          <div class="signup-form-group">
+            <label for="reEnterPasswordInput" class="signup-form-label">Re-Enter Password</label>
+            <input 
+              type="password" 
+              id="reEnterPasswordInput" 
+              name="confirmPassword" 
+              class="signup-form-input" 
+              placeholder="Confirm the password" 
+              autocomplete="new-password" 
+              required
+            >
+            <span id="confirmError" class="error-line">Passwords do not match</span>
+          </div>
+
+          <!-- Terms Checkbox -->
+          <div class="signup-checkbox-row">
+            <label class="custom-checkbox-wrapper" for="agreeTerms">
+              <input type="checkbox" id="agreeTerms" name="terms" required>
+              <span class="custom-checkbox-box"></span>
+              <span class="custom-checkbox-label">I agree to the terms and privacy policy</span>
+            </label>
+          </div>
+          <span id="termsError" class="error-line" style="margin-top: -6px; margin-bottom: 4px;">You must agree to the terms and privacy policy</span>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-signup-primary" id="btnSignUpSubmit">
+            <span>Create account</span>
+          </button>
+
+          <!-- Bottom Prompt: Already have an account? Sign in -->
+          <div class="signup-footer-prompt">
+            Already have an account? <a href="login.html" class="link-signin-switch" id="linkSignIn">Sign in</a>
+          </div>
+        </form>
+      </section>
+
+      <!-- RIGHT: Modern Airport Air Traffic Control Tower Visual -->
+      <section class="signup-visual-card" aria-label="Stackly Logistics Operations Center">
+        <img 
+          src="assets/airport_control_tower.webp" 
+          alt="Stackly Air Traffic Control operations at runway at sunset" 
+          class="signup-visual-img"
+          id="authVisualImg"
+        >
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ======================================================================
+       SITE FOOTER (4-Column Layout from Home Page with Salem Office Address)
+       ====================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid-4">
+        <!-- Col 1: Brand Logo, Caption & 4 Social Media Icons -->
+        <div class="footer-brand-col">
+          <a href="index.html" class="footer-logo-wrap" aria-label="Stackly Home">
+            <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="footer-logo-img">
+          </a>
+          <p class="footer-caption">
+            Stackly connects suppliers, warehouses, carriers and stores in one unified live view, so planners spot disruptions before they impact shelves.
+          </p>
+          <div class="footer-social-row">
+            <!-- 1. Twitter / X -->
+            <a href="404.html" class="social-icon-btn" aria-label="Twitter X">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <!-- 2. LinkedIn -->
+            <a href="404.html" class="social-icon-btn" aria-label="LinkedIn">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <!-- 3. YouTube -->
+            <a href="404.html" class="social-icon-btn" aria-label="YouTube">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <!-- 4. GitHub -->
+            <a href="404.html" class="social-icon-btn" aria-label="GitHub">
+              <svg class="social-svg" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links (Navbar items) -->
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-nav-list">
+            <li class="footer-nav-item"><a href="index.html">Home</a></li>
+            <li class="footer-nav-item"><a href="services.html">Services</a></li>
+            <li class="footer-nav-item"><a href="about.html">About</a></li>
+            <li class="footer-nav-item"><a href="blog.html">Blog</a></li>
+            <li class="footer-nav-item"><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Platform Solutions -->
+        <div class="footer-nav-col">
+          <h4 class="footer-col-title">Platform Solutions</h4>
+          <ul class="footer-nav-list">
+            <li class="footer-nav-item"><a href="404.html">Shipment Visibility</a></li>
+            <li class="footer-nav-item"><a href="404.html">Inventory Control</a></li>
+            <li class="footer-nav-item"><a href="404.html">Demand Forecasting</a></li>
+            <li class="footer-nav-item"><a href="404.html">Supplier Management</a></li>
+            <li class="footer-nav-item"><a href="404.html">Risk Alerts</a></li>
+            <li class="footer-nav-item"><a href="404.html">Freight Audit</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Stackly Salem Address -->
+        <div class="footer-address-col">
+          <h4 class="footer-col-title">Salem Headquarters</h4>
+          <div class="footer-address-card">
+            <div class="address-company">Stackly Technologies Hub</div>
+            <p class="address-text">
+              124/B Heritage Enclave, Cherry Road,<br>
+              Hasthampatti, Salem,<br>
+              Tamil Nadu 636007, India.
+            </p>
+            <div class="address-contact-item">
+              <span>Phone:</span>
+              <span style="color:#ffffff;">+91 427 244 8900</span>
+            </div>
+            <div class="address-contact-item">
+              <span>Mobile:</span>
+              <span style="color:#ffffff;">+91 98427 12345</span>
+            </div>
+            <div class="address-contact-item">
+              <span>Email:</span>
+              <span style="color:#ffffff;">support@stackly.com</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Legal Row -->
+      <div class="footer-bottom-bar">
+        <span class="footer-copyright">&copy; 2026 Stackly Technologies Inc. All rights reserved.</span>
+        <div class="footer-legal-links">
+          <a href="404.html">Privacy Policy</a>
+          <a href="404.html">Terms of Service</a>
+          <a href="404.html">Security Protocol</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+
+      // 2. Form & Inputs Validation
+      var form = document.getElementById('signupForm');
+      var fullNameInput = document.getElementById('fullNameInput');
+      var companyInput = document.getElementById('companyInput');
+      var emailInput = document.getElementById('emailInput');
+      var passwordInput = document.getElementById('passwordInput');
+      var reEnterPasswordInput = document.getElementById('reEnterPasswordInput');
+      var agreeTerms = document.getElementById('agreeTerms');
+
+      var nameError = document.getElementById('nameError');
+      var companyError = document.getElementById('companyError');
+      var emailError = document.getElementById('emailError');
+      var passwordError = document.getElementById('passwordError');
+      var confirmError = document.getElementById('confirmError');
+      var termsError = document.getElementById('termsError');
+
+      // Clear pre-filled value
+      if (emailInput) {
+        emailInput.value = '';
+      }
+
+      // Strict @gmail.com validator
+      var gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+
+      function validateEmail() {
+        var emailVal = emailInput ? emailInput.value.trim() : '';
+        if (!emailVal || !gmailRegex.test(emailVal)) {
+          if (emailInput) emailInput.classList.add('input-error');
+          if (emailError) {
+            emailError.textContent = 'Please enter a valid @gmail.com address';
+            emailError.classList.add('show');
+          }
+          return false;
+        } else {
+          if (emailInput) emailInput.classList.remove('input-error');
+          if (emailError) emailError.classList.remove('show');
+          return true;
+        }
+      }
+
+      // Realtime clearing of error styles
+      if (fullNameInput) {
+        fullNameInput.addEventListener('input', function () {
+          if (fullNameInput.value.trim().length >= 2) {
+            fullNameInput.classList.remove('input-error');
+            if (nameError) nameError.classList.remove('show');
+          }
+        });
+      }
+
+      if (companyInput) {
+        companyInput.addEventListener('input', function () {
+          if (companyInput.value.trim().length >= 2) {
+            companyInput.classList.remove('input-error');
+            if (companyError) companyError.classList.remove('show');
+          }
+        });
+      }
+
+      if (emailInput) {
+        // Prevent browser from showing recommended email / autofill dropdown on click
+        emailInput.addEventListener('focus', function () {
+          this.removeAttribute('readonly');
+        });
+
+        emailInput.addEventListener('mousedown', function () {
+          this.removeAttribute('readonly');
+        });
+
+        emailInput.addEventListener('touchstart', function () {
+          this.removeAttribute('readonly');
+        });
+
+        emailInput.addEventListener('input', function () {
+          var val = emailInput.value.trim();
+          if (val === '') {
+            emailInput.classList.remove('input-error');
+            if (emailError) emailError.classList.remove('show');
+          } else if (gmailRegex.test(val)) {
+            emailInput.classList.remove('input-error');
+            if (emailError) emailError.classList.remove('show');
+          } else if (emailInput.classList.contains('input-error')) {
+            if (emailError) {
+              emailError.textContent = 'Please enter a valid @gmail.com address';
+              emailError.classList.add('show');
+            }
+          }
+        });
+
+        emailInput.addEventListener('blur', function () {
+          this.setAttribute('readonly', 'readonly');
+          var val = emailInput.value.trim();
+          if (val.length > 0) {
+            validateEmail();
+          }
+        });
+      }
+
+      if (passwordInput) {
+        passwordInput.addEventListener('input', function () {
+          if (passwordInput.value.length >= 8) {
+            passwordInput.classList.remove('input-error');
+            if (passwordError) passwordError.classList.remove('show');
+          }
+          if (reEnterPasswordInput && reEnterPasswordInput.value.length > 0) {
+            if (passwordInput.value === reEnterPasswordInput.value) {
+              reEnterPasswordInput.classList.remove('input-error');
+              if (confirmError) confirmError.classList.remove('show');
+            }
+          }
+        });
+      }
+
+      if (reEnterPasswordInput) {
+        reEnterPasswordInput.addEventListener('input', function () {
+          if (passwordInput && reEnterPasswordInput.value === passwordInput.value) {
+            reEnterPasswordInput.classList.remove('input-error');
+            if (confirmError) confirmError.classList.remove('show');
+          }
+        });
+      }
+
+      if (agreeTerms) {
+        agreeTerms.addEventListener('change', function () {
+          if (agreeTerms.checked && termsError) {
+            termsError.classList.remove('show');
+          }
+        });
+      }
+
+      // Form submission
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          var nameVal = fullNameInput ? fullNameInput.value.trim() : '';
+          var companyVal = companyInput ? companyInput.value.trim() : '';
+          var passVal = passwordInput ? passwordInput.value : '';
+          var confirmVal = reEnterPasswordInput ? reEnterPasswordInput.value : '';
+          var isValid = true;
+
+          // Name validation
+          if (!nameVal || nameVal.length < 2) {
+            if (fullNameInput) fullNameInput.classList.add('input-error');
+            if (nameError) nameError.classList.add('show');
+            isValid = false;
+          } else {
+            if (fullNameInput) fullNameInput.classList.remove('input-error');
+            if (nameError) nameError.classList.remove('show');
+          }
+
+          // Company validation
+          if (!companyVal || companyVal.length < 2) {
+            if (companyInput) companyInput.classList.add('input-error');
+            if (companyError) companyError.classList.add('show');
+            isValid = false;
+          } else {
+            if (companyInput) companyInput.classList.remove('input-error');
+            if (companyError) companyError.classList.remove('show');
+          }
+
+          // Email validation
+          if (!validateEmail()) {
+            isValid = false;
+          }
+
+          // Password validation: at least 8 characters
+          if (!passVal || passVal.length < 8) {
+            if (passwordInput) passwordInput.classList.add('input-error');
+            if (passwordError) passwordError.classList.add('show');
+            isValid = false;
+          } else {
+            if (passwordInput) passwordInput.classList.remove('input-error');
+            if (passwordError) passwordError.classList.remove('show');
+          }
+
+          // Confirm password validation
+          if (confirmVal !== passVal || !confirmVal) {
+            if (reEnterPasswordInput) reEnterPasswordInput.classList.add('input-error');
+            if (confirmError) confirmError.classList.add('show');
+            isValid = false;
+          } else {
+            if (reEnterPasswordInput) reEnterPasswordInput.classList.remove('input-error');
+            if (confirmError) confirmError.classList.remove('show');
+          }
+
+          // Terms validation
+          if (agreeTerms && !agreeTerms.checked) {
+            if (termsError) termsError.classList.add('show');
+            isValid = false;
+          } else {
+            if (termsError) termsError.classList.remove('show');
+          }
+
+          if (isValid) {
+            var emailVal = emailInput ? emailInput.value.trim() : '';
+            // Save profile details
+            localStorage.setItem('stackly_user_name', nameVal);
+            localStorage.setItem('stackly_user_company', companyVal);
+            localStorage.setItem('stackly_user_email', emailVal);
+            localStorage.setItem('stackly_user_role', 'Supply Chain Manager');
+            sessionStorage.removeItem('stackly_dashboard_session');
+
+            // Redirect to sign in page
+            window.location.href = 'login.html';
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Route Lost in Transit | Stackly</title>
+  <meta name="description" content="The page or shipment reference you requested could not be located in our supply chain ledger.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/webp" href="assets/stackly_logo.webp">
+  <style>
+    .error-page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      text-align: center;
+      background: radial-gradient(circle at center, #26557e 0%, #1a3854 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ambient radar grid background */
+    .radar-grid-bg {
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      border: 1px dashed rgba(110, 202, 169, 0.15);
+      pointer-events: none;
+      animation: radarRotate 30s linear infinite;
+    }
+
+    .radar-grid-bg::before {
+      content: '';
+      position: absolute;
+      inset: 80px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, 0.08);
+    }
+
+    .radar-grid-bg::after {
+      content: '';
+      position: absolute;
+      inset: 160px;
+      border-radius: 50%;
+      border: 1px solid rgba(110, 202, 169, 0.1);
+    }
+
+    @keyframes radarRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* 404 Supply Chain Layout */
+    .error-digits-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .digit-four {
+      font-size: clamp(100px, 15vw, 170px);
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+      text-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      letter-spacing: -2px;
+    }
+
+    /* Unique Supply Chain Animated '0' */
+    .supply-chain-zero {
+      width: clamp(100px, 15vw, 170px);
+      height: clamp(100px, 15vw, 170px);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sc-outer-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 4px solid rgba(110, 202, 169, 0.25);
+      border-top-color: var(--accent-teal);
+      border-right-color: var(--accent-teal);
+      animation: spinOuter 6s linear infinite;
+    }
+
+    .sc-middle-ring {
+      position: absolute;
+      inset: 18px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 255, 255, 0.4);
+      animation: spinInner 10s linear infinite reverse;
+    }
+
+    .sc-center-hub {
+      width: 48%;
+      height: 48%;
+      border-radius: 50%;
+      background: #15324c;
+      border: 2px solid var(--accent-teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px rgba(110, 202, 169, 0.4);
+      position: relative;
+      z-index: 3;
+    }
+
+    .sc-hub-pulse {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-teal);
+      animation: pulseZero 2s ease-out infinite;
+      opacity: 0;
+    }
+
+    /* Orbiting cargo nodes */
+    .orbit-node {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      background: var(--accent-teal);
+      box-shadow: 0 0 10px var(--accent-teal);
+    }
+
+    .node-top { top: -7px; left: calc(50% - 7px); }
+    .node-bottom { bottom: -7px; left: calc(50% - 7px); background: #38bdf8; box-shadow: 0 0 10px #38bdf8; }
+
+    @keyframes spinOuter {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes spinInner {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    @keyframes pulseZero {
+      0% { transform: scale(0.9); opacity: 0.8; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+
+    .error-badge {
+      display: inline-block;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 6px 18px;
+      border-radius: 9999px;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+    }
+
+    .error-title {
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .error-description {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+
+    .error-actions-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Stackly Brand Logo at the top of Disrupted Waybill */
+    .error-logo-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
+      text-decoration: none;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+    }
+
+    .error-logo-link:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 16px rgba(110, 202, 169, 0.5));
+    }
+
+    .error-logo-img {
+      height: 48px;
+      max-height: 52px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    button.btn-secondary-white {
+      font-family: inherit;
+      line-height: inherit;
+    }
+
+    @media (max-width: 600px) {
+      .error-logo-img {
+        height: 40px;
+      }
+      .error-actions-group {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+      }
+      .error-actions-group .btn-primary-teal,
+      .error-actions-group .btn-secondary-white {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Preloader: Clean Typography Split (STACK / LY) + Equal Supply Chain Caption Split -->
+  <div id="preloader" class="preloader" aria-label="Loading Stackly">
+    <div class="preloader-curtain curtain-left"></div>
+    <div class="preloader-curtain curtain-right"></div>
+    <div class="preloader-inner">
+      <div class="preloader-logo-wrap">
+        <span class="preloader-text-part part-left">STACK</span>
+        <span class="preloader-text-part part-right">LY</span>
+      </div>
+      <div class="preloader-caption-wrap">
+        <span class="preloader-caption-part part-left">SUPPLY CHAIN</span>
+        <span class="preloader-caption-part part-right">MANAGEMENT</span>
+      </div>
+      <div class="preloader-bar-wrap">
+        <div class="preloader-bar-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="error-page-wrapper">
+    <div class="radar-grid-bg"></div>
+
+    <!-- Stackly Logo at the top of Disrupted Waybill -->
+    <a href="index.html" class="error-logo-link" aria-label="Stackly Home">
+      <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="error-logo-img">
+    </a>
+
+    <span class="error-badge">Disrupted Waybill</span>
+
+    <!-- 404 with Supply Chain Animated Zero -->
+    <div class="error-digits-row">
+      <span class="digit-four">4</span>
+      <div class="supply-chain-zero" aria-label="Supply chain cargo hub animation">
+        <div class="sc-outer-ring">
+          <span class="orbit-node node-top"></span>
+          <span class="orbit-node node-bottom"></span>
+        </div>
+        <div class="sc-middle-ring"></div>
+        <div class="sc-center-hub">
+          <div class="sc-hub-pulse"></div>
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#6ecaa9" stroke-width="2">
+            <rect x="2" y="7" width="20" height="14" rx="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+        </div>
+      </div>
+      <span class="digit-four">4</span>
+    </div>
+
+    <h1 class="error-title">LOST IN TRANSIT. ROUTE NOT FOUND.</h1>
+    <p class="error-description">
+      The freight reference, waybill, or logistics documentation you requested has dropped off the global radar. Please re-route back to the control center.
+    </p>
+
+    <div class="error-actions-group">
+      <a href="index.html" class="btn-primary-teal" id="btnBackHome">Back to Home</a>
+      <button type="button" class="btn-secondary-white" id="btnGoBack" onclick="if (window.StacklyNavigation) { window.StacklyNavigation.goBack(); } else if (window.history.length > 1) { window.history.back(); } else { window.location.href = 'index.html'; }">Go Back</button>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
