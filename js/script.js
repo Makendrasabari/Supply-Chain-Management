@@ -20,6 +20,11 @@
   var StacklyNavigation = (function () {
     var STORAGE_STACK_KEY = 'stackly_nav_stack';
     var STORAGE_LAST_VALID_KEY = 'stackly_last_valid_page';
+    var STORAGE_RETURN_PAGE = 'stackly_return_page';
+    var STORAGE_RETURN_SCROLL = 'stackly_return_scroll';
+    var STORAGE_RETURN_SECTION = 'stackly_return_section';
+    var STORAGE_RESTORE_ACTIVE = 'stackly_restore_active';
+    var STORAGE_BYPASS_PRELOADER = 'stackly_bypass_preloader';
     var MAX_STACK_SIZE = 30;
 
     // Helper: Extract clean relative file/path name from URL or pathname
@@ -59,6 +64,14 @@
       try {
         if (window.sessionStorage) {
           window.sessionStorage.setItem(key, value);
+        }
+      } catch (e) {}
+    }
+
+    function removeSessionItem(key) {
+      try {
+        if (window.sessionStorage) {
+          window.sessionStorage.removeItem(key);
         }
       } catch (e) {}
     }
@@ -104,17 +117,22 @@
       if (!currentPage) currentPage = 'index.html';
 
       if (is404Page(currentPage)) {
-        // When on 404, never store 404 in history stack.
-        // If query parameter from exists, preserve it as last valid page if none recorded.
+        // When on 404, capture return parameters from URL query string if present
         var fromParam = getQueryParam('from') || getQueryParam('ref');
         if (fromParam) {
           var cleanFrom = getCleanPageName(fromParam);
           if (cleanFrom && !is404Page(cleanFrom)) {
-            var existingLast = getSessionItem(STORAGE_LAST_VALID_KEY);
-            if (!existingLast || is404Page(existingLast)) {
-              setSessionItem(STORAGE_LAST_VALID_KEY, cleanFrom);
-            }
+            setSessionItem(STORAGE_LAST_VALID_KEY, cleanFrom);
+            setSessionItem(STORAGE_RETURN_PAGE, cleanFrom);
           }
+        }
+        var scrollParam = getQueryParam('scroll');
+        if (scrollParam) {
+          setSessionItem(STORAGE_RETURN_SCROLL, scrollParam);
+        }
+        var secParam = getQueryParam('section');
+        if (secParam) {
+          setSessionItem(STORAGE_RETURN_SECTION, secParam);
         }
         return;
       }
@@ -129,6 +147,14 @@
       }
 
       setSessionItem(STORAGE_LAST_VALID_KEY, currentPage);
+      setSessionItem(STORAGE_RETURN_PAGE, currentPage);
+
+      // Track live scroll position
+      var recordScroll = function () {
+        var sy = Math.round(window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
+        setSessionItem(STORAGE_RETURN_SCROLL, String(sy));
+      };
+      window.addEventListener('scroll', recordScroll, { passive: true });
     }
 
     function getPreviousPage() {
@@ -141,7 +167,16 @@
         }
       }
 
-      // 2. Check document.referrer
+      // 2. Check return page in sessionStorage
+      var returnPage = getSessionItem(STORAGE_RETURN_PAGE);
+      if (returnPage) {
+        var cleanReturn = getCleanPageName(returnPage);
+        if (cleanReturn && !is404Page(cleanReturn)) {
+          return cleanReturn;
+        }
+      }
+
+      // 3. Check document.referrer
       if (document.referrer) {
         var cleanRef = getCleanPageName(document.referrer);
         var currentClean = getCleanPageName(window.location.pathname);
@@ -150,67 +185,30 @@
         }
       }
 
-      // 3. Check sessionStorage navigation stack
+      // 4. Check sessionStorage navigation stack
       var stack = getNavStack();
-      var currentClean = getCleanPageName(window.location.pathname);
+      var currentCleanPath = getCleanPageName(window.location.pathname);
 
       for (var i = stack.length - 1; i >= 0; i--) {
         var page = stack[i];
-        if (page && !is404Page(page) && page !== currentClean) {
+        if (page && !is404Page(page) && page !== currentCleanPath) {
           return page;
         }
       }
 
-      // 4. Check sessionStorage last valid page
+      // 5. Check last valid page
       var lastValid = getSessionItem(STORAGE_LAST_VALID_KEY);
       if (lastValid) {
         var cleanLast = getCleanPageName(lastValid);
-        if (cleanLast && !is404Page(cleanLast) && cleanLast !== currentClean) {
+        if (cleanLast && !is404Page(cleanLast) && cleanLast !== currentCleanPath) {
           return cleanLast;
         }
       }
 
-      // 5. Default fallback
       return 'index.html';
     }
 
-    function goBack() {
-      var targetPage = getPreviousPage();
-      var isCurrent404 = is404Page(window.location.pathname);
-
-      if (isCurrent404) {
-        // Direct navigation guarantees escaping any 404 browser history loop
-        if (targetPage && !is404Page(targetPage)) {
-          window.location.href = targetPage;
-          return;
-        }
-        window.location.href = 'index.html';
-        return;
-      }
-
-      // If on standard page, attempt history.back() with fallback
-      if (targetPage && !is404Page(targetPage) && targetPage !== getCleanPageName(window.location.pathname)) {
-        var didUnload = false;
-        var markUnload = function () { didUnload = true; };
-        window.addEventListener('beforeunload', markUnload, { once: true });
-        window.addEventListener('pagehide', markUnload, { once: true });
-
-        if (window.history && window.history.length > 1) {
-          window.history.back();
-          setTimeout(function () {
-            if (!didUnload) {
-              window.location.href = targetPage;
-            }
-          }, 280);
-        } else {
-          window.location.href = targetPage;
-        }
-      } else {
-        window.location.href = 'index.html';
-      }
-    }
-
-    function navigateTo404() {
+    function navigateTo404(trigger) {
       var currentClean = getCleanPageName(window.location.pathname);
       if (is404Page(currentClean)) {
         var existingFrom = getQueryParam('from') || getQueryParam('ref');
@@ -219,38 +217,169 @@
         } else {
           window.location.href = '404.html';
         }
-      } else {
-        window.location.href = '404.html?from=' + encodeURIComponent(currentClean || 'index.html');
-      }
-    }
-
-    function enhance404Links() {
-      var currentClean = getCleanPageName(window.location.pathname);
-      if (is404Page(currentClean)) {
-        var existingFrom = getQueryParam('from') || getQueryParam('ref');
-        if (existingFrom && !is404Page(existingFrom)) {
-          var links404 = document.querySelectorAll('a[href*="404.html"], a[href="404.html"]');
-          links404.forEach(function (link) {
-            link.setAttribute('href', '404.html?from=' + encodeURIComponent(getCleanPageName(existingFrom)));
-          });
-        }
         return;
       }
 
       var fromTarget = currentClean || 'index.html';
-      var links = document.querySelectorAll('a[href="404.html"], a[href*="404.html"]');
-      links.forEach(function (link) {
-        var href = link.getAttribute('href');
-        if (!href) return;
-        if (href.indexOf('?from=') === -1 && href.indexOf('&from=') === -1) {
-          if (href === '404.html') {
-            link.setAttribute('href', '404.html?from=' + encodeURIComponent(fromTarget));
-          } else if (href.indexOf('404.html?') !== -1) {
-            link.setAttribute('href', href + '&from=' + encodeURIComponent(fromTarget));
-          } else if (href.indexOf('404.html') !== -1) {
-            link.setAttribute('href', href.replace('404.html', '404.html?from=' + encodeURIComponent(fromTarget)));
+      var scrollY = Math.round(window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
+
+      var sectionId = '';
+      if (trigger && trigger.nodeType === 1) {
+        var container = trigger.closest('section[id], div[id], [id]');
+        if (container && container.id && container.id !== 'app' && container.id !== 'root') {
+          sectionId = container.id;
+        }
+      }
+
+      setSessionItem(STORAGE_RETURN_PAGE, fromTarget);
+      setSessionItem(STORAGE_RETURN_SCROLL, String(scrollY));
+      if (sectionId) {
+        setSessionItem(STORAGE_RETURN_SECTION, sectionId);
+      } else {
+        removeSessionItem(STORAGE_RETURN_SECTION);
+      }
+
+      var dest = '404.html?from=' + encodeURIComponent(fromTarget) + '&scroll=' + scrollY;
+      if (sectionId) {
+        dest += '&section=' + encodeURIComponent(sectionId);
+      }
+
+      window.location.href = dest;
+    }
+
+    function executeDirectReturn(targetPage, targetScroll, targetSection) {
+      var dest = targetPage;
+      if (targetSection) {
+        dest += '#' + targetSection;
+      }
+      window.location.href = dest;
+    }
+
+    function goBack() {
+      var isCurrent404 = is404Page(window.location.pathname);
+
+      if (!isCurrent404) {
+        if (window.history && window.history.length > 1) {
+          window.history.back();
+        } else {
+          window.location.href = 'index.html';
+        }
+        return;
+      }
+
+      // 404 page:
+      var targetPage = getPreviousPage();
+      if (!targetPage || is404Page(targetPage)) {
+        targetPage = 'index.html';
+      }
+
+      var scrollParam = getQueryParam('scroll');
+      var targetScroll = scrollParam ? parseInt(scrollParam, 10) : NaN;
+      if (isNaN(targetScroll)) {
+        var storedScroll = getSessionItem(STORAGE_RETURN_SCROLL);
+        if (storedScroll) {
+          targetScroll = parseInt(storedScroll, 10);
+        }
+      }
+      if (isNaN(targetScroll) || targetScroll < 0) {
+        targetScroll = 0;
+      }
+
+      var targetSection = getQueryParam('section') || getSessionItem(STORAGE_RETURN_SECTION) || '';
+
+      // Set restore signals in sessionStorage
+      setSessionItem(STORAGE_RESTORE_ACTIVE, 'true');
+      setSessionItem('stackly_restore_page', targetPage);
+      setSessionItem('stackly_restore_scroll', String(targetScroll));
+      if (targetSection) {
+        setSessionItem('stackly_restore_section', targetSection);
+      } else {
+        removeSessionItem('stackly_restore_section');
+      }
+      setSessionItem(STORAGE_BYPASS_PRELOADER, 'true');
+
+      // Attempt history back if referrer matches target page
+      var canHistory = window.history && window.history.length > 1 && document.referrer && !is404Page(document.referrer);
+      if (canHistory) {
+        var didUnload = false;
+        var onUnload = function () { didUnload = true; };
+        window.addEventListener('beforeunload', onUnload, { once: true });
+        window.addEventListener('pagehide', onUnload, { once: true });
+
+        window.history.back();
+
+        setTimeout(function () {
+          if (!didUnload) {
+            executeDirectReturn(targetPage, targetScroll, targetSection);
+          }
+        }, 280);
+      } else {
+        executeDirectReturn(targetPage, targetScroll, targetSection);
+      }
+    }
+
+    function applyScrollRestoration() {
+      var isCurrent404 = is404Page(window.location.pathname);
+      if (isCurrent404) return;
+
+      var isRestoreActive = getSessionItem(STORAGE_RESTORE_ACTIVE) === 'true';
+      if (!isRestoreActive) return;
+
+      var restorePage = getSessionItem('stackly_restore_page');
+      var currentClean = getCleanPageName(window.location.pathname);
+
+      var isMatch = !restorePage || restorePage === currentClean ||
+                    (restorePage === 'index.html' && (currentClean === '' || currentClean === 'index.html'));
+
+      if (!isMatch) return;
+
+      var targetScroll = parseInt(getSessionItem('stackly_restore_scroll') || '0', 10);
+      var targetSection = getSessionItem('stackly_restore_section');
+
+      // Clean up restoration flags so normal future navigation is unaffected
+      removeSessionItem(STORAGE_RESTORE_ACTIVE);
+      removeSessionItem('stackly_restore_page');
+      removeSessionItem('stackly_restore_scroll');
+      removeSessionItem('stackly_restore_section');
+
+      // Fast-track and hide preloader if active
+      var preloader = document.getElementById('preloader');
+      if (preloader) {
+        document.body.classList.add('loaded');
+        preloader.style.display = 'none';
+      }
+
+      function doScroll() {
+        if (targetSection) {
+          var el = document.getElementById(targetSection);
+          if (el) {
+            el.scrollIntoView({ behavior: 'auto', block: 'center' });
+            return;
           }
         }
+        if (!isNaN(targetScroll) && targetScroll > 0) {
+          window.scrollTo({ top: targetScroll, behavior: 'auto' });
+        }
+      }
+
+      doScroll();
+      requestAnimationFrame(doScroll);
+      setTimeout(doScroll, 40);
+      setTimeout(doScroll, 160);
+      setTimeout(doScroll, 380);
+      setTimeout(doScroll, 650);
+    }
+
+    function enhance404Links() {
+      var currentClean = getCleanPageName(window.location.pathname);
+      if (is404Page(currentClean)) return;
+
+      var links = document.querySelectorAll('a[href="404.html"], a[href*="404.html"]');
+      links.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          navigateTo404(link);
+        });
       });
     }
 
@@ -290,15 +419,14 @@
         var link = e.target.closest('a');
         if (link) {
           var href = link.getAttribute('href');
-          if (href && (href === '404.html' || href.indexOf('404.html') === 0) && href.indexOf('?from=') === -1 && href.indexOf('&from=') === -1) {
+          if (href && (href === '404.html' || href.indexOf('404.html') === 0 || href.indexOf('404.html?') === 0)) {
             e.preventDefault();
-            navigateTo404();
+            navigateTo404(link);
           }
         }
       });
     }
 
-    // Run recording immediately on script evaluation
     recordCurrentPage();
 
     return {
@@ -307,13 +435,15 @@
         enhance404Links();
         bindGoBackButtons();
         initDelegatedListeners();
+        applyScrollRestoration();
       },
       recordCurrentPage: recordCurrentPage,
       getPreviousPage: getPreviousPage,
       goBack: goBack,
       navigateTo404: navigateTo404,
       enhance404Links: enhance404Links,
-      bindGoBackButtons: bindGoBackButtons
+      bindGoBackButtons: bindGoBackButtons,
+      applyScrollRestoration: applyScrollRestoration
     };
   })();
 
@@ -322,6 +452,7 @@
 
   window.addEventListener('pageshow', function () {
     StacklyNavigation.recordCurrentPage();
+    StacklyNavigation.applyScrollRestoration();
   });
 
   // --- 1. PRELOADER LOGIC: Stackly separates left and right smoothly ---
@@ -333,6 +464,13 @@
 
     var preloader = document.getElementById('preloader');
     if (!preloader) return;
+
+    if (sessionStorage.getItem('stackly_bypass_preloader') === 'true') {
+      sessionStorage.removeItem('stackly_bypass_preloader');
+      document.body.classList.add('loaded');
+      preloader.style.display = 'none';
+      return;
+    }
 
     if (document.documentElement.classList.contains('no-preloader')) {
       document.body.classList.add('loaded');
@@ -1122,27 +1260,16 @@
       }
     });
 
-    // CTA banner buttons navigation: "Start with Stackly" navigates to signup.html
+    // CTA banner buttons navigation: All CTA banner buttons navigate to 404.html
     var ctaButtons = document.querySelectorAll(
       '.btn-cta-banner, .btn-about-cta, .btn-cta-touch, a.btn-mint-card-action'
     );
     ctaButtons.forEach(function (btn) {
-      var text = (btn.textContent || '').trim().toLowerCase();
-      var id = btn.id || '';
-      var href = btn.getAttribute('href') || '';
-      if (id === 'btnStartWithStackly' || text.indexOf('start with stackly') !== -1 || href === 'signup.html') {
-        btn.setAttribute('href', 'signup.html');
-        btn.addEventListener('click', function (e) {
-          e.preventDefault();
-          window.location.href = 'signup.html';
-        });
-      } else {
-        btn.setAttribute('href', '404.html');
-        btn.addEventListener('click', function (e) {
-          e.preventDefault();
-          StacklyNavigation.navigateTo404();
-        });
-      }
+      btn.setAttribute('href', '404.html');
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        StacklyNavigation.navigateTo404();
+      });
     });
   }
 

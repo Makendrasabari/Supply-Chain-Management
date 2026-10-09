@@ -325,7 +325,21 @@
       background: #fef2f2 !important;
     }
 
-    .login-form-select {
+    .login-form-input:-webkit-autofill,
+    .login-form-input:-webkit-autofill:hover,
+    .login-form-input:-webkit-autofill:focus {
+      -webkit-text-fill-color: var(--login-text-dark);
+      -webkit-box-shadow: 0 0 0px 1000px #eef4f6 inset;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+
+    /* Custom Role Dropdown */
+    .custom-select-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .custom-select-trigger {
       width: 100%;
       background: var(--login-input-bg);
       border: 1.5px solid transparent;
@@ -339,19 +353,104 @@
       transition: all 0.2s ease;
       box-sizing: border-box;
       cursor: pointer;
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      background-size: 16px;
-      padding-right: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-align: left;
     }
 
-    .login-form-select:focus {
-      background-color: #ffffff;
+    .custom-select-trigger:hover {
+      background: #e6eef2;
+    }
+
+    .custom-select-wrapper.is-open .custom-select-trigger,
+    .custom-select-trigger:focus {
+      background: #ffffff;
       border-color: #6ecaa9;
       box-shadow: 0 0 0 3px rgba(110, 202, 169, 0.2);
+    }
+
+    .custom-select-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #475569;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+      pointer-events: none;
+    }
+
+    .custom-select-wrapper.is-open .custom-select-arrow {
+      transform: rotate(180deg);
+      color: #0f766e;
+    }
+
+    .custom-select-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border: 1.5px solid #d9e3ea;
+      border-radius: 14px;
+      box-shadow: 0 14px 32px rgba(15, 30, 46, 0.14), 0 4px 10px rgba(15, 30, 46, 0.06);
+      padding: 6px;
+      margin: 0;
+      list-style: none;
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+      pointer-events: none;
+    }
+
+    .custom-select-wrapper.is-open .custom-select-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .custom-select-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 14px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--login-text-dark);
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+      outline: none;
+      user-select: none;
+    }
+
+    .custom-select-option:hover,
+    .custom-select-option:focus {
+      background: #f1f7f9;
+      color: #0d382b;
+    }
+
+    .custom-select-option.is-selected {
+      background: #e8f5f0;
+      color: #0d382b;
+      font-weight: 700;
+    }
+
+    .custom-select-option .option-check {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #0f766e;
+      opacity: 0;
+      transform: scale(0.7);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .custom-select-option.is-selected .option-check {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .error-line {
@@ -693,32 +792,20 @@
         <h1 class="login-heading" id="loginHeading">WELCOME BACK.</h1>
         <p class="login-subheading">Sign in to see where your shipments are right now.</p>
 
-        <form id="loginForm" class="login-form" autocomplete="off" novalidate>
-          <!-- Off-screen dummy fields to absorb browser autofill heuristics -->
-          <div style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;" aria-hidden="true">
-            <input type="text" name="fake_email_prevent" tabindex="-1" autocomplete="off">
-            <input type="password" name="fake_password_prevent" tabindex="-1" autocomplete="off">
-          </div>
-
+        <form id="loginForm" class="login-form" autocomplete="on" novalidate>
           <!-- Work Email Field -->
           <div class="login-form-group">
             <label for="emailInput" class="login-form-label">Work email</label>
             <input 
-              type="text" 
-              inputmode="email"
+              type="email" 
               id="emailInput" 
-              name="workEmailAddress" 
+              name="email" 
               class="login-form-input" 
               placeholder="Enter the email address" 
-              autocomplete="one-time-code" 
+              autocomplete="email" 
               autocorrect="off"
               autocapitalize="off"
               spellcheck="false"
-              readonly
-              onfocus="this.removeAttribute('readonly');"
-              onmousedown="this.removeAttribute('readonly');"
-              ontouchstart="this.removeAttribute('readonly');"
-              value=""
               required
             >
             <span id="emailError" class="error-line">Please enter a valid @gmail.com address</span>
@@ -742,13 +829,63 @@
             </div>
           </div>
 
-          <!-- Role Selector Field -->
+          <!-- Role Selector Field (Custom Dropdown) -->
           <div class="login-form-group">
-            <label for="roleSelect" class="login-form-label">Role</label>
-            <select id="roleSelect" name="userRole" class="login-form-select" required>
-              <option value="Chief Supply Chain Manager">Chief Supply Chain Manager</option>
-              <option value="Logistics Manager">Logistics Manager</option>
-            </select>
+            <label id="roleDropdownLabel" class="login-form-label">Role</label>
+            <div class="custom-select-wrapper" id="roleCustomSelect">
+              <input type="hidden" name="userRole" id="roleSelect" value="Supply Chain Manager">
+              <button 
+                type="button" 
+                class="custom-select-trigger" 
+                id="roleTriggerBtn" 
+                aria-haspopup="listbox" 
+                aria-expanded="false" 
+                aria-labelledby="roleDropdownLabel roleSelectedText"
+              >
+                <span class="custom-select-value" id="roleSelectedText">Supply Chain Manager</span>
+                <span class="custom-select-arrow" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </span>
+              </button>
+              <ul 
+                class="custom-select-menu" 
+                id="roleMenu" 
+                role="listbox" 
+                tabindex="-1" 
+                aria-labelledby="roleDropdownLabel"
+              >
+                <li 
+                  class="custom-select-option is-selected" 
+                  role="option" 
+                  data-value="Supply Chain Manager" 
+                  aria-selected="true"
+                  tabindex="0"
+                >
+                  <span class="option-label">Supply Chain Manager</span>
+                  <span class="option-check" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </span>
+                </li>
+                <li 
+                  class="custom-select-option" 
+                  role="option" 
+                  data-value="Logistics Manager" 
+                  aria-selected="false"
+                  tabindex="0"
+                >
+                  <span class="option-label">Logistics Manager</span>
+                  <span class="option-check" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </span>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <!-- Keep me signed in on this device -->
@@ -915,24 +1052,8 @@
         }
       }
 
-      // Clear any pre-filled value so it only shows after user enters
       if (emailInput) {
-        emailInput.value = '';
-
-        // Prevent browser from showing recommended email / autofill dropdown on click
-        emailInput.addEventListener('focus', function () {
-          this.removeAttribute('readonly');
-        });
-
-        emailInput.addEventListener('mousedown', function () {
-          this.removeAttribute('readonly');
-        });
-
-        emailInput.addEventListener('touchstart', function () {
-          this.removeAttribute('readonly');
-        });
-
-        emailInput.addEventListener('input', function () {
+        var handleEmailChange = function () {
           var val = emailInput.value.trim();
           if (val === '') {
             emailInput.classList.remove('input-error');
@@ -946,10 +1067,12 @@
               emailError.classList.add('show');
             }
           }
-        });
+        };
+
+        emailInput.addEventListener('input', handleEmailChange);
+        emailInput.addEventListener('change', handleEmailChange);
 
         emailInput.addEventListener('blur', function () {
-          this.setAttribute('readonly', 'readonly');
           var val = emailInput.value.trim();
           if (val.length > 0) {
             validateEmail();
@@ -966,11 +1089,117 @@
         });
       }
 
+      // 3. Custom Role Dropdown Handler
+      var roleCustomSelect = document.getElementById('roleCustomSelect');
+      var roleTriggerBtn = document.getElementById('roleTriggerBtn');
+      var roleMenu = document.getElementById('roleMenu');
+      var roleSelect = document.getElementById('roleSelect');
+      var roleSelectedText = document.getElementById('roleSelectedText');
+      var roleOptions = document.querySelectorAll('.custom-select-option');
+
+      function openRoleDropdown() {
+        if (!roleCustomSelect) return;
+        roleCustomSelect.classList.add('is-open');
+        if (roleTriggerBtn) roleTriggerBtn.setAttribute('aria-expanded', 'true');
+      }
+
+      function closeRoleDropdown() {
+        if (!roleCustomSelect) return;
+        roleCustomSelect.classList.remove('is-open');
+        if (roleTriggerBtn) roleTriggerBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      function selectRole(roleValue) {
+        if (roleSelect) roleSelect.value = roleValue;
+        if (roleSelectedText) roleSelectedText.textContent = roleValue;
+        roleOptions.forEach(function (opt) {
+          var val = opt.getAttribute('data-value');
+          if (val === roleValue) {
+            opt.classList.add('is-selected');
+            opt.setAttribute('aria-selected', 'true');
+          } else {
+            opt.classList.remove('is-selected');
+            opt.setAttribute('aria-selected', 'false');
+          }
+        });
+      }
+
+      if (roleTriggerBtn) {
+        roleTriggerBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (roleCustomSelect && roleCustomSelect.classList.contains('is-open')) {
+            closeRoleDropdown();
+          } else {
+            openRoleDropdown();
+          }
+        });
+
+        roleTriggerBtn.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openRoleDropdown();
+            var firstOpt = roleMenu ? roleMenu.querySelector('.custom-select-option') : null;
+            if (firstOpt) firstOpt.focus();
+          } else if (e.key === 'Escape') {
+            closeRoleDropdown();
+          }
+        });
+      }
+
+      roleOptions.forEach(function (option) {
+        option.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var val = this.getAttribute('data-value');
+          if (val) {
+            selectRole(val);
+          }
+          closeRoleDropdown();
+          if (roleTriggerBtn) roleTriggerBtn.focus();
+        });
+
+        option.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            var val = this.getAttribute('data-value');
+            if (val) {
+              selectRole(val);
+            }
+            closeRoleDropdown();
+            if (roleTriggerBtn) roleTriggerBtn.focus();
+          } else if (e.key === 'Escape') {
+            closeRoleDropdown();
+            if (roleTriggerBtn) roleTriggerBtn.focus();
+          } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            var next = this.nextElementSibling;
+            if (next && next.classList.contains('custom-select-option')) next.focus();
+          } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            var prev = this.previousElementSibling;
+            if (prev && prev.classList.contains('custom-select-option')) prev.focus();
+          }
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (roleCustomSelect && !roleCustomSelect.contains(e.target)) {
+          closeRoleDropdown();
+        }
+      });
+
+      // Initialize from saved preference if available
+      var storedRole = localStorage.getItem('stackly_user_role');
+      if (storedRole === 'Logistics Manager') {
+        selectRole('Logistics Manager');
+      } else {
+        selectRole('Supply Chain Manager');
+      }
+
       // Form submission
       if (form) {
         form.addEventListener('submit', function (e) {
           e.preventDefault();
-          if (emailInput) emailInput.removeAttribute('readonly');
 
           var emailVal = emailInput ? emailInput.value.trim() : '';
           var passwordVal = passwordInput ? passwordInput.value : '';
@@ -996,8 +1225,7 @@
             if (keepSignedIn && keepSignedIn.checked) {
               localStorage.setItem('stackly_user_email', emailVal);
             }
-            var roleSelect = document.getElementById('roleSelect');
-            var selectedRole = roleSelect ? roleSelect.value : 'Chief Supply Chain Manager';
+            var selectedRole = roleSelect ? roleSelect.value : 'Supply Chain Manager';
             localStorage.setItem('stackly_user_role', selectedRole);
             sessionStorage.removeItem('stackly_dashboard_session');
 

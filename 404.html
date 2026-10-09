@@ -8,6 +8,11 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/webp" href="assets/stackly_logo.webp">
   <style>
+    body {
+      background-color: #d6ebf8;
+      color: #173854;
+    }
+
     .error-page-wrapper {
       min-height: 100vh;
       display: flex;
@@ -16,7 +21,7 @@
       justify-content: center;
       padding: 40px 24px;
       text-align: center;
-      background: radial-gradient(circle at center, #26557e 0%, #1a3854 100%);
+      background: radial-gradient(circle at center, #edf6fc 0%, #d6ebf8 100%);
       position: relative;
       overflow: hidden;
     }
@@ -27,7 +32,7 @@
       width: 700px;
       height: 700px;
       border-radius: 50%;
-      border: 1px dashed rgba(110, 202, 169, 0.15);
+      border: 1px dashed rgba(23, 56, 84, 0.12);
       pointer-events: none;
       animation: radarRotate 30s linear infinite;
     }
@@ -37,7 +42,7 @@
       position: absolute;
       inset: 80px;
       border-radius: 50%;
-      border: 1px dashed rgba(255, 255, 255, 0.08);
+      border: 1px dashed rgba(23, 56, 84, 0.08);
     }
 
     .radar-grid-bg::after {
@@ -45,7 +50,7 @@
       position: absolute;
       inset: 160px;
       border-radius: 50%;
-      border: 1px solid rgba(110, 202, 169, 0.1);
+      border: 1px solid rgba(15, 118, 110, 0.2);
     }
 
     @keyframes radarRotate {
@@ -67,9 +72,9 @@
     .digit-four {
       font-size: clamp(100px, 15vw, 170px);
       font-weight: 900;
-      color: #ffffff;
+      color: #173854;
       line-height: 1;
-      text-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      text-shadow: 0 10px 30px rgba(23, 56, 84, 0.15);
       letter-spacing: -2px;
     }
 
@@ -87,9 +92,9 @@
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      border: 4px solid rgba(110, 202, 169, 0.25);
-      border-top-color: var(--accent-teal);
-      border-right-color: var(--accent-teal);
+      border: 4px solid rgba(15, 118, 110, 0.25);
+      border-top-color: #0f766e;
+      border-right-color: #0f766e;
       animation: spinOuter 6s linear infinite;
     }
 
@@ -97,7 +102,7 @@
       position: absolute;
       inset: 18px;
       border-radius: 50%;
-      border: 2px dashed rgba(255, 255, 255, 0.4);
+      border: 2px dashed rgba(23, 56, 84, 0.28);
       animation: spinInner 10s linear infinite reverse;
     }
 
@@ -105,12 +110,12 @@
       width: 48%;
       height: 48%;
       border-radius: 50%;
-      background: #15324c;
-      border: 2px solid var(--accent-teal);
+      background: #ffffff;
+      border: 2.5px solid #0f766e;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 25px rgba(110, 202, 169, 0.4);
+      box-shadow: 0 8px 24px rgba(15, 118, 110, 0.2);
       position: relative;
       z-index: 3;
     }
@@ -119,7 +124,7 @@
       position: absolute;
       inset: -8px;
       border-radius: 50%;
-      border: 2px solid var(--accent-teal);
+      border: 2px solid #0f766e;
       animation: pulseZero 2s ease-out infinite;
       opacity: 0;
     }
@@ -130,12 +135,12 @@
       width: 14px;
       height: 14px;
       border-radius: 4px;
-      background: var(--accent-teal);
-      box-shadow: 0 0 10px var(--accent-teal);
+      background: #0f766e;
+      box-shadow: 0 0 10px rgba(15, 118, 110, 0.5);
     }
 
     .node-top { top: -7px; left: calc(50% - 7px); }
-    .node-bottom { bottom: -7px; left: calc(50% - 7px); background: #38bdf8; box-shadow: 0 0 10px #38bdf8; }
+    .node-bottom { bottom: -7px; left: calc(50% - 7px); background: #0284c7; box-shadow: 0 0 10px rgba(2, 132, 199, 0.5); }
 
     @keyframes spinOuter {
       from { transform: rotate(0deg); }
@@ -154,9 +159,9 @@
 
     .error-badge {
       display: inline-block;
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.35);
-      color: #fca5a5;
+      background: rgba(220, 38, 38, 0.1);
+      border: 1px solid rgba(220, 38, 38, 0.35);
+      color: #dc2626;
       font-size: 13px;
       font-weight: 700;
       letter-spacing: 2px;
@@ -169,16 +174,17 @@
     .error-title {
       font-size: clamp(28px, 3.5vw, 42px);
       font-weight: 800;
-      color: #ffffff;
+      color: #173854;
       line-height: 1.2;
       margin-bottom: 16px;
       text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(23, 56, 84, 0.08);
     }
 
     .error-description {
       font-size: 16px;
       line-height: 1.6;
-      color: rgba(255, 255, 255, 0.8);
+      color: #47617a;
       max-width: 520px;
       margin: 0 auto 36px;
     }
@@ -207,7 +213,7 @@
 
     .error-logo-link:hover {
       transform: scale(1.05);
-      filter: drop-shadow(0 0 16px rgba(110, 202, 169, 0.5));
+      filter: drop-shadow(0 4px 14px rgba(23, 56, 84, 0.2));
     }
 
     .error-logo-img {
@@ -215,6 +221,16 @@
       max-height: 52px;
       width: auto;
       object-fit: contain;
+    }
+
+    .error-actions-group .btn-secondary-white {
+      border: 1.5px solid #c9dceb;
+      box-shadow: 0 4px 16px rgba(23, 56, 84, 0.12);
+    }
+
+    .error-actions-group .btn-secondary-white:hover {
+      border-color: #9cbdd6;
+      box-shadow: 0 6px 20px rgba(23, 56, 84, 0.18);
     }
 
     button.btn-secondary-white {
@@ -281,7 +297,7 @@
         <div class="sc-middle-ring"></div>
         <div class="sc-center-hub">
           <div class="sc-hub-pulse"></div>
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#6ecaa9" stroke-width="2">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2.2">
             <rect x="2" y="7" width="20" height="14" rx="2"></rect>
             <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
           </svg>
