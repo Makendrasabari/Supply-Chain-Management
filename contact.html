@@ -3287,7 +3287,7 @@
           btnStartWithStackly.addEventListener('click', function(e) {
             e.preventDefault();
             if (window.StacklyNavigation) {
-              window.StacklyNavigation.navigateTo404();
+              window.StacklyNavigation.navigateTo404(btnStartWithStackly);
             } else {
               window.location.href = '404.html';
             }

@@ -442,11 +442,22 @@
       cursor: pointer;
     }
 
+    .hero-services-visual-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 28px;
+      box-shadow: inset 0 0 28px rgba(13, 34, 56, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      pointer-events: none;
+      z-index: 5;
+    }
+
     .visual-slice {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
+      overflow: hidden;
       pointer-events: none;
       transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
     }
@@ -469,12 +480,18 @@
       z-index: 1;
     }
 
+    /* Clean 3D platform framing: completely removes top navbar and surrounding hero text */
     .visual-slice-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: 86% 52%;
+      position: absolute;
+      top: -38%;
+      left: -112%;
+      width: 226%;
+      height: 168%;
+      max-width: none;
+      max-height: none;
+      object-fit: fill;
       display: block;
+      pointer-events: none;
     }
 
     /* Keyframes: Top-Left slice enters diagonally and joins */
@@ -1337,76 +1354,60 @@
       flex-shrink: 0;
     }
 
-    /* Content on Front Bottom (replacing the removed button) */
+    /* Content on Front Bottom: Clean plan guarantee footer */
     .pricing-front-bottom-badge {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 12px 14px;
+      border-radius: 14px;
+      padding: 12px 16px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 18px;
-      transition: background 0.3s ease, border-color 0.3s ease;
+      justify-content: center;
+      text-align: center;
+      box-sizing: border-box;
+      width: 100%;
+      margin-top: 20px;
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .pricing-card-flip-wrap:hover .pricing-front-bottom-badge {
-      border-color: #34d399;
-      background: #ecfdf5;
+      border-color: rgba(52, 211, 153, 0.55);
+      background: #f0fdf9;
     }
 
-    .pricing-front-bottom-left {
-      display: flex;
-      align-items: center;
-      gap: 9px;
+    #pricing-card-2 .pricing-front-bottom-badge {
+      background: #f0fdf4;
+      border-color: rgba(16, 185, 129, 0.35);
     }
 
-    .pricing-badge-icon {
-      font-size: 16px;
-      flex-shrink: 0;
+    #pricing-card-2 .pricing-badge-title {
+      color: #047857;
     }
 
     .pricing-badge-texts {
       display: flex;
       flex-direction: column;
-      line-height: 1.25;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
     }
 
     .pricing-badge-title {
-      font-size: 13px;
+      font-size: 13.5px;
       font-weight: 700;
       color: #0f2742;
+      line-height: 1.35;
+      letter-spacing: 0.1px;
     }
 
     .pricing-badge-desc {
-      font-size: 11px;
+      font-size: 11.5px;
       color: #64748b;
       font-weight: 500;
-    }
-
-    .pricing-flip-prompt {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 11.5px;
-      font-weight: 700;
-      color: #0f766e;
-      background: #ccfbf1;
-      padding: 4px 9px;
-      border-radius: 9999px;
-      flex-shrink: 0;
-      letter-spacing: 0.2px;
-    }
-
-    .flip-icon {
-      font-size: 13px;
-      display: inline-block;
-      transition: transform 0.4s ease;
-    }
-
-    .pricing-card-flip-wrap:hover .flip-icon {
-      transform: rotate(180deg);
+      line-height: 1.35;
+      margin-top: 2px;
     }
 
     /* Back Face Styling */
@@ -1856,6 +1857,11 @@
         grid-template-columns: 1fr;
         gap: 36px;
       }
+      .hero-services-visual-card {
+        height: 350px;
+        max-width: 620px;
+        margin: 0 auto;
+      }
       .hero-services-title {
         font-size: 42px;
       }
@@ -1905,6 +1911,16 @@
       }
       .services-hero-section {
         padding: 100px 16px 50px;
+      }
+      .hero-services-visual-card {
+        height: 260px;
+        border-radius: 20px;
+      }
+      .visual-slice-img {
+        top: -36%;
+        left: -110%;
+        width: 224%;
+        height: 165%;
       }
       .hero-services-title {
         font-size: 32px;
@@ -2515,19 +2531,11 @@
                     </li>
                   </ul>
                 </div>
-                <!-- Engaging front bottom content replacing the button -->
                 <div class="pricing-front-bottom-badge">
-                  <div class="pricing-front-bottom-left">
-                    <span class="pricing-badge-icon">⚡</span>
-                    <div class="pricing-badge-texts">
-                      <span class="pricing-badge-title">14-Day Free Trial</span>
-                      <span class="pricing-badge-desc">No credit card required</span>
-                    </div>
+                  <div class="pricing-badge-texts">
+                    <span class="pricing-badge-title">14-Day Free Trial</span>
+                    <span class="pricing-badge-desc">No credit card required</span>
                   </div>
-                  <span class="pricing-flip-prompt" aria-hidden="true">
-                    <span>Hover to choose</span>
-                    <span class="flip-icon">↻</span>
-                  </span>
                 </div>
               </div>
 
@@ -2591,19 +2599,11 @@
                     </li>
                   </ul>
                 </div>
-                <!-- Engaging front bottom content replacing the button -->
                 <div class="pricing-front-bottom-badge">
-                  <div class="pricing-front-bottom-left">
-                    <span class="pricing-badge-icon">⭐</span>
-                    <div class="pricing-badge-texts">
-                      <span class="pricing-badge-title">Most Popular Choice</span>
-                      <span class="pricing-badge-desc">Full 6-module analytics suite</span>
-                    </div>
+                  <div class="pricing-badge-texts">
+                    <span class="pricing-badge-title">Most Popular Choice</span>
+                    <span class="pricing-badge-desc">Full 6-module analytics suite</span>
                   </div>
-                  <span class="pricing-flip-prompt" aria-hidden="true">
-                    <span>Hover to choose</span>
-                    <span class="flip-icon">↻</span>
-                  </span>
                 </div>
               </div>
 
@@ -2663,19 +2663,11 @@
                     </li>
                   </ul>
                 </div>
-                <!-- Engaging front bottom content replacing the button -->
                 <div class="pricing-front-bottom-badge">
-                  <div class="pricing-front-bottom-left">
-                    <span class="pricing-badge-icon">🛡️</span>
-                    <div class="pricing-badge-texts">
-                      <span class="pricing-badge-title">Enterprise Scale</span>
-                      <span class="pricing-badge-desc">Custom EDI & security review</span>
-                    </div>
+                  <div class="pricing-badge-texts">
+                    <span class="pricing-badge-title">Enterprise Scale</span>
+                    <span class="pricing-badge-desc">Custom EDI & security review</span>
                   </div>
-                  <span class="pricing-flip-prompt" aria-hidden="true">
-                    <span>Hover to choose</span>
-                    <span class="flip-icon">↻</span>
-                  </span>
                 </div>
               </div>
 

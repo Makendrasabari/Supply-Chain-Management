@@ -2183,7 +2183,11 @@
 
           // Valid @gmail.com entered -> navigate to 404 page
           clearNewsletterError();
-          window.location.href = '404.html';
+          if (window.StacklyNavigation) {
+            window.StacklyNavigation.navigateTo404(newsletterForm);
+          } else {
+            window.location.href = '404.html';
+          }
         });
       }
 

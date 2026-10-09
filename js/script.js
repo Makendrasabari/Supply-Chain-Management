@@ -27,6 +27,9 @@
     var STORAGE_BYPASS_PRELOADER = 'stackly_bypass_preloader';
     var MAX_STACK_SIZE = 30;
 
+    var isNavigatingTo404 = false;
+    var isNavigatingBack = false;
+
     // Helper: Extract clean relative file/path name from URL or pathname
     function getCleanPageName(urlOrPath) {
       if (!urlOrPath) return '';
@@ -149,8 +152,9 @@
       setSessionItem(STORAGE_LAST_VALID_KEY, currentPage);
       setSessionItem(STORAGE_RETURN_PAGE, currentPage);
 
-      // Track live scroll position
+      // Track live scroll position without overwriting during active restoration
       var recordScroll = function () {
+        if (getSessionItem(STORAGE_RESTORE_ACTIVE) === 'true') return;
         var sy = Math.round(window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
         setSessionItem(STORAGE_RETURN_SCROLL, String(sy));
       };
@@ -209,25 +213,27 @@
     }
 
     function navigateTo404(trigger) {
+      if (isNavigatingTo404) return;
+
       var currentClean = getCleanPageName(window.location.pathname);
       if (is404Page(currentClean)) {
-        var existingFrom = getQueryParam('from') || getQueryParam('ref');
-        if (existingFrom && !is404Page(existingFrom)) {
-          window.location.href = '404.html?from=' + encodeURIComponent(getCleanPageName(existingFrom));
-        } else {
-          window.location.href = '404.html';
-        }
         return;
       }
+
+      isNavigatingTo404 = true;
 
       var fromTarget = currentClean || 'index.html';
       var scrollY = Math.round(window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
 
       var sectionId = '';
       if (trigger && trigger.nodeType === 1) {
-        var container = trigger.closest('section[id], div[id], [id]');
-        if (container && container.id && container.id !== 'app' && container.id !== 'root') {
-          sectionId = container.id;
+        if (trigger.id && trigger.id !== 'app' && trigger.id !== 'root') {
+          sectionId = trigger.id;
+        } else {
+          var container = trigger.closest('section[id], [id]');
+          if (container && container.id && container.id !== 'app' && container.id !== 'root') {
+            sectionId = container.id;
+          }
         }
       }
 
@@ -247,15 +253,9 @@
       window.location.href = dest;
     }
 
-    function executeDirectReturn(targetPage, targetScroll, targetSection) {
-      var dest = targetPage;
-      if (targetSection) {
-        dest += '#' + targetSection;
-      }
-      window.location.href = dest;
-    }
-
     function goBack() {
+      if (isNavigatingBack) return;
+
       var isCurrent404 = is404Page(window.location.pathname);
 
       if (!isCurrent404) {
@@ -267,7 +267,9 @@
         return;
       }
 
-      // 404 page:
+      isNavigatingBack = true;
+
+      // 404 page: resolve exact originating page
       var targetPage = getPreviousPage();
       if (!targetPage || is404Page(targetPage)) {
         targetPage = 'index.html';
@@ -287,7 +289,7 @@
 
       var targetSection = getQueryParam('section') || getSessionItem(STORAGE_RETURN_SECTION) || '';
 
-      // Set restore signals in sessionStorage
+      // Arm restoration state in sessionStorage
       setSessionItem(STORAGE_RESTORE_ACTIVE, 'true');
       setSessionItem('stackly_restore_page', targetPage);
       setSessionItem('stackly_restore_scroll', String(targetScroll));
@@ -298,24 +300,8 @@
       }
       setSessionItem(STORAGE_BYPASS_PRELOADER, 'true');
 
-      // Attempt history back if referrer matches target page
-      var canHistory = window.history && window.history.length > 1 && document.referrer && !is404Page(document.referrer);
-      if (canHistory) {
-        var didUnload = false;
-        var onUnload = function () { didUnload = true; };
-        window.addEventListener('beforeunload', onUnload, { once: true });
-        window.addEventListener('pagehide', onUnload, { once: true });
-
-        window.history.back();
-
-        setTimeout(function () {
-          if (!didUnload) {
-            executeDirectReturn(targetPage, targetScroll, targetSection);
-          }
-        }, 280);
-      } else {
-        executeDirectReturn(targetPage, targetScroll, targetSection);
-      }
+      // Navigate directly to targetPage ensuring 100% accurate page return
+      window.location.href = targetPage;
     }
 
     function applyScrollRestoration() {
@@ -336,38 +322,63 @@
       var targetScroll = parseInt(getSessionItem('stackly_restore_scroll') || '0', 10);
       var targetSection = getSessionItem('stackly_restore_section');
 
-      // Clean up restoration flags so normal future navigation is unaffected
-      removeSessionItem(STORAGE_RESTORE_ACTIVE);
-      removeSessionItem('stackly_restore_page');
-      removeSessionItem('stackly_restore_scroll');
-      removeSessionItem('stackly_restore_section');
-
-      // Fast-track and hide preloader if active
+      // Fast-track and suppress preloader immediately
       var preloader = document.getElementById('preloader');
       if (preloader) {
         document.body.classList.add('loaded');
         preloader.style.display = 'none';
       }
 
-      function doScroll() {
-        if (targetSection) {
+      // Tell browser history not to overwrite custom scroll position
+      if ('scrollRestoration' in window.history) {
+        try {
+          window.history.scrollRestoration = 'manual';
+        } catch (e) {}
+      }
+
+      // Disable CSS smooth scroll temporarily so instant scrollTo is not delayed or cancelled by reflow
+      var docEl = document.documentElement;
+      var origBehavior = docEl.style.scrollBehavior;
+      docEl.style.scrollBehavior = 'auto';
+
+      function performScroll() {
+        if (!isNaN(targetScroll) && targetScroll > 0) {
+          window.scrollTo(0, targetScroll);
+        } else if (targetSection) {
           var el = document.getElementById(targetSection);
           if (el) {
-            el.scrollIntoView({ behavior: 'auto', block: 'center' });
-            return;
+            var rect = el.getBoundingClientRect();
+            var top = rect.top + (window.pageYOffset || docEl.scrollTop || 0);
+            window.scrollTo(0, Math.max(0, top - 80));
           }
-        }
-        if (!isNaN(targetScroll) && targetScroll > 0) {
-          window.scrollTo({ top: targetScroll, behavior: 'auto' });
         }
       }
 
-      doScroll();
-      requestAnimationFrame(doScroll);
-      setTimeout(doScroll, 40);
-      setTimeout(doScroll, 160);
-      setTimeout(doScroll, 380);
-      setTimeout(doScroll, 650);
+      // Execute across progressive layout render checkpoints
+      performScroll();
+      requestAnimationFrame(performScroll);
+      setTimeout(performScroll, 20);
+      setTimeout(performScroll, 80);
+      setTimeout(performScroll, 200);
+      setTimeout(performScroll, 400);
+      setTimeout(performScroll, 700);
+      setTimeout(performScroll, 1100);
+
+      window.addEventListener('load', function () {
+        performScroll();
+        setTimeout(performScroll, 100);
+        setTimeout(performScroll, 300);
+      }, { once: true });
+
+      // Clean up restoration flags after the page has fully stabilized (1400ms)
+      setTimeout(function () {
+        docEl.style.scrollBehavior = origBehavior;
+        removeSessionItem(STORAGE_RESTORE_ACTIVE);
+        removeSessionItem('stackly_restore_page');
+        removeSessionItem('stackly_restore_scroll');
+        removeSessionItem('stackly_restore_section');
+        removeSessionItem(STORAGE_BYPASS_PRELOADER);
+      }, 1400);
     }
 
     function enhance404Links() {
@@ -419,7 +430,7 @@
         var link = e.target.closest('a');
         if (link) {
           var href = link.getAttribute('href');
-          if (href && (href === '404.html' || href.indexOf('404.html') === 0 || href.indexOf('404.html?') === 0)) {
+          if (href && (href === '404.html' || href.indexOf('404.html') !== -1)) {
             e.preventDefault();
             navigateTo404(link);
           }
@@ -1183,7 +1194,7 @@
       btn.setAttribute('href', '404.html');
       btn.addEventListener('click', function (e) {
         e.preventDefault();
-        StacklyNavigation.navigateTo404();
+        StacklyNavigation.navigateTo404(btn);
       });
     });
   }
@@ -1268,7 +1279,7 @@
       btn.setAttribute('href', '404.html');
       btn.addEventListener('click', function (e) {
         e.preventDefault();
-        StacklyNavigation.navigateTo404();
+        StacklyNavigation.navigateTo404(btn);
       });
     });
   }
@@ -1281,7 +1292,7 @@
     footer404Links.forEach(function (link) {
       link.addEventListener('click', function (e) {
         e.preventDefault();
-        StacklyNavigation.navigateTo404();
+        StacklyNavigation.navigateTo404(link);
       });
     });
   }
