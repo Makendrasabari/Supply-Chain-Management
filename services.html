@@ -205,6 +205,7 @@
       right: 0;
       bottom: 0;
       width: 100vw;
+      max-width: 100%;
       height: 100vh;
       height: 100dvh;
       background: #ffffff;
@@ -219,8 +220,19 @@
       overflow-y: auto;
     }
 
-    .services-mobile-drawer.open {
-      display: flex !important;
+    @media (max-width: 768px) {
+      .services-mobile-drawer.open {
+        display: flex !important;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .services-mobile-drawer,
+      .services-mobile-drawer.open {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
     }
 
     /* ==========================================================================
@@ -437,7 +449,7 @@
       border-radius: 28px;
       background: radial-gradient(circle at 60% 40%, #16385a 0%, #0d2238 100%);
       box-shadow: 0 25px 65px rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       overflow: hidden;
       cursor: pointer;
     }
@@ -447,7 +459,7 @@
       position: absolute;
       inset: 0;
       border-radius: 28px;
-      box-shadow: inset 0 0 28px rgba(13, 34, 56, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      box-shadow: inset 0 0 28px rgba(13, 34, 56, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
       pointer-events: none;
       z-index: 5;
     }
@@ -460,79 +472,113 @@
       overflow: hidden;
       pointer-events: none;
       transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+      will-change: transform, filter;
     }
 
     /* Slice 1: Top-Left diagonal half */
     .slice-top {
       clip-path: polygon(0 0, 100% 0, 0 100%);
-      animation: diagonalJoinTop 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
-      opacity: 0;
-      transform: translate(-65px, -45px);
+      opacity: 1;
+      transform: translate(0, 0);
       z-index: 2;
     }
 
     /* Slice 2: Bottom-Right diagonal half */
     .slice-bottom {
       clip-path: polygon(100% 0, 100% 100%, 0 100%);
-      animation: diagonalJoinBottom 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
-      opacity: 0;
-      transform: translate(65px, 45px);
+      opacity: 1;
+      transform: translate(0, 0);
       z-index: 1;
     }
 
-    /* Clean 3D platform framing: completely removes top navbar and surrounding hero text */
+    /* Active animation class: separates diagonally apart, holds, and smoothly joins together */
+    .slice-top.anim-active {
+      animation: diagonalSeparateAndJoinTop 1.9s cubic-bezier(0.2, 0.9, 0.28, 1) forwards;
+    }
+
+    .slice-bottom.anim-active {
+      animation: diagonalSeparateAndJoinBottom 1.9s cubic-bezier(0.2, 0.9, 0.28, 1) forwards;
+    }
+
+    /* Clean 3D platform framing matching the new uploaded image */
     .visual-slice-img {
       position: absolute;
-      top: -38%;
-      left: -112%;
-      width: 226%;
-      height: 168%;
+      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       max-width: none;
       max-height: none;
-      object-fit: fill;
+      object-fit: cover;
+      object-position: center;
       display: block;
       pointer-events: none;
     }
 
-    /* Keyframes: Top-Left slice enters diagonally and joins */
-    @keyframes diagonalJoinTop {
+    /* Keyframes: Top-Left slice separates diagonally up-left then joins together */
+    @keyframes diagonalSeparateAndJoinTop {
       0% {
-        opacity: 0;
-        transform: translate(-70px, -50px) scale(0.96);
+        transform: translate(0, 0) scale(1);
+        filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
       }
-      70% {
-        opacity: 1;
-        transform: translate(2px, 2px) scale(1.01);
+      10% {
+        transform: translate(0, 0) scale(1);
+        filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+      }
+      44% {
+        transform: translate(-52px, -36px) scale(0.975);
+        filter: drop-shadow(6px 6px 16px rgba(0, 0, 0, 0.6));
+      }
+      64% {
+        transform: translate(-52px, -36px) scale(0.975);
+        filter: drop-shadow(6px 6px 16px rgba(0, 0, 0, 0.6));
+      }
+      88% {
+        transform: translate(2px, 1.5px) scale(1.008);
+        filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.25));
       }
       100% {
-        opacity: 1;
         transform: translate(0, 0) scale(1);
+        filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
       }
     }
 
-    /* Keyframes: Bottom-Right slice enters diagonally and joins */
-    @keyframes diagonalJoinBottom {
+    /* Keyframes: Bottom-Right slice separates diagonally down-right then joins together */
+    @keyframes diagonalSeparateAndJoinBottom {
       0% {
-        opacity: 0;
-        transform: translate(70px, 50px) scale(0.96);
+        transform: translate(0, 0) scale(1);
+        filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
       }
-      70% {
-        opacity: 1;
-        transform: translate(-2px, -2px) scale(1.01);
+      10% {
+        transform: translate(0, 0) scale(1);
+        filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+      }
+      44% {
+        transform: translate(52px, 36px) scale(0.975);
+        filter: drop-shadow(-6px -6px 16px rgba(0, 0, 0, 0.6));
+      }
+      64% {
+        transform: translate(52px, 36px) scale(0.975);
+        filter: drop-shadow(-6px -6px 16px rgba(0, 0, 0, 0.6));
+      }
+      88% {
+        transform: translate(-2px, -1.5px) scale(1.008);
+        filter: drop-shadow(-1px -1px 4px rgba(0, 0, 0, 0.25));
       }
       100% {
-        opacity: 1;
         transform: translate(0, 0) scale(1);
+        filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
       }
     }
 
     /* Interactive Hover: subtle diagonal separation and rejoin */
-    .hero-services-visual-card:hover .slice-top {
+    .hero-services-visual-card:hover .slice-top:not(.anim-active) {
       transform: translate(-14px, -10px);
       filter: drop-shadow(4px 4px 12px rgba(0, 0, 0, 0.45));
     }
 
-    .hero-services-visual-card:hover .slice-bottom {
+    .hero-services-visual-card:hover .slice-bottom:not(.anim-active) {
       transform: translate(14px, 10px);
       filter: drop-shadow(-4px -4px 12px rgba(0, 0, 0, 0.45));
     }
@@ -1829,7 +1875,47 @@
     }
 
     /* Responsive Breakpoints */
-    @media (max-width: 980px) {
+    /* Desktop Navbar above 768px */
+    @media (min-width: 769px) {
+      .services-mobile-btn {
+        display: none !important;
+      }
+      .services-nav-links {
+        display: flex !important;
+      }
+      .services-nav-actions .btn-pill-signin,
+      .services-nav-actions .btn-pill-signup,
+      #navSignIn,
+      #navSignUp {
+        display: inline-flex !important;
+      }
+    }
+
+    /* Tablet compact desktop navbar (769px to 980px) */
+    @media (min-width: 769px) and (max-width: 980px) {
+      .services-navbar-pill {
+        padding: 8px 18px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .services-nav-links {
+        gap: 16px !important;
+      }
+      .services-nav-item a {
+        font-size: 14px;
+      }
+      .services-nav-actions .btn-pill-signin {
+        padding: 7px 16px;
+        font-size: 13.5px;
+      }
+      .services-nav-actions .btn-pill-signup {
+        padding: 7.5px 18px;
+        font-size: 13.5px;
+      }
+    }
+
+    /* Mobile Navbar: strictly 768px and below */
+    @media (max-width: 768px) {
       .services-navbar-pill {
         padding: 8px 16px;
         width: 100%;
@@ -1853,6 +1939,9 @@
       .services-nav-links {
         display: none !important;
       }
+    }
+
+    @media (max-width: 980px) {
       .services-hero-container {
         grid-template-columns: 1fr;
         gap: 36px;
@@ -1917,10 +2006,11 @@
         border-radius: 20px;
       }
       .visual-slice-img {
-        top: -36%;
-        left: -110%;
-        width: 224%;
-        height: 165%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
       .hero-services-title {
         font-size: 32px;
@@ -2084,7 +2174,6 @@
           <div class="visual-slice slice-top">
             <img 
               src="assets/services_hero_platform.png" 
-              onerror="if(!this.dataset.step){this.dataset.step=1;this.src='assets/services_hero_flow.webp';}" 
               alt="Stackly 3D SaaS Freight Flow Platform Visualization" 
               class="visual-slice-img"
             >
@@ -2093,7 +2182,6 @@
           <div class="visual-slice slice-bottom">
             <img 
               src="assets/services_hero_platform.png" 
-              onerror="if(!this.dataset.step){this.dataset.step=1;this.src='assets/services_hero_flow.webp';}" 
               alt="Stackly 3D SaaS Freight Flow Platform Visualization" 
               class="visual-slice-img"
             >
@@ -2900,20 +2988,58 @@
 
 
 
-      // Replay hero visual diagonal separation and join on click
+      // Hero visual diagonal separation and join animation on page opening and on click
       var heroVisual = document.getElementById('heroVisualCard');
+      function triggerHeroDiagonalAnimation() {
+        if (!heroVisual) return;
+        var top = heroVisual.querySelector('.slice-top');
+        var btm = heroVisual.querySelector('.slice-bottom');
+        if (!top || !btm) return;
+
+        top.classList.remove('anim-active');
+        btm.classList.remove('anim-active');
+        void top.offsetWidth;
+        void btm.offsetWidth;
+        top.classList.add('anim-active');
+        btm.classList.add('anim-active');
+      }
+
       if (heroVisual) {
+        // Replay on click
         heroVisual.addEventListener('click', function() {
-          var top = heroVisual.querySelector('.slice-top');
-          var btm = heroVisual.querySelector('.slice-bottom');
-          if (top && btm) {
-            top.style.animation = 'none';
-            btm.style.animation = 'none';
-            void top.offsetWidth;
-            void btm.offsetWidth;
-            top.style.animation = 'diagonalJoinTop 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards';
-            btm.style.animation = 'diagonalJoinBottom 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards';
-          }
+          triggerHeroDiagonalAnimation();
+        });
+
+        // Trigger on page opening:
+        // When preloader finishes (or immediately if bypassed or already loaded)
+        var preloader = document.getElementById('preloader');
+        var openingTriggered = false;
+
+        function runOnOpening() {
+          if (openingTriggered) return;
+          openingTriggered = true;
+          // Trigger diagonal separation and join right as the hero section is displayed
+          setTimeout(triggerHeroDiagonalAnimation, 300);
+        }
+
+        if (preloader && getComputedStyle(preloader).display !== 'none' && !document.body.classList.contains('loaded')) {
+          var bodyObserver = new MutationObserver(function() {
+            if (document.body.classList.contains('loaded')) {
+              bodyObserver.disconnect();
+              // Curtains part in about 1.1s; trigger when hero section is revealed
+              setTimeout(runOnOpening, 400);
+            }
+          });
+          bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+          // Fallback timer if mutation observer did not trigger
+          setTimeout(runOnOpening, 1900);
+        } else {
+          runOnOpening();
+        }
+
+        window.addEventListener('pageshow', function() {
+          setTimeout(triggerHeroDiagonalAnimation, 250);
         });
       }
 

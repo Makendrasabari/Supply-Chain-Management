@@ -522,6 +522,8 @@
     if (!drawer) return;
 
     function openMenu() {
+      // Only open when at mobile viewport (768px and below)
+      if (window.innerWidth > 768) return;
       drawer.classList.add('open');
       if (toggleBtn) {
         toggleBtn.classList.add('open');
@@ -561,7 +563,7 @@
       });
     });
 
-    // Close when clicking any link inside drawer
+    // Close when clicking any link inside drawer (navigates cleanly and restores page state)
     var drawerLinks = drawer.querySelectorAll('a');
     drawerLinks.forEach(function (link) {
       link.addEventListener('click', function () {
@@ -574,6 +576,22 @@
       if (e.key === 'Escape' && drawer.classList.contains('open')) {
         closeMenu();
       }
+    });
+
+    // Automatically close menu when resizing from mobile to desktop (> 768px)
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768) {
+        if (drawer.classList.contains('open') || (toggleBtn && toggleBtn.classList.contains('open'))) {
+          closeMenu();
+        }
+        document.body.classList.remove('mobile-menu-active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Guarantee closed state on page show (including back/forward restoration)
+    window.addEventListener('pageshow', function () {
+      closeMenu();
     });
   }
 
@@ -639,11 +657,17 @@
     var profileBtn = document.getElementById('profileBtn');
     var profileDropdown = document.getElementById('profileDropdown');
 
-    // Retrieve saved user info from localStorage or defaults
-    var savedName = localStorage.getItem('stackly_user_name') || 'Mahendra Sabari';
-    var savedEmail = localStorage.getItem('stackly_user_email') || 'mahendra.sabari@gmail.com';
+    // Retrieve saved user info from sessionStorage, localStorage, or defaults
+    var savedName = (window.sessionStorage && sessionStorage.getItem('stackly_user_name')) ||
+                    (window.localStorage && localStorage.getItem('stackly_user_name')) ||
+                    'Mahendra Sabari';
+    var savedEmail = (window.sessionStorage && sessionStorage.getItem('stackly_user_email')) ||
+                     (window.localStorage && localStorage.getItem('stackly_user_email')) ||
+                     'mahendra.sabari@gmail.com';
+    var savedRole = (window.sessionStorage && sessionStorage.getItem('stackly_user_role')) ||
+                    (window.localStorage && localStorage.getItem('stackly_user_role'));
 
-    // Compute Initials: e.g. "Mahendra Sabari" -> "MS", "Ramesh Kumar" -> "RK"
+    // Compute Initials: e.g. "Kumar Saravanan" yields "KS", "Mahendra Sabari" yields "MS"
     function getInitials(name) {
       if (!name || typeof name !== 'string') return 'MS';
       var words = name.trim().split(/\s+/).filter(Boolean);
@@ -660,11 +684,27 @@
       el.textContent = savedName;
     });
 
+    var welcomeHeadings = document.querySelectorAll('.welcome-heading');
+    welcomeHeadings.forEach(function (heading) {
+      if (heading.textContent.indexOf('Welcome') !== -1) {
+        var userSpan = heading.querySelector('.user-display-name');
+        if (userSpan) {
+          userSpan.textContent = savedName;
+        } else if (heading.getAttribute('data-letters-animated') === 'true') {
+          heading.innerHTML = 'Welcome, <span class="user-display-name">' + savedName + '</span>';
+          heading.removeAttribute('data-letters-animated');
+          if (typeof renderLettersAnimation === 'function') {
+            renderLettersAnimation(heading, 'Welcome, ' + savedName);
+          }
+        }
+      }
+    });
+
     // Update Topbar Profile Name and Initials
     var topbarName = document.getElementById('topbarName');
     if (topbarName) topbarName.textContent = savedName;
 
-    var avatarEls = document.querySelectorAll('#profileAvatar, #dropdownAvatar, #sidebarAvatar');
+    var avatarEls = document.querySelectorAll('#profileAvatar, #dropdownAvatar, #sidebarAvatar, .profile-avatar-circle, .dropdown-avatar-circle, .sidebar-user-avatar');
     avatarEls.forEach(function (el) {
       el.textContent = initials;
     });
@@ -682,7 +722,6 @@
     if (sidebarEmail) sidebarEmail.textContent = savedEmail;
 
     // Update Role badges in profile dropdown and views
-    var savedRole = localStorage.getItem('stackly_user_role');
     if (savedRole) {
       var dropdownRoles = document.querySelectorAll('.dropdown-badge-role');
       dropdownRoles.forEach(function (el) {
@@ -696,7 +735,8 @@
 
     // Sidebar Sign Out Button
     var btnSidebarSignout = document.getElementById('btnSidebarSignout');
-    if (btnSidebarSignout) {
+    if (btnSidebarSignout && !btnSidebarSignout.hasAttribute('data-bound')) {
+      btnSidebarSignout.setAttribute('data-bound', 'true');
       btnSidebarSignout.addEventListener('click', function (e) {
         e.preventDefault();
         sessionStorage.removeItem('stackly_dashboard_session');
@@ -705,7 +745,8 @@
     }
 
     // Profile Dropdown Toggle
-    if (profileBtn && profileDropdown) {
+    if (profileBtn && profileDropdown && !profileBtn.hasAttribute('data-bound')) {
+      profileBtn.setAttribute('data-bound', 'true');
       profileBtn.addEventListener('click', function (e) {
         e.stopPropagation();
         var isOpen = profileDropdown.classList.toggle('show');
@@ -1636,5 +1677,9 @@
   } else {
     initAll();
   }
+
+  window.addEventListener('pageshow', function () {
+    initDashboardUser();
+  });
 })();
 

@@ -202,6 +202,7 @@
       right: 0;
       bottom: 0;
       width: 100vw;
+      max-width: 100%;
       height: 100vh;
       height: 100dvh;
       background: #ffffff;
@@ -216,8 +217,19 @@
       overflow-y: auto;
     }
 
-    .contact-mobile-drawer.open {
-      display: flex !important;
+    @media (max-width: 768px) {
+      .contact-mobile-drawer.open {
+        display: flex !important;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .contact-mobile-drawer,
+      .contact-mobile-drawer.open {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
     }
 
     /* Common Eyebrow and Heading Styles */
@@ -1415,7 +1427,7 @@
       box-shadow: 0 26px 65px rgba(0, 0, 0, 0.48), 0 0 35px rgba(114, 202, 167, 0.25);
     }
 
-    /* Click overlay navigating directly to Home */
+    /* Click overlay navigating to Google Maps */
     .map-click-overlay {
       position: absolute;
       inset: 0;
@@ -1423,6 +1435,34 @@
       cursor: pointer;
       text-decoration: none;
       background: transparent;
+    }
+
+    .map-open-google-pill {
+      position: absolute;
+      bottom: 18px;
+      right: 18px;
+      z-index: 22;
+      background: rgba(15, 30, 46, 0.92);
+      color: #ffffff;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid rgba(114, 202, 167, 0.45);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .map-card-outer:hover .map-open-google-pill {
+      background: var(--contact-teal, #72caa7);
+      color: #0d382b;
+      border-color: #72caa7;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(114, 202, 167, 0.4);
     }
 
     .map-top-address-bar {
@@ -2006,7 +2046,47 @@
     }
 
     /* Responsive Breakpoints */
-    @media (max-width: 980px) {
+    /* Desktop Navbar above 768px */
+    @media (min-width: 769px) {
+      .contact-mobile-btn {
+        display: none !important;
+      }
+      .contact-nav-links {
+        display: flex !important;
+      }
+      .contact-nav-actions .btn-pill-signin,
+      .contact-nav-actions .btn-pill-signup,
+      #navSignIn,
+      #navSignUp {
+        display: inline-flex !important;
+      }
+    }
+
+    /* Tablet compact desktop navbar (769px to 980px) */
+    @media (min-width: 769px) and (max-width: 980px) {
+      .contact-navbar-pill {
+        padding: 8px 18px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .contact-nav-links {
+        gap: 16px !important;
+      }
+      .contact-nav-item a {
+        font-size: 14px;
+      }
+      .contact-nav-actions .btn-pill-signin {
+        padding: 7px 16px;
+        font-size: 13.5px;
+      }
+      .contact-nav-actions .btn-pill-signup {
+        padding: 7.5px 18px;
+        font-size: 13.5px;
+      }
+    }
+
+    /* Mobile Navbar: strictly 768px and below */
+    @media (max-width: 768px) {
       .contact-navbar-pill {
         padding: 8px 16px;
         width: 100%;
@@ -2030,6 +2110,9 @@
       .contact-nav-links {
         display: none !important;
       }
+    }
+
+    @media (max-width: 980px) {
       .contact-hero-container,
       .contact-form-container {
         grid-template-columns: 1fr;
@@ -2522,9 +2605,15 @@
           <p class="map-subtext">Drop your map embed into the placeholder below.</p>
         </div>
 
-        <div class="map-card-outer" id="mapCardOuter" title="Click map to return to Stackly Home">
-          <!-- Click Overlay to Home Page -->
-          <a href="index.html" class="map-click-overlay" aria-label="Open Salem Headquarters Map (Navigate to Home)"></a>
+        <div class="map-card-outer" id="mapCardOuter" title="Open location in Google Maps">
+          <!-- Click Overlay to Google Maps -->
+          <a 
+            href="https://www.google.com/maps/search/?api=1&amp;query=10,+Begur+-+Koppa+Rd,+Suraksha+nagar,+Yelenahalli,+Akshayanagar,+Bengaluru,+Karnataka+560114,+India" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="map-click-overlay" 
+            aria-label="Open location in Google Maps"
+          ></a>
 
           <!-- Top Black Address Bar matching Screenshot 3 -->
           <div class="map-top-address-bar">
@@ -2541,6 +2630,16 @@
               referrerpolicy="no-referrer-when-downgrade"
               title="Stackly Salem / South India Hub Map Location"
             ></iframe>
+          </div>
+
+          <!-- Floating Pill indicator -->
+          <div class="map-open-google-pill" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            <span>Open in Google Maps</span>
           </div>
         </div>
 
@@ -3135,7 +3234,7 @@
       }
 
       // ======================================================================
-      // SECTION 3: MAP SECTION ENTRANCE & HOME NAVIGATION
+      // SECTION 3: MAP SECTION ENTRANCE & GOOGLE MAPS NAVIGATION
       // ======================================================================
       var mapSec = document.getElementById('find-us');
       if (mapSec) {
@@ -3167,16 +3266,17 @@
 
       var mapCardOuter = document.getElementById('mapCardOuter');
       if (mapCardOuter) {
+        var googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=10,+Begur+-+Koppa+Rd,+Suraksha+nagar,+Yelenahalli,+Akshayanagar,+Bengaluru,+Karnataka+560114,+India';
         mapCardOuter.addEventListener('click', function(e) {
           if (!e.target.closest('a')) {
-            window.location.href = 'index.html';
+            window.open(googleMapsUrl, '_blank', 'noopener,noreferrer');
           }
         });
         mapCardOuter.addEventListener('keydown', function(e) {
           if (e.key === 'Enter' || e.key === ' ') {
             if (!e.target.closest('a')) {
               e.preventDefault();
-              window.location.href = 'index.html';
+              window.open(googleMapsUrl, '_blank', 'noopener,noreferrer');
             }
           }
         });

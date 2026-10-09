@@ -211,6 +211,7 @@
       right: 0;
       bottom: 0;
       width: 100vw;
+      max-width: 100%;
       height: 100vh;
       height: 100dvh;
       background: #ffffff;
@@ -225,8 +226,19 @@
       overflow-y: auto;
     }
 
-    .login-mobile-drawer.open {
-      display: flex !important;
+    @media (max-width: 768px) {
+      .login-mobile-drawer.open {
+        display: flex !important;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .login-mobile-drawer,
+      .login-mobile-drawer.open {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
     }
 
     /* Main Container (Two Columns: White Card + Airport Image) */
@@ -636,7 +648,47 @@
 
 
     /* Responsive Breakpoints */
-    @media (max-width: 980px) {
+    /* Desktop Navbar above 768px */
+    @media (min-width: 769px) {
+      .login-mobile-btn {
+        display: none !important;
+      }
+      .login-nav-links {
+        display: flex !important;
+      }
+      .login-nav-actions .btn-pill-signin,
+      .login-nav-actions .btn-pill-signup,
+      #navSignIn,
+      #navSignUp {
+        display: inline-flex !important;
+      }
+    }
+
+    /* Tablet compact desktop navbar (769px to 980px) */
+    @media (min-width: 769px) and (max-width: 980px) {
+      .login-navbar-pill {
+        padding: 8px 18px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .login-nav-links {
+        gap: 16px !important;
+      }
+      .login-nav-item a {
+        font-size: 14px;
+      }
+      .login-nav-actions .btn-pill-signin {
+        padding: 7px 16px;
+        font-size: 13.5px;
+      }
+      .login-nav-actions .btn-pill-signup {
+        padding: 7.5px 18px;
+        font-size: 13.5px;
+      }
+    }
+
+    /* Mobile Navbar: strictly 768px and below */
+    @media (max-width: 768px) {
       .login-navbar-pill {
         padding: 8px 16px;
         width: 100%;
@@ -660,6 +712,9 @@
       .login-nav-links {
         display: none !important;
       }
+    }
+
+    @media (max-width: 980px) {
       .login-content-grid {
         grid-template-columns: 1fr;
         max-width: 520px;
@@ -793,22 +848,22 @@
         <p class="login-subheading">Sign in to see where your shipments are right now.</p>
 
         <form id="loginForm" class="login-form" autocomplete="on" novalidate>
-          <!-- Work Email Field -->
+          <!-- Full Name or Work Email Field -->
           <div class="login-form-group">
-            <label for="emailInput" class="login-form-label">Work email</label>
+            <label for="emailInput" class="login-form-label">Full Name or Work Email</label>
             <input 
-              type="email" 
+              type="text" 
               id="emailInput" 
               name="email" 
               class="login-form-input" 
-              placeholder="Enter the email address" 
-              autocomplete="email" 
-              autocorrect="off"
-              autocapitalize="off"
-              spellcheck="false"
+              placeholder="Enter your name or email (e.g. Kumar Saravanan)" 
+              autocomplete="username" 
+              autocorrect="off" 
+              autocapitalize="words" 
+              spellcheck="false" 
               required
             >
-            <span id="emailError" class="error-line">Please enter a valid @gmail.com address</span>
+            <span id="emailError" class="error-line">Please enter your name or email address</span>
           </div>
 
           <!-- Password Field -->
@@ -1033,56 +1088,100 @@
       var passwordError = document.getElementById('passwordError');
       var keepSignedIn = document.getElementById('keepSignedIn');
 
-      // Strict @gmail.com validator
-      var gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+      // Helper function to extract and format display name from input
+      function formatDisplayName(input) {
+        var trimmed = (input || '').trim();
+        if (!trimmed) return 'Kumar Saravanan';
 
-      function validateEmail() {
-        var emailVal = emailInput ? emailInput.value.trim() : '';
-        if (!emailVal || !gmailRegex.test(emailVal)) {
+        // If email entered, extract username part before @
+        if (trimmed.indexOf('@') !== -1) {
+          var localPart = trimmed.split('@')[0];
+          var tokens = localPart.split(/[._\-\s]+/).filter(Boolean);
+          if (tokens.length > 0) {
+            return tokens.map(function (w) {
+              return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+            }).join(' ');
+          }
+          return localPart;
+        }
+
+        // If direct name entered, title-case words cleanly
+        var words = trimmed.split(/\s+/).filter(Boolean);
+        if (words.length > 0) {
+          return words.map(function (w) {
+            return w.charAt(0).toUpperCase() + w.slice(1);
+          }).join(' ');
+        }
+        return trimmed;
+      }
+
+      // Helper function to derive valid email from input or name
+      function deriveEmail(input, formattedName) {
+        var trimmed = (input || '').trim();
+        if (trimmed.indexOf('@') !== -1) {
+          return trimmed.toLowerCase();
+        }
+        var emailPrefix = formattedName.toLowerCase().replace(/\s+/g, '.').replace(/[^a-z0-9.]/g, '');
+        return (emailPrefix ? emailPrefix : 'kumar.saravanan') + '@gmail.com';
+      }
+
+      function validateInput() {
+        var val = emailInput ? emailInput.value.trim() : '';
+        if (!val || val.length < 2) {
           if (emailInput) emailInput.classList.add('input-error');
           if (emailError) {
-            emailError.textContent = 'Please enter a valid @gmail.com address';
+            emailError.textContent = 'Please enter your name or email address';
             emailError.classList.add('show');
           }
           return false;
-        } else {
-          if (emailInput) emailInput.classList.remove('input-error');
-          if (emailError) emailError.classList.remove('show');
-          return true;
         }
+
+        // If an @ is present, validate email syntax
+        if (val.indexOf('@') !== -1) {
+          var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(val)) {
+            if (emailInput) emailInput.classList.add('input-error');
+            if (emailError) {
+              emailError.textContent = 'Please enter a valid email address';
+              emailError.classList.add('show');
+            }
+            return false;
+          }
+        }
+
+        if (emailInput) emailInput.classList.remove('input-error');
+        if (emailError) emailError.classList.remove('show');
+        return true;
       }
 
       if (emailInput) {
-        var handleEmailChange = function () {
+        var handleInputChange = function () {
           var val = emailInput.value.trim();
           if (val === '') {
             emailInput.classList.remove('input-error');
             if (emailError) emailError.classList.remove('show');
-          } else if (gmailRegex.test(val)) {
-            emailInput.classList.remove('input-error');
-            if (emailError) emailError.classList.remove('show');
-          } else if (emailInput.classList.contains('input-error')) {
-            if (emailError) {
-              emailError.textContent = 'Please enter a valid @gmail.com address';
-              emailError.classList.add('show');
+          } else if (val.length >= 2) {
+            if (val.indexOf('@') === -1 || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+              emailInput.classList.remove('input-error');
+              if (emailError) emailError.classList.remove('show');
             }
           }
         };
 
-        emailInput.addEventListener('input', handleEmailChange);
-        emailInput.addEventListener('change', handleEmailChange);
+        emailInput.addEventListener('input', handleInputChange);
+        emailInput.addEventListener('change', handleInputChange);
 
         emailInput.addEventListener('blur', function () {
           var val = emailInput.value.trim();
           if (val.length > 0) {
-            validateEmail();
+            validateInput();
           }
         });
       }
 
       if (passwordInput) {
         passwordInput.addEventListener('input', function () {
-          if (passwordInput.value.length >= 8) {
+          if (passwordInput.value.length >= 6) {
             passwordInput.classList.remove('input-error');
             if (passwordError) passwordError.classList.remove('show');
           }
@@ -1201,19 +1300,22 @@
         form.addEventListener('submit', function (e) {
           e.preventDefault();
 
-          var emailVal = emailInput ? emailInput.value.trim() : '';
+          var rawInput = emailInput ? emailInput.value.trim() : '';
           var passwordVal = passwordInput ? passwordInput.value : '';
           var isValid = true;
 
-          // Strict email validation: only @gmail.com allowed
-          if (!validateEmail()) {
+          // Input validation (accepts full names or valid emails)
+          if (!validateInput()) {
             isValid = false;
           }
 
           // Password validation
-          if (!passwordVal || passwordVal.length < 8) {
+          if (!passwordVal || passwordVal.length < 6) {
             if (passwordInput) passwordInput.classList.add('input-error');
-            if (passwordError) passwordError.classList.add('show');
+            if (passwordError) {
+              passwordError.textContent = 'Password must be at least 6 characters';
+              passwordError.classList.add('show');
+            }
             isValid = false;
           } else {
             if (passwordInput) passwordInput.classList.remove('input-error');
@@ -1221,12 +1323,18 @@
           }
 
           if (isValid) {
-            // Save email if keep signed in or remembering
-            if (keepSignedIn && keepSignedIn.checked) {
-              localStorage.setItem('stackly_user_email', emailVal);
-            }
+            var userDisplayName = formatDisplayName(rawInput);
+            var userDisplayEmail = deriveEmail(rawInput, userDisplayName);
+
+            // Store user details across localStorage and sessionStorage so dashboards reflect them dynamically
+            localStorage.setItem('stackly_user_name', userDisplayName);
+            sessionStorage.setItem('stackly_user_name', userDisplayName);
+            localStorage.setItem('stackly_user_email', userDisplayEmail);
+            sessionStorage.setItem('stackly_user_email', userDisplayEmail);
+
             var selectedRole = roleSelect ? roleSelect.value : 'Supply Chain Manager';
             localStorage.setItem('stackly_user_role', selectedRole);
+            sessionStorage.setItem('stackly_user_role', selectedRole);
             sessionStorage.removeItem('stackly_dashboard_session');
 
             // Dynamic redirect based on selected role
