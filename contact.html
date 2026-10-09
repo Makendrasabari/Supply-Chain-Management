@@ -495,7 +495,7 @@
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(255, 255, 255, 0.08);
       position: relative;
       aspect-ratio: 16 / 10;
-      cursor: pointer;
+      cursor: default;
       isolation: isolate;
       border: 1px solid rgba(114, 202, 167, 0.25);
       transition: box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.5s ease;
@@ -2247,7 +2247,7 @@
         <!-- Left: Copy & Action CTAs -->
         <div class="contact-hero-content">
           <span class="hero-badge-contact">Contact</span>
-          <h1 class="contact-hero-title cta-heading-letters white-heading-replay" id="contactHeroTitle" aria-label="LET'S STACK YOUR SUPPLY chain." title="Click to replay animation">
+          <h1 class="contact-hero-title cta-heading-letters white-heading-replay" id="contactHeroTitle" aria-label="LET'S STACK YOUR SUPPLY chain.">
             <!-- Line 1: LET'S STACK YOUR -->
             <span class="anim-word-unit">
               <span class="anim-letter-right" style="--delay: 0.04s;">L</span>
@@ -2303,7 +2303,7 @@
         </div>
 
         <!-- Right: Visual Collaboration Card with Diagonal Separation & Join -->
-        <div class="contact-hero-visual-card" id="contactHeroVisualCard" title="Click to replay animation">
+        <div class="contact-hero-visual-card" id="contactHeroVisualCard">
           <!-- Top-Left Diagonal Half -->
           <div class="diagonal-slice slice-top">
             <img 
@@ -2389,7 +2389,7 @@
         <!-- Left: Copy & Meta details -->
         <div class="contact-form-left">
           <span class="section-eyebrow">SEND A MESSAGE</span>
-          <h2 class="contact-form-heading cta-heading-letters white-heading-replay" id="formSectionHeading" aria-label="TELL US WHAT IS NOT MOVING." title="Click to replay animation">
+          <h2 class="contact-form-heading cta-heading-letters white-heading-replay" id="formSectionHeading" aria-label="TELL US WHAT IS NOT MOVING.">
             <!-- Word 1: TELL -->
             <span class="anim-word-unit">
               <span class="anim-letter-right" style="--delay: 0.04s;">T</span>
@@ -2457,7 +2457,7 @@
         </div>
 
         <!-- Right: Clean White Form Card (Enters from Left Downside) -->
-        <div class="contact-form-card" id="contactFormCard" title="Click to replay card entrance">
+        <div class="contact-form-card" id="contactFormCard">
           <form id="contactForm" novalidate>
             
             <div class="form-group">
@@ -2574,7 +2574,7 @@
         <div class="map-header-row">
           <div>
             <span class="section-eyebrow">FIND US</span>
-            <h2 class="map-section-heading cta-heading-letters white-heading-replay" id="mapSectionHeading" aria-label="SALEM HEADQUARTERS." title="Click to replay animation">
+            <h2 class="map-section-heading cta-heading-letters white-heading-replay" id="mapSectionHeading" aria-label="SALEM HEADQUARTERS.">
               <!-- Word 1: SALEM -->
               <span class="anim-word-unit">
                 <span class="anim-letter-right" style="--delay: 0.04s;">S</span>
@@ -2656,7 +2656,7 @@
         <div class="offices-header-row">
           <div>
             <span class="section-eyebrow">OFFICES</span>
-            <h2 class="offices-section-heading cta-heading-letters white-heading-replay" id="officesHeading" aria-label="THREE OFFICES, ONE NETWORK." title="Click to replay animation">
+            <h2 class="offices-section-heading cta-heading-letters white-heading-replay" id="officesHeading" aria-label="THREE OFFICES, ONE NETWORK.">
               <!-- Word 1: THREE -->
               <span class="anim-word-unit">
                 <span class="anim-letter-right" style="--delay: 0.04s;">T</span>
@@ -2773,7 +2773,7 @@
         
         <div class="faq-header-wrap">
           <span class="section-eyebrow">FAQ</span>
-          <h2 class="faq-section-heading cta-heading-letters white-heading-replay" id="faqHeading" aria-label="QUICK ANSWERS." title="Click to replay animation">
+          <h2 class="faq-section-heading cta-heading-letters white-heading-replay" id="faqHeading" aria-label="QUICK ANSWERS.">
             <!-- Word 1: QUICK -->
             <span class="anim-word-unit">
               <span class="anim-letter-right" style="--delay: 0.04s;">Q</span>
@@ -2845,7 +2845,7 @@
       <div class="cta-banner-container">
         <div class="cta-mint-banner-card cta-card-from-right" id="ctaBannerCard">
           <div class="cta-banner-left">
-            <h2 class="cta-banner-heading" id="ctaBannerHeading" title="Click to replay animation">
+            <h2 class="cta-banner-heading" id="ctaBannerHeading">
               START WITH THE MODULE THAT HURTS MOST.
             </h2>
             <p class="cta-banner-subtext">14 days free. No card required.</p>
@@ -2957,6 +2957,7 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="js/script.js"></script>
   <script>
     (function() {
@@ -3002,6 +3003,20 @@
         if (visualCard) {
           visualCard.addEventListener('click', triggerHeroEntrance);
         }
+
+        // Hero bidirectional observer
+        if ('IntersectionObserver' in window) {
+          var heroObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                contactHero.classList.add('in-view');
+              } else {
+                contactHero.classList.remove('in-view');
+              }
+            });
+          }, { threshold: 0.1 });
+          heroObs.observe(contactHero);
+        }
       }
 
       // 3 Contact Channels Cards Hover Shuffle & Click Arrange Handler
@@ -3039,10 +3054,11 @@
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 formSec.classList.add('in-view');
-                formObs.unobserve(formSec);
+              } else {
+                formSec.classList.remove('in-view');
               }
             });
-          }, { threshold: 0.12 });
+          }, { threshold: 0.1 });
           formObs.observe(formSec);
         } else {
           formSec.classList.add('in-view');
@@ -3249,10 +3265,11 @@
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 mapSec.classList.add('in-view');
-                mapObs.unobserve(mapSec);
+              } else {
+                mapSec.classList.remove('in-view');
               }
             });
-          }, { threshold: 0.12 });
+          }, { threshold: 0.1 });
           mapObs.observe(mapSec);
         } else {
           mapSec.classList.add('in-view');
@@ -3298,10 +3315,11 @@
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 officesSec.classList.add('in-view');
-                officesObs.unobserve(officesSec);
+              } else {
+                officesSec.classList.remove('in-view');
               }
             });
-          }, { threshold: 0.12 });
+          }, { threshold: 0.1 });
           officesObs.observe(officesSec);
         } else {
           officesSec.classList.add('in-view');
@@ -3329,7 +3347,8 @@
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 faqSec.classList.add('in-view');
-                faqObs.unobserve(faqSec);
+              } else {
+                faqSec.classList.remove('in-view');
               }
             });
           }, { threshold: 0.1 });
@@ -3368,10 +3387,12 @@
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 ctaWrap.classList.add('in-view');
-                ctaObs.unobserve(ctaWrap);
+              } else {
+                ctaWrap.classList.remove('in-view');
+                if (ctaCard) ctaCard.classList.remove('animation-done');
               }
             });
-          }, { threshold: 0.08 });
+          }, { threshold: 0.05 });
           ctaObs.observe(ctaWrap);
         } else {
           ctaWrap.classList.add('in-view');

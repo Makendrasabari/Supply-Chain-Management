@@ -466,6 +466,139 @@
     StacklyNavigation.applyScrollRestoration();
   });
 
+  // --- 0. LENIS SMOOTH SCROLL INTEGRATION ---
+  function initLenisScroll() {
+    if (typeof Lenis === 'undefined') return;
+    if (window.lenis && typeof window.lenis.destroy === 'function') {
+      try { window.lenis.destroy(); } catch (e) {}
+    }
+
+    var dashboardContainer = document.querySelector('.dashboard-main');
+    var isDashboard = !!dashboardContainer;
+
+    var lenisOptions = {
+      duration: 1.15,
+      easing: function (t) {
+        return Math.min(1, 1.001 - Math.pow(2, -10 * t));
+      },
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.2,
+      infinite: false,
+      autoResize: true
+    };
+
+    if (isDashboard) {
+      document.documentElement.classList.add('lenis-dashboard-page');
+      lenisOptions.wrapper = dashboardContainer;
+      lenisOptions.content = dashboardContainer;
+    }
+
+    var lenis = new Lenis(lenisOptions);
+    window.lenis = lenis;
+
+    // Harmonious GSAP and ScrollTrigger integration
+    if (window.gsap) {
+      if (window.ScrollTrigger) {
+        lenis.on('scroll', window.ScrollTrigger.update);
+      }
+      window.gsap.ticker.add(function (time) {
+        lenis.raf(time * 1000);
+      });
+      if (typeof window.gsap.ticker.lagSmoothing === 'function') {
+        window.gsap.ticker.lagSmoothing(0);
+      }
+    } else {
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    }
+
+    // Smooth scroll for internal hash anchor links on current page
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href*="#"]');
+      if (!link) return;
+
+      var href = link.getAttribute('href');
+      if (!href || href === '#' || href === '#!' || href.indexOf('#') === -1) return;
+
+      // Verify the link belongs to the current page
+      var linkUrl;
+      try {
+        linkUrl = new URL(link.href, window.location.href);
+      } catch (err) {
+        return;
+      }
+      if (linkUrl.pathname !== window.location.pathname) {
+        return;
+      }
+
+      var targetId = href.split('#')[1];
+      if (!targetId) return;
+
+      var targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        e.preventDefault();
+        var navOffset = isDashboard ? -20 : -85;
+        lenis.scrollTo(targetEl, {
+          offset: navOffset,
+          duration: 1.15
+        });
+      }
+    });
+
+    // Handle full-screen mobile drawers: pause Lenis while drawer is open
+    var drawerSelectors = [
+      '#mobileNavDrawer',
+      '.services-mobile-drawer',
+      '.about-mobile-drawer',
+      '.login-mobile-drawer',
+      '.signup-mobile-drawer',
+      '.contact-mobile-drawer',
+      '.blog-mobile-drawer',
+      '.dashboard-sidebar'
+    ];
+
+    drawerSelectors.forEach(function (sel) {
+      var d = document.querySelector(sel);
+      if (d) {
+        var obs = new MutationObserver(function () {
+          var isOpen = d.classList.contains('open') || d.classList.contains('is-open');
+          if (isOpen) {
+            lenis.stop();
+          } else {
+            lenis.start();
+          }
+        });
+        obs.observe(d, { attributes: true, attributeFilter: ['class'] });
+      }
+    });
+
+    // Resize Lenis when window loads or images finish rendering
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        lenis.resize();
+      }, 600);
+    });
+
+    var preloader = document.getElementById('preloader');
+    if (preloader) {
+      var pObs = new MutationObserver(function () {
+        if (document.body.classList.contains('loaded')) {
+          pObs.disconnect();
+          setTimeout(function () {
+            lenis.resize();
+          }, 350);
+        }
+      });
+      pObs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    }
+  }
+
   // --- 1. PRELOADER LOGIC: Stackly separates left and right smoothly ---
   function initPreloader() {
     var isDashboard = window.location.pathname.indexOf('dashboard') !== -1;
@@ -822,10 +955,11 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             aboutSection.classList.add('in-view');
-            observer.unobserve(aboutSection);
+          } else {
+            aboutSection.classList.remove('in-view');
           }
         });
-      }, { threshold: 0.2 });
+      }, { threshold: 0.12 });
 
       observer.observe(aboutSection);
     } else {
@@ -907,17 +1041,23 @@
       });
     }
 
-    // Scroll Observer: automatically trigger shuffle & card reveal when scrolled into view
+    // Scroll Observer: automatically trigger shuffle & card reveal when scrolled into view (bidirectional)
     if ('IntersectionObserver' in window && casesSection) {
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting && !hasShuffled) {
-            hasShuffled = true;
-            setTimeout(shuffleCards, 200);
-            observer.unobserve(casesSection);
+          if (entry.isIntersecting) {
+            if (!hasShuffled) {
+              hasShuffled = true;
+              setTimeout(shuffleCards, 150);
+            }
+          } else {
+            hasShuffled = false;
+            cards.forEach(function (card) {
+              card.classList.remove('in-view');
+            });
           }
         });
-      }, { threshold: 0.2 });
+      }, { threshold: 0.12 });
 
       observer.observe(casesSection);
     } else {
@@ -958,10 +1098,11 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             servicesSection.classList.add('in-view');
-            observer.unobserve(servicesSection);
+          } else {
+            servicesSection.classList.remove('in-view');
           }
         });
-      }, { threshold: 0.2 });
+      }, { threshold: 0.12 });
 
       observer.observe(servicesSection);
     } else {
@@ -979,10 +1120,11 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             trackingSection.classList.add('in-view');
-            observer.unobserve(trackingSection);
+          } else {
+            trackingSection.classList.remove('in-view');
           }
         });
-      }, { threshold: 0.2 });
+      }, { threshold: 0.12 });
 
       observer.observe(trackingSection);
     } else {
@@ -1039,12 +1181,13 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             numbersSection.classList.add('in-view');
-            // Stagger counter run slightly so card entrance animation is visible as numbers roll
             setTimeout(runCounters, 150);
-            observer.unobserve(numbersSection);
+          } else {
+            numbersSection.classList.remove('in-view');
+            hasAnimated = false;
           }
         });
-      }, { threshold: 0.25 });
+      }, { threshold: 0.15 });
 
       observer.observe(numbersSection);
     } else {
@@ -1063,10 +1206,11 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             stepsSection.classList.add('in-view');
-            observer.unobserve(stepsSection);
+          } else {
+            stepsSection.classList.remove('in-view');
           }
         });
-      }, { threshold: 0.18 });
+      }, { threshold: 0.12 });
 
       observer.observe(stepsSection);
     } else {
@@ -1084,10 +1228,11 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             industriesSection.classList.add('in-view');
-            observer.unobserve(industriesSection);
+          } else {
+            industriesSection.classList.remove('in-view');
           }
         });
-      }, { threshold: 0.15 });
+      }, { threshold: 0.12 });
 
       observer.observe(industriesSection);
     } else {
@@ -1105,10 +1250,11 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             testimonialsSection.classList.add('in-view');
-            observer.unobserve(testimonialsSection);
+          } else {
+            testimonialsSection.classList.remove('in-view');
           }
         });
-      }, { threshold: 0.18 });
+      }, { threshold: 0.12 });
 
       observer.observe(testimonialsSection);
     } else {
@@ -1126,10 +1272,11 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             blogSection.classList.add('in-view');
-            observer.unobserve(blogSection);
+          } else {
+            blogSection.classList.remove('in-view');
           }
         });
-      }, { threshold: 0.18 });
+      }, { threshold: 0.12 });
 
       observer.observe(blogSection);
     } else {
@@ -1159,10 +1306,12 @@
           entries.forEach(function (entry) {
             if (entry.isIntersecting) {
               sec.classList.add('in-view');
-              observer.unobserve(sec);
+            } else {
+              sec.classList.remove('in-view');
+              cards.forEach(function (card) { card.classList.remove('animation-done'); });
             }
           });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.1 });
         observer.observe(sec);
       } else {
         sec.classList.add('in-view');
@@ -1204,10 +1353,12 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             pricingSection.classList.add('in-view');
-            observer.unobserve(pricingSection);
+          } else {
+            pricingSection.classList.remove('in-view');
+            flipCards.forEach(function (card) { card.classList.remove('animation-done'); });
           }
         });
-      }, { threshold: 0.15 });
+      }, { threshold: 0.1 });
       observer.observe(pricingSection);
     } else {
       pricingSection.classList.add('in-view');
@@ -1257,7 +1408,10 @@
                 var c = sec.querySelectorAll('.cta-banner-card, .cta-mint-banner-card, .about-cta-mint-card, .mint-banner-card');
                 c.forEach(function (card) { card.classList.add('animation-done'); });
               }, 1100);
-              observer.unobserve(sec);
+            } else {
+              sec.classList.remove('in-view');
+              var c = sec.querySelectorAll('.cta-banner-card, .cta-mint-banner-card, .about-cta-mint-card, .mint-banner-card');
+              c.forEach(function (card) { card.classList.remove('animation-done'); });
             }
           });
         }, { threshold: 0.05 });
@@ -1619,10 +1773,11 @@
           entries.forEach(function (entry) {
             if (entry.isIntersecting) {
               triggerHeadingAnimation(heading);
-              obs.unobserve(heading);
+            } else {
+              heading.classList.remove('anim-letter-active');
             }
           });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.1 });
         obs.observe(heading);
       } else {
         triggerHeadingAnimation(heading);
@@ -1643,6 +1798,7 @@
 
   // --- 27. INITIALIZE ALL COMPONENTS ---
   function initAll() {
+    initLenisScroll();
     StacklyNavigation.init();
     initPreloader();
     initMobileMenu();
@@ -1678,8 +1834,25 @@
     initAll();
   }
 
+  // Ensure Lenis initializes even if script loaded with a small delay
+  if (typeof Lenis === 'undefined') {
+    var lenisPollCount = 0;
+    var lenisPoll = setInterval(function () {
+      lenisPollCount++;
+      if (typeof Lenis !== 'undefined') {
+        clearInterval(lenisPoll);
+        initLenisScroll();
+      } else if (lenisPollCount > 60) {
+        clearInterval(lenisPoll);
+      }
+    }, 50);
+  }
+
   window.addEventListener('pageshow', function () {
     initDashboardUser();
+    if (window.lenis) {
+      window.lenis.resize();
+    }
   });
 })();
 

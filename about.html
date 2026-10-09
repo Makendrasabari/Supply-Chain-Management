@@ -2046,7 +2046,7 @@
           <!-- Left: Story Copy & Certifications with Words/Letters Animation -->
           <div class="story-copy-col">
             <span class="section-eyebrow">OUR STORY</span>
-            <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="storyTitle" aria-label="FROM THREE SPREADSHEETS TO ONE PLAN." style="cursor: pointer; user-select: none;" title="Click to replay story animations">
+            <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="storyTitle" aria-label="FROM THREE SPREADSHEETS TO ONE PLAN." style="user-select: none;">
               <span class="anim-word-unit">
                 <span class="anim-letter-right" style="--delay: 0.03s">F</span><span class="anim-letter-right" style="--delay: 0.05s">R</span><span class="anim-letter-right" style="--delay: 0.07s">O</span><span class="anim-letter-right" style="--delay: 0.09s">M</span>
               </span>
@@ -2165,7 +2165,7 @@
         <div class="values-header-row">
           <div>
             <span class="section-eyebrow">WHAT WE VALUE</span>
-            <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="valuesHeading" style="margin-bottom: 0;" aria-label="THREE RULES WE PLAN BY." title="Click to replay animation">
+            <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="valuesHeading" style="margin-bottom: 0;" aria-label="THREE RULES WE PLAN BY.">
               <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">T</span><span class="anim-letter-right" style="--delay: 0.065s;">H</span><span class="anim-letter-right" style="--delay: 0.090s;">R</span><span class="anim-letter-right" style="--delay: 0.115s;">E</span><span class="anim-letter-right" style="--delay: 0.140s;">E</span></span>
               <span class="anim-letter-space">&nbsp;</span>
               <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.170s;">R</span><span class="anim-letter-right" style="--delay: 0.195s;">U</span><span class="anim-letter-right" style="--delay: 0.220s;">L</span><span class="anim-letter-right" style="--delay: 0.245s;">E</span><span class="anim-letter-right" style="--delay: 0.270s;">S</span></span>
@@ -2254,7 +2254,7 @@
     <section class="milestones-section" id="milestones">
       <div class="milestones-container">
         <span class="section-eyebrow">MILESTONES</span>
-        <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="milestonesHeading" aria-label="EIGHT YEARS, ONE SCREEN." title="Click to replay animation">
+        <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="milestonesHeading" aria-label="EIGHT YEARS, ONE SCREEN.">
           <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">E</span><span class="anim-letter-right" style="--delay: 0.065s;">I</span><span class="anim-letter-right" style="--delay: 0.090s;">G</span><span class="anim-letter-right" style="--delay: 0.115s;">H</span><span class="anim-letter-right" style="--delay: 0.140s;">T</span></span>
           <span class="anim-letter-space">&nbsp;</span>
           <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.170s;">Y</span><span class="anim-letter-right" style="--delay: 0.195s;">E</span><span class="anim-letter-right" style="--delay: 0.220s;">A</span><span class="anim-letter-right" style="--delay: 0.245s;">R</span><span class="anim-letter-right" style="--delay: 0.270s;">S</span><span class="anim-letter-right" style="--delay: 0.295s;">,</span></span>
@@ -2359,7 +2359,7 @@
         <div class="team-header-row">
           <div>
             <span class="section-eyebrow">TEAM</span>
-            <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="teamHeading" style="margin-bottom: 0;" aria-label="THE PEOPLE BEHIND THE SCREEN." title="Click to replay animation">
+            <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="teamHeading" style="margin-bottom: 0;" aria-label="THE PEOPLE BEHIND THE SCREEN.">
               <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">T</span><span class="anim-letter-right" style="--delay: 0.065s;">H</span><span class="anim-letter-right" style="--delay: 0.090s;">E</span></span>
               <span class="anim-letter-space">&nbsp;</span>
               <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.120s;">P</span><span class="anim-letter-right" style="--delay: 0.145s;">E</span><span class="anim-letter-right" style="--delay: 0.170s;">O</span><span class="anim-letter-right" style="--delay: 0.195s;">P</span><span class="anim-letter-right" style="--delay: 0.220s;">L</span><span class="anim-letter-right" style="--delay: 0.245s;">E</span></span>
@@ -2602,7 +2602,7 @@
       <div class="about-cta-banner-container">
         <div class="about-cta-mint-card cta-card-from-right" id="ctaBannerCard">
           <div class="about-cta-left">
-            <h2 class="about-cta-heading" id="aboutCtaHeading" title="Click to replay animation">
+            <h2 class="about-cta-heading" id="aboutCtaHeading">
               COME AND SEE THE NETWORK.
             </h2>
             <p class="about-cta-subtext">Book a 30-minute walkthrough with a logistics analyst.</p>
@@ -2714,6 +2714,7 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="js/script.js"></script>
   <script>
     (function() {
@@ -2733,7 +2734,7 @@
 
 
 
-      // Intersection Observer for scroll triggers (.in-view)
+      // Intersection Observer for bidirectional scroll triggers (.in-view)
       var observerSections = document.querySelectorAll('.about-hero-section, .story-section, .values-section, .milestones-section, .team-section, .about-cta-banner-wrap');
       if ('IntersectionObserver' in window) {
         var sectionObserver = new IntersectionObserver(function(entries) {
@@ -2742,6 +2743,15 @@
               entry.target.classList.add('in-view');
               if (entry.target.classList.contains('story-section')) {
                 animateStoryCounters();
+              }
+            } else {
+              entry.target.classList.remove('in-view');
+              if (entry.target.classList.contains('story-section')) {
+                resetStoryCounters();
+              }
+              if (entry.target.classList.contains('values-section')) {
+                var vCards = entry.target.querySelectorAll('.value-card');
+                vCards.forEach(function(c) { c.classList.remove('arranged'); });
               }
             }
           });
@@ -2807,11 +2817,20 @@
         });
       }
 
-      function animateStoryCounters() {
+      var storyCountersRunning = false;
+      function resetStoryCounters() {
+        storyCountersRunning = false;
         var counters = document.querySelectorAll('.num-counter');
         counters.forEach(function(counter) {
-          if (counter.dataset.animated) return;
-          counter.dataset.animated = 'true';
+          counter.dataset.animated = '';
+        });
+      }
+
+      function animateStoryCounters() {
+        if (storyCountersRunning) return;
+        storyCountersRunning = true;
+        var counters = document.querySelectorAll('.num-counter');
+        counters.forEach(function(counter) {
           var target = parseFloat(counter.getAttribute('data-target')) || 0;
           var prefix = counter.getAttribute('data-prefix') || '';
           var suffix = counter.getAttribute('data-suffix') || '';
@@ -2828,6 +2847,7 @@
               window.requestAnimationFrame(step);
             } else {
               counter.textContent = prefix + (isDecimal ? target.toFixed(1) : target) + suffix;
+              storyCountersRunning = false;
             }
           }
           window.requestAnimationFrame(step);

@@ -451,7 +451,7 @@
       box-shadow: 0 25px 65px rgba(0, 0, 0, 0.35);
       border: 1px solid rgba(255, 255, 255, 0.16);
       overflow: hidden;
-      cursor: pointer;
+      cursor: default;
     }
 
     .hero-services-visual-card::after {
@@ -2169,7 +2169,7 @@
         </div>
 
         <!-- Right: Real 3D App Mockup Visual (Diagonally sliced & joining animation) -->
-        <div class="hero-services-visual-card" id="heroVisualCard" title="Click to replay diagonal join animation">
+        <div class="hero-services-visual-card" id="heroVisualCard">
           <!-- Top-Left Diagonal Half -->
           <div class="visual-slice slice-top">
             <img 
@@ -2197,8 +2197,8 @@
          ====================================================================== -->
     <section class="modules-section" id="modules">
       <div class="modules-container">
-        <span class="section-eyebrow" id="modulesEyebrow" title="Click to replay animation">MODULES</span>
-        <h2 class="section-heading-lg modules-heading-letters white-heading-replay" id="modulesHeading" aria-label="SIX WAYS STACKLY MOVES FREIGHT." title="Click to replay animation">
+        <span class="section-eyebrow" id="modulesEyebrow">MODULES</span>
+        <h2 class="section-heading-lg modules-heading-letters white-heading-replay" id="modulesHeading" aria-label="SIX WAYS STACKLY MOVES FREIGHT.">
           <span class="anim-word-unit">
             <span class="anim-letter-right" style="--delay: 0.04s;">S</span>
             <span class="anim-letter-right" style="--delay: 0.065s;">I</span>
@@ -2352,7 +2352,7 @@
       <div class="deepdive-container">
         
         <!-- Left Column: Container Ship Visual (3D Wrap Unfold Animation & Blue Shade Glow) -->
-        <div class="deepdive-visual-card" id="deepdiveVisualCard" title="Hover to view blue enlightened shade">
+        <div class="deepdive-visual-card" id="deepdiveVisualCard">
           <div class="deepdive-wrap-shimmer"></div>
           <img 
             src="assets/service_container_ship.webp" 
@@ -2365,8 +2365,8 @@
 
         <!-- Right Column: Deep Dive Narrative & Live ETA Bullets -->
         <div class="deepdive-content-col">
-          <span class="deepdive-eyebrow" id="deepdiveEyebrow" title="Click to replay animation">DEEP DIVE</span>
-          <h2 class="deepdive-heading deepdive-heading-letters white-heading-replay" id="deepdiveHeading" aria-label="SEE EVERY CONTAINER BEFORE IT IS LATE." title="Click to replay animation">
+          <span class="deepdive-eyebrow" id="deepdiveEyebrow">DEEP DIVE</span>
+          <h2 class="deepdive-heading deepdive-heading-letters white-heading-replay" id="deepdiveHeading" aria-label="SEE EVERY CONTAINER BEFORE IT IS LATE.">
             <!-- Line 1: SEE EVERY CONTAINER -->
             <span class="anim-word-unit">
               <span class="anim-letter-right" style="--delay: 0.04s;">S</span>
@@ -2457,7 +2457,7 @@
         <!-- Centered Headings for Live in Four Steps as requested -->
         <div class="steps-header-center">
           <span class="section-tag steps-tag-anim">HOW IT WORKS</span>
-          <h2 class="section-title steps-title-anim cta-heading-letters white-heading-replay" id="stepsHeadingServices" aria-label="LIVE IN FOUR STEPS." title="Click to replay animation">
+          <h2 class="section-title steps-title-anim cta-heading-letters white-heading-replay" id="stepsHeadingServices" aria-label="LIVE IN FOUR STEPS.">
             <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">L</span><span class="anim-letter-right" style="--delay: 0.065s;">I</span><span class="anim-letter-right" style="--delay: 0.090s;">V</span><span class="anim-letter-right" style="--delay: 0.115s;">E</span></span>
             <span class="anim-letter-space">&nbsp;</span>
             <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.145s;">I</span><span class="anim-letter-right" style="--delay: 0.170s;">N</span></span>
@@ -2574,7 +2574,7 @@
         <div class="pricing-header-row">
           <div>
             <span class="section-eyebrow">PRICING</span>
-            <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="pricingHeadingServices" style="margin-bottom: 0;" aria-label="PICK THE SIZE THAT FITS." title="Click to replay animation">
+            <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="pricingHeadingServices" style="margin-bottom: 0;" aria-label="PICK THE SIZE THAT FITS.">
               <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">P</span><span class="anim-letter-right" style="--delay: 0.065s;">I</span><span class="anim-letter-right" style="--delay: 0.090s;">C</span><span class="anim-letter-right" style="--delay: 0.115s;">K</span></span>
               <span class="anim-letter-space">&nbsp;</span>
               <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.145s;">T</span><span class="anim-letter-right" style="--delay: 0.170s;">H</span><span class="anim-letter-right" style="--delay: 0.195s;">E</span></span>
@@ -2857,7 +2857,7 @@
       <div class="cta-banner-container">
         <div class="cta-mint-banner-card cta-card-from-right" id="ctaBannerCard">
           <div class="cta-banner-left">
-            <h2 class="cta-banner-heading" id="ctaBannerHeading" title="Click to replay animation">
+            <h2 class="cta-banner-heading" id="ctaBannerHeading">
               START WITH THE MODULE THAT HURTS MOST.
             </h2>
             <p class="cta-banner-subtext">14 days free. No card required.</p>
@@ -2969,6 +2969,7 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="js/script.js"></script>
   <script>
     (function() {
@@ -3038,6 +3039,23 @@
           runOnOpening();
         }
 
+        // Observer for hero visual diagonal join on bidirectional scroll
+        if ('IntersectionObserver' in window) {
+          var heroObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                triggerHeroDiagonalAnimation();
+              } else {
+                var top = heroVisual.querySelector('.slice-top');
+                var btm = heroVisual.querySelector('.slice-bottom');
+                if (top) top.classList.remove('anim-active');
+                if (btm) btm.classList.remove('anim-active');
+              }
+            });
+          }, { threshold: 0.1 });
+          heroObs.observe(heroVisual);
+        }
+
         window.addEventListener('pageshow', function() {
           setTimeout(triggerHeroDiagonalAnimation, 250);
         });
@@ -3055,10 +3073,13 @@
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 triggerModulesEntrance();
-                modulesObserver.unobserve(modulesSection);
+              } else {
+                modulesSection.classList.remove('in-view');
+                var cards = modulesSection.querySelectorAll('.module-card');
+                cards.forEach(function(card) { card.classList.remove('animation-done'); });
               }
             });
-          }, { threshold: 0.12 });
+          }, { threshold: 0.1 });
           modulesObserver.observe(modulesSection);
         } else {
           triggerModulesEntrance();
@@ -3104,10 +3125,15 @@
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 triggerDeepdiveEntrance();
-                deepdiveObserver.unobserve(deepdiveSection);
+              } else {
+                deepdiveSection.classList.remove('in-view');
+                var deepdiveAnimElements = deepdiveSection.querySelectorAll(
+                  '.deepdive-visual-card, .deepdive-desc-p1, .deepdive-desc-p2, .deepdive-feature-item'
+                );
+                deepdiveAnimElements.forEach(function(el) { el.classList.remove('animation-done'); });
               }
             });
-          }, { threshold: 0.12 });
+          }, { threshold: 0.1 });
           deepdiveObserver.observe(deepdiveSection);
         } else {
           triggerDeepdiveEntrance();
@@ -3152,10 +3178,11 @@
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 stepsSection.classList.add('in-view');
-                stepsObserver.unobserve(stepsSection);
+              } else {
+                stepsSection.classList.remove('in-view');
               }
             });
-          }, { threshold: 0.12 });
+          }, { threshold: 0.1 });
           stepsObserver.observe(stepsSection);
         } else {
           stepsSection.classList.add('in-view');
@@ -3172,10 +3199,11 @@
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 sec.classList.add('in-view');
-                obs.unobserve(sec);
+              } else {
+                sec.classList.remove('in-view');
               }
             });
-          }, { threshold: 0.08 });
+          }, { threshold: 0.05 });
           obs.observe(sec);
         } else {
           sec.classList.add('in-view');

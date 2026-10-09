@@ -1657,7 +1657,7 @@
         <!-- Left: Copy & CTAs -->
         <div class="blog-hero-content">
           <span class="hero-badge-blog">Blog</span>
-          <h1 class="blog-hero-title cta-heading-letters white-heading-replay" id="blogHeroTitle" aria-label="NOTES FROM THE network." title="Click to replay entrance animation">
+          <h1 class="blog-hero-title cta-heading-letters white-heading-replay" id="blogHeroTitle" aria-label="NOTES FROM THE network.">
             <span class="anim-word-unit">
               <span class="anim-letter-right" style="--delay: 0.040s;">N</span><span class="anim-letter-right" style="--delay: 0.065s;">O</span><span class="anim-letter-right" style="--delay: 0.090s;">T</span><span class="anim-letter-right" style="--delay: 0.115s;">E</span><span class="anim-letter-right" style="--delay: 0.140s;">S</span>
             </span>
@@ -1733,7 +1733,7 @@
       <div class="latest-articles-container">
         
         <span class="section-eyebrow">LATEST</span>
-        <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="latestArticlesTitle" aria-label="FRESH FROM OUR ANALYSTS." title="Click to replay animation">
+        <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="latestArticlesTitle" aria-label="FRESH FROM OUR ANALYSTS.">
           <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">F</span><span class="anim-letter-right" style="--delay: 0.065s;">R</span><span class="anim-letter-right" style="--delay: 0.090s;">E</span><span class="anim-letter-right" style="--delay: 0.115s;">S</span><span class="anim-letter-right" style="--delay: 0.140s;">H</span></span>
           <span class="anim-letter-space">&nbsp;</span>
           <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.170s;">F</span><span class="anim-letter-right" style="--delay: 0.195s;">R</span><span class="anim-letter-right" style="--delay: 0.220s;">O</span><span class="anim-letter-right" style="--delay: 0.245s;">M</span></span>
@@ -1869,7 +1869,7 @@
           <!-- Left: Copy & Bullets -->
           <div class="editors-copy-col">
             <span class="section-eyebrow">EDITOR'S PICK</span>
-            <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="editorsPickTitle" aria-label="THE ONE CHART EVERY PLANNER SHOULD BUILD." title="Click to replay entrance animation">
+            <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="editorsPickTitle" aria-label="THE ONE CHART EVERY PLANNER SHOULD BUILD.">
               <span class="anim-word-unit">
                 <span class="anim-letter-right" style="--delay: 0.040s;">T</span><span class="anim-letter-right" style="--delay: 0.065s;">H</span><span class="anim-letter-right" style="--delay: 0.090s;">E</span>
               </span>
@@ -1935,7 +1935,7 @@
         <!-- Most Read This Month Timeline (Centered Zigzag Layout) -->
         <div class="popular-section-block" id="popularBlock">
           <span class="section-eyebrow">POPULAR</span>
-          <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="popularSectionTitle" aria-label="MOST READ THIS MONTH." title="Click to replay sequence">
+          <h2 class="section-heading-lg cta-heading-letters white-heading-replay" id="popularSectionTitle" aria-label="MOST READ THIS MONTH.">
             <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.040s;">M</span><span class="anim-letter-right" style="--delay: 0.065s;">O</span><span class="anim-letter-right" style="--delay: 0.090s;">S</span><span class="anim-letter-right" style="--delay: 0.115s;">T</span></span>
             <span class="anim-letter-space">&nbsp;</span>
             <span class="anim-word-unit"><span class="anim-letter-right" style="--delay: 0.145s;">R</span><span class="anim-letter-right" style="--delay: 0.170s;">E</span><span class="anim-letter-right" style="--delay: 0.195s;">A</span><span class="anim-letter-right" style="--delay: 0.220s;">D</span></span>
@@ -2130,6 +2130,7 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="js/script.js"></script>
   <script>
     (function() {
@@ -2185,10 +2186,12 @@
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 blogCta.classList.add('in-view');
-                obs.unobserve(blogCta);
+              } else {
+                blogCta.classList.remove('in-view');
+                mintCards.forEach(function(card) { card.classList.remove('animation-done'); });
               }
             });
-          }, { threshold: 0.08 });
+          }, { threshold: 0.05 });
           obs.observe(blogCta);
         } else {
           blogCta.classList.add('in-view');
@@ -2273,6 +2276,20 @@
         if (visualCard) {
           visualCard.addEventListener('click', triggerHeroEntrance);
         }
+
+        // Hero bidirectional observer
+        if ('IntersectionObserver' in window) {
+          var heroObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                blogHero.classList.add('in-view');
+              } else {
+                blogHero.classList.remove('in-view');
+              }
+            });
+          }, { threshold: 0.1 });
+          heroObs.observe(blogHero);
+        }
       }
 
       // Latest Articles Section In-View Trigger & Replay
@@ -2289,10 +2306,11 @@
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 latestSec.classList.add('in-view');
-                latestObs.unobserve(latestSec);
+              } else {
+                latestSec.classList.remove('in-view');
               }
             });
-          }, { threshold: 0.12 });
+          }, { threshold: 0.1 });
           latestObs.observe(latestSec);
         } else {
           latestSec.classList.add('in-view');
@@ -2318,10 +2336,11 @@
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 editorsPick.classList.add('in-view');
-                editObs.unobserve(editorsPick);
+              } else {
+                editorsPick.classList.remove('in-view');
               }
             });
-          }, { threshold: 0.12 });
+          }, { threshold: 0.1 });
           editObs.observe(editorsPick);
         } else {
           editorsPick.classList.add('in-view');
@@ -2352,10 +2371,11 @@
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 popularBlock.classList.add('in-view');
-                popObs.unobserve(popularBlock);
+              } else {
+                popularBlock.classList.remove('in-view');
               }
             });
-          }, { threshold: 0.12 });
+          }, { threshold: 0.1 });
           popObs.observe(popularBlock);
         } else {
           popularBlock.classList.add('in-view');
