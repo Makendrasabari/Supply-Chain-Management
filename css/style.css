@@ -1642,9 +1642,11 @@ body.loaded .preloader {
   display: flex;
 }
 
-.service-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 55px rgba(0, 0, 0, 0.22);
+/* Once entrance animation ends, clear animation to enable unhindered transforms & hover interaction */
+.service-card.animation-done {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: translateY(0);
 }
 
 /* Directional Entrance Animations:
@@ -1697,7 +1699,7 @@ body.loaded .preloader {
   }
 }
 
-/* Hover Effect: Continuous Running Black Line Light at the Border & Corners */
+/* Continuous Running Line Light at the Border & Corners */
 .service-border-beam {
   position: absolute;
   inset: -70%;
@@ -1712,13 +1714,8 @@ body.loaded .preloader {
   opacity: 0;
   pointer-events: none;
   z-index: 1;
-  transition: opacity 0.3s ease;
-  will-change: transform;
-}
-
-.service-card:hover .service-border-beam {
-  opacity: 1;
-  animation: beamRotate 2.6s linear infinite;
+  transition: opacity 0.35s ease;
+  will-change: transform, opacity;
 }
 
 @keyframes beamRotate {
@@ -1759,12 +1756,7 @@ body.loaded .preloader {
   z-index: 1;
 }
 
-.service-card:hover .service-card-bg {
-  transform: scale(1.08);
-  filter: brightness(1.08) contrast(1.05);
-}
-
-/* Sleek subtle contrast overlay (replaces the washed-out white shade) */
+/* Sleek subtle contrast overlay */
 .service-card-overlay {
   position: absolute;
   inset: 0;
@@ -1779,11 +1771,6 @@ body.loaded .preloader {
   opacity: 1;
 }
 
-/* ON HOVER: Overlay completely disappears so image is 100% crystal-clear and unobstructed */
-.service-card:hover .service-card-overlay {
-  opacity: 0;
-}
-
 /* Card Content: Title & Description */
 .service-card-content {
   position: relative;
@@ -1794,12 +1781,43 @@ body.loaded .preloader {
   transform: translateY(0);
 }
 
-/* ON HOVER: Content smoothly hides so only the image is visible */
-.service-card:hover .service-card-content {
-  opacity: 0;
-  transform: translateY(-12px);
-  visibility: hidden;
-  pointer-events: none;
+/* ==========================================================================
+   DESKTOP: PRESERVE EXISTING HOVER BEHAVIOR
+   Strictly isolated to pointer-fine desktop devices to prevent conflicting
+   with touch tap events on mobile & tablet.
+   ========================================================================== */
+@media (hover: hover) and (pointer: fine) and (min-width: 1025px) {
+  .service-card {
+    cursor: pointer;
+  }
+
+  .service-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 24px 55px rgba(0, 0, 0, 0.22);
+  }
+
+  .service-card:hover .service-border-beam {
+    opacity: 1;
+    animation: beamRotate 2.6s linear infinite;
+  }
+
+  .service-card:hover .service-card-bg {
+    transform: scale(1.08);
+    filter: brightness(1.08) contrast(1.05);
+  }
+
+  /* ON HOVER: Overlay completely disappears so image is 100% crystal-clear and unobstructed */
+  .service-card:hover .service-card-overlay {
+    opacity: 0;
+  }
+
+  /* ON HOVER: Content smoothly hides so only the image is visible */
+  .service-card:hover .service-card-content {
+    opacity: 0;
+    transform: translateY(-12px);
+    visibility: hidden;
+    pointer-events: none;
+  }
 }
 
 .service-title {
@@ -4024,6 +4042,95 @@ body.loaded .preloader {
 
   .services-cards-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  /* ========================================================================
+     MOBILE & TABLET: RESPONSIVE SERVICE LIST / CARD INTERACTION
+     - Closed State: Displays clean crisp image (as in mobile screenshot)
+     - Tap Item: Opens its corresponding content & elevates card
+     - Tap Same Item Again: Closes it & restores its original position
+     - Tap Another Item: Activates that item & closes the previous one
+     - Prevents stuck hover and conflicting hover/click events
+     ======================================================================== */
+  .service-card {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.38s ease,
+                border-color 0.38s ease;
+  }
+
+  /* Disable simulated/stuck CSS hover on touch/mobile/tablet */
+  .service-card:hover {
+    transform: translateY(0);
+    box-shadow: var(--shadow-card);
+  }
+
+  .service-card:hover .service-border-beam {
+    opacity: 0;
+    animation: none;
+  }
+
+  .service-card:hover .service-card-bg {
+    transform: scale(1);
+    filter: none;
+  }
+
+  /* Closed / Resting State on Mobile & Tablet:
+     Shows pristine visual image with content closed */
+  .service-card .service-card-overlay {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .service-card .service-card-content {
+    opacity: 0;
+    transform: translateY(-12px);
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.35s;
+  }
+
+  /* Open / Active State on Mobile & Tablet:
+     Opened via tap; card elevates and smoothly reveals title & description */
+  .service-card.is-open,
+  .service-card.is-active {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32);
+    border-color: rgba(114, 202, 167, 0.45);
+  }
+
+  .service-card.is-open .service-border-beam,
+  .service-card.is-active .service-border-beam {
+    opacity: 1;
+    animation: beamRotate 2.6s linear infinite;
+  }
+
+  .service-card.is-open .service-card-bg,
+  .service-card.is-active .service-card-bg {
+    transform: scale(1.06);
+    filter: brightness(1.06) contrast(1.04);
+  }
+
+  .service-card.is-open .service-card-overlay,
+  .service-card.is-active .service-card-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .service-card.is-open .service-card-content,
+  .service-card.is-active .service-card-content {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .numbers-grid {
@@ -4247,6 +4354,15 @@ body.loaded .preloader {
     align-items: flex-start;
   }
 
+  .services-cards-grid {
+    gap: 20px;
+  }
+
+  .service-card-inner {
+    padding: 34px 24px;
+    min-height: 240px;
+  }
+
   .hero-heading {
     font-size: 34px;
   }
@@ -4372,6 +4488,11 @@ body.loaded .preloader {
 @media (max-width: 480px) {
   .navbar-actions .btn-pill-signin {
     display: none;
+  }
+
+  .service-card-inner {
+    padding: 28px 18px;
+    min-height: 220px;
   }
 }
 

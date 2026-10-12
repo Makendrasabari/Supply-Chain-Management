@@ -1088,11 +1088,34 @@
     }
   }
 
-  // --- 11. SECTION 4: SERVICES ENTRANCE ANIMATION ON SCROLL ---
+  // --- 11. SECTION 4: SERVICES INTERACTION (DESKTOP HOVER, MOBILE/TABLET TAP ACCORDION) ---
   function initServicesAnimation() {
     var servicesSection = document.getElementById('services');
-    if (!servicesSection) return;
+    var cardsGrid = document.getElementById('servicesCardsGrid');
+    if (!servicesSection || !cardsGrid) return;
 
+    var cards = Array.from(cardsGrid.querySelectorAll('.service-card'));
+    if (cards.length === 0) return;
+
+    // Helper: Determine if current environment is mobile or tablet (viewport <= 1024px or touch device)
+    function isMobileOrTablet() {
+      if (window.innerWidth <= 1024) return true;
+      try {
+        if (window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches) {
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    // 1. Clean up entrance animation on cards once finished to prevent keyframe transform lock
+    cards.forEach(function (card) {
+      card.addEventListener('animationend', function () {
+        card.classList.add('animation-done');
+      });
+    });
+
+    // 2. IntersectionObserver for section scroll entrance & replay
     if ('IntersectionObserver' in window) {
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
@@ -1100,6 +1123,9 @@
             servicesSection.classList.add('in-view');
           } else {
             servicesSection.classList.remove('in-view');
+            cards.forEach(function (card) {
+              card.classList.remove('animation-done');
+            });
           }
         });
       }, { threshold: 0.12 });
@@ -1108,6 +1134,91 @@
     } else {
       servicesSection.classList.add('in-view');
     }
+
+    // Card state control helpers
+    function closeCard(card) {
+      if (!card) return;
+      card.classList.remove('is-open');
+      card.classList.remove('is-active');
+      card.setAttribute('aria-expanded', 'false');
+    }
+
+    function openCard(card) {
+      if (!card) return;
+      card.classList.add('is-open');
+      card.classList.add('is-active');
+      card.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeAllCards(exceptCard) {
+      cards.forEach(function (c) {
+        if (c !== exceptCard && (c.classList.contains('is-open') || c.classList.contains('is-active'))) {
+          closeCard(c);
+        }
+      });
+    }
+
+    // 3. Set accessibility attributes and tap handlers
+    cards.forEach(function (card) {
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-expanded', 'false');
+
+      var titleEl = card.querySelector('.service-title');
+      var titleText = titleEl ? titleEl.textContent.trim() : 'Service';
+      if (!card.getAttribute('aria-label')) {
+        card.setAttribute('aria-label', titleText + ' - Tap to view details');
+      }
+
+      // Tap / Click handler
+      card.addEventListener('click', function (e) {
+        // On desktop, preserve existing hover behavior without any interference
+        if (!isMobileOrTablet()) {
+          return;
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        var isOpen = card.classList.contains('is-open') || card.classList.contains('is-active');
+
+        if (isOpen) {
+          // Tapping the same item again closes it and restores its original position
+          closeCard(card);
+        } else {
+          // Tapping another item activates that item and closes the previous one
+          closeAllCards(card);
+          openCard(card);
+        }
+      });
+
+      // Keyboard accessible support (Enter or Space key)
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ' || e.keyCode === 13 || e.keyCode === 32) {
+          if (isMobileOrTablet()) {
+            e.preventDefault();
+            var isOpen = card.classList.contains('is-open') || card.classList.contains('is-active');
+            if (isOpen) {
+              closeCard(card);
+            } else {
+              closeAllCards(card);
+              openCard(card);
+            }
+          }
+        }
+      });
+    });
+
+    // 4. Handle viewport resize: clean up open state when switching to desktop to keep hover unhindered
+    var resizeTimer = null;
+    window.addEventListener('resize', function () {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        if (!isMobileOrTablet()) {
+          closeAllCards(null);
+        }
+      }, 100);
+    }, { passive: true });
   }
 
   // --- 12. SECTION 5: LIVE TRACKING ANIMATION ON SCROLL ---
