@@ -51,6 +51,7 @@
     .sidebar-logo-link {
       display: flex;
       align-items: center;
+      gap: 6px;
       text-decoration: none;
       transition: transform 0.2s ease;
     }
@@ -60,11 +61,23 @@
     }
 
     .sidebar-logo {
-      height: 38px;
-      max-height: 42px;
+      height: 34px;
+      max-height: 38px;
       width: auto;
       object-fit: contain;
       display: block;
+    }
+
+    .sidebar-logo-text {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      color: #0038c8;
+      line-height: 1;
+      text-transform: uppercase;
+      user-select: none;
+      white-space: nowrap;
     }
 
     /* Clean 5-Heading Sidebar Navigation with Vibrant Blue Color Palette */
@@ -545,6 +558,7 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 20px;
       padding: 20px 24px;
+      scroll-margin-top: 90px;
     }
 
     .export-action-title {
@@ -656,7 +670,8 @@
     <aside class="dashboard-sidebar">
       <div class="sidebar-header">
         <a href="dashboard-supply-chain.html" class="sidebar-logo-link" aria-label="Stackly Dashboard">
-          <img src="assets/stackly_logo.webp" alt="Stackly" class="sidebar-logo">
+          <img src="assets/stackly_s_logo.webp" alt="Stackly S Symbol" class="sidebar-logo">
+          <span class="sidebar-logo-text">STACKLY</span>
         </a>
         <button type="button" class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close navigation menu">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -778,17 +793,17 @@
         </div>
 
         <!-- One-Click Export Actions Bar -->
-        <div class="export-actions-bar">
+        <div class="export-actions-bar" id="executiveExportBundles" data-section="executiveExportBundles">
           <span class="export-action-title">One-Click Executive Export Bundles</span>
-          <a href="404.html" class="btn-export-item">
+          <a href="404.html" class="btn-export-item" id="btnExportAuditPdf" data-export-action="audit-pdf" onclick="if (window.StacklyNavigation) { window.StacklyNavigation.navigateTo404(this); return false; }">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
             <span>Download Audit PDF</span>
           </a>
-          <a href="404.html" class="btn-export-item">
+          <a href="404.html" class="btn-export-item" id="btnExportCsvDataset" data-export-action="csv-dataset" onclick="if (window.StacklyNavigation) { window.StacklyNavigation.navigateTo404(this); return false; }">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
             <span>Export CSV Dataset</span>
           </a>
-          <a href="404.html" class="btn-export-item">
+          <a href="404.html" class="btn-export-item" id="btnExportCustomsPack" data-export-action="customs-pack" onclick="if (window.StacklyNavigation) { window.StacklyNavigation.navigateTo404(this); return false; }">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
             <span>Customs Regulatory Pack</span>
           </a>

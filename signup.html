@@ -721,58 +721,34 @@
 
         <form id="signupForm" class="signup-form" novalidate>
           
-          <!-- Row 1: Full name & Company -->
-          <div class="form-row-two-col">
-            <!-- Full Name -->
-            <div class="signup-form-group">
-              <label for="fullNameInput" class="signup-form-label">Full name</label>
-              <input 
-                type="text" 
-                id="fullNameInput" 
-                name="fullName" 
-                class="signup-form-input" 
-                placeholder="Enter full name" 
-                autocomplete="name" 
-                required
-              >
-              <span id="nameError" class="error-line">Please enter your full name</span>
-            </div>
-
-            <!-- Company -->
-            <div class="signup-form-group">
-              <label for="companyInput" class="signup-form-label">Company</label>
-              <input 
-                type="text" 
-                id="companyInput" 
-                name="company" 
-                class="signup-form-input" 
-                placeholder="Enter company name" 
-                autocomplete="organization" 
-                required
-              >
-              <span id="companyError" class="error-line">Please enter your company name</span>
-            </div>
-          </div>
-
-          <!-- Row 2: Work email -->
+          <!-- Full name -->
           <div class="signup-form-group">
-            <label for="emailInput" class="signup-form-label">Work email</label>
+            <label for="fullNameInput" class="signup-form-label">Full name</label>
             <input 
               type="text" 
-              inputmode="email"
+              id="fullNameInput" 
+              name="fullName" 
+              class="signup-form-input" 
+              placeholder="Enter full name" 
+              autocomplete="name" 
+              required
+            >
+            <span id="nameError" class="error-line">Please enter your full name</span>
+          </div>
+
+          <!-- Email address -->
+          <div class="signup-form-group">
+            <label for="emailInput" class="signup-form-label">Email address</label>
+            <input 
+              type="email" 
               id="emailInput" 
-              name="workEmailAddress" 
+              name="email" 
               class="signup-form-input" 
               placeholder="Enter your email" 
-              autocomplete="one-time-code" 
+              autocomplete="email" 
               autocorrect="off"
-              autocapitalize="off"
+              autocapitalize="none"
               spellcheck="false"
-              readonly
-              onfocus="this.removeAttribute('readonly');"
-              onmousedown="this.removeAttribute('readonly');"
-              ontouchstart="this.removeAttribute('readonly');"
-              value="" 
               required
             >
             <span id="emailError" class="error-line">Please enter a valid @gmail.com address</span>
@@ -951,14 +927,12 @@
       // 2. Form & Inputs Validation
       var form = document.getElementById('signupForm');
       var fullNameInput = document.getElementById('fullNameInput');
-      var companyInput = document.getElementById('companyInput');
       var emailInput = document.getElementById('emailInput');
       var passwordInput = document.getElementById('passwordInput');
       var reEnterPasswordInput = document.getElementById('reEnterPasswordInput');
       var agreeTerms = document.getElementById('agreeTerms');
 
       var nameError = document.getElementById('nameError');
-      var companyError = document.getElementById('companyError');
       var emailError = document.getElementById('emailError');
       var passwordError = document.getElementById('passwordError');
       var confirmError = document.getElementById('confirmError');
@@ -994,15 +968,6 @@
           if (fullNameInput.value.trim().length >= 2) {
             fullNameInput.classList.remove('input-error');
             if (nameError) nameError.classList.remove('show');
-          }
-        });
-      }
-
-      if (companyInput) {
-        companyInput.addEventListener('input', function () {
-          if (companyInput.value.trim().length >= 2) {
-            companyInput.classList.remove('input-error');
-            if (companyError) companyError.classList.remove('show');
           }
         });
       }
@@ -1084,7 +1049,6 @@
           e.preventDefault();
 
           var nameVal = fullNameInput ? fullNameInput.value.trim() : '';
-          var companyVal = companyInput ? companyInput.value.trim() : '';
           var passVal = passwordInput ? passwordInput.value : '';
           var confirmVal = reEnterPasswordInput ? reEnterPasswordInput.value : '';
           var isValid = true;
@@ -1097,16 +1061,6 @@
           } else {
             if (fullNameInput) fullNameInput.classList.remove('input-error');
             if (nameError) nameError.classList.remove('show');
-          }
-
-          // Company validation
-          if (!companyVal || companyVal.length < 2) {
-            if (companyInput) companyInput.classList.add('input-error');
-            if (companyError) companyError.classList.add('show');
-            isValid = false;
-          } else {
-            if (companyInput) companyInput.classList.remove('input-error');
-            if (companyError) companyError.classList.remove('show');
           }
 
           // Email validation
@@ -1147,8 +1101,6 @@
             // Save profile details
             localStorage.setItem('stackly_user_name', nameVal);
             sessionStorage.setItem('stackly_user_name', nameVal);
-            localStorage.setItem('stackly_user_company', companyVal);
-            sessionStorage.setItem('stackly_user_company', companyVal);
             localStorage.setItem('stackly_user_email', emailVal);
             sessionStorage.setItem('stackly_user_email', emailVal);
             localStorage.setItem('stackly_user_role', 'Supply Chain Manager');

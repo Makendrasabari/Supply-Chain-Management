@@ -864,22 +864,22 @@
         <p class="login-subheading">Sign in to see where your shipments are right now.</p>
 
         <form id="loginForm" class="login-form" autocomplete="on" novalidate>
-          <!-- Full Name or Work Email Field -->
+          <!-- Email Address Field -->
           <div class="login-form-group">
-            <label for="emailInput" class="login-form-label">Full Name or Work Email</label>
+            <label for="emailInput" class="login-form-label">Email address</label>
             <input 
-              type="text" 
+              type="email" 
               id="emailInput" 
               name="email" 
               class="login-form-input" 
-              placeholder="Enter your name or email (e.g. Kumar Saravanan)" 
-              autocomplete="username" 
+              placeholder="Enter your email" 
+              autocomplete="email" 
               autocorrect="off" 
-              autocapitalize="words" 
+              autocapitalize="none" 
               spellcheck="false" 
               required
             >
-            <span id="emailError" class="error-line">Please enter your name or email address</span>
+            <span id="emailError" class="error-line">Please enter your email address</span>
           </div>
 
           <!-- Password Field -->
@@ -1109,7 +1109,7 @@
       // Helper function to extract and format display name from input
       function formatDisplayName(input) {
         var trimmed = (input || '').trim();
-        if (!trimmed) return 'Kumar Saravanan';
+        if (!trimmed) return 'Alex Turner';
 
         // If email entered, extract username part before @
         if (trimmed.indexOf('@') !== -1) {
@@ -1140,31 +1140,28 @@
           return trimmed.toLowerCase();
         }
         var emailPrefix = formattedName.toLowerCase().replace(/\s+/g, '.').replace(/[^a-z0-9.]/g, '');
-        return (emailPrefix ? emailPrefix : 'kumar.saravanan') + '@gmail.com';
+        return (emailPrefix ? emailPrefix : 'user') + '@gmail.com';
       }
 
       function validateInput() {
         var val = emailInput ? emailInput.value.trim() : '';
-        if (!val || val.length < 2) {
+        if (!val) {
           if (emailInput) emailInput.classList.add('input-error');
           if (emailError) {
-            emailError.textContent = 'Please enter your name or email address';
+            emailError.textContent = 'Please enter your email address';
             emailError.classList.add('show');
           }
           return false;
         }
 
-        // If an @ is present, validate email syntax
-        if (val.indexOf('@') !== -1) {
-          var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(val)) {
-            if (emailInput) emailInput.classList.add('input-error');
-            if (emailError) {
-              emailError.textContent = 'Please enter a valid email address';
-              emailError.classList.add('show');
-            }
-            return false;
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(val)) {
+          if (emailInput) emailInput.classList.add('input-error');
+          if (emailError) {
+            emailError.textContent = 'Please enter a valid email address';
+            emailError.classList.add('show');
           }
+          return false;
         }
 
         if (emailInput) emailInput.classList.remove('input-error');

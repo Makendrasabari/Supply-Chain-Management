@@ -155,10 +155,48 @@
       // Track live scroll position without overwriting during active restoration
       var recordScroll = function () {
         if (getSessionItem(STORAGE_RESTORE_ACTIVE) === 'true') return;
-        var sy = Math.round(window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
-        setSessionItem(STORAGE_RETURN_SCROLL, String(sy));
+        var sy = getCurrentScrollPosition();
+        if (sy > 0) {
+          setSessionItem(STORAGE_RETURN_SCROLL, String(sy));
+        }
       };
       window.addEventListener('scroll', recordScroll, { passive: true });
+      var dashMain = document.querySelector('.dashboard-main');
+      if (dashMain) {
+        dashMain.addEventListener('scroll', recordScroll, { passive: true });
+      }
+      if (window.lenis && typeof window.lenis.on === 'function') {
+        window.lenis.on('scroll', recordScroll);
+      }
+    }
+
+    function getCurrentScrollPosition(trigger) {
+      var dashMain = document.querySelector('.dashboard-main');
+      if (dashMain) {
+        if (trigger && trigger.nodeType === 1) {
+          var container = trigger.closest('.export-actions-bar') || trigger;
+          var dashRect = dashMain.getBoundingClientRect();
+          var rect = container.getBoundingClientRect();
+          var offset = rect.top - dashRect.top + dashMain.scrollTop;
+          return Math.max(0, Math.round(offset - 80));
+        }
+        if (window.lenis && typeof window.lenis.scroll === 'number' && window.lenis.scroll > 0) {
+          return Math.round(window.lenis.scroll);
+        }
+        return Math.round(dashMain.scrollTop);
+      }
+
+      if (trigger && trigger.nodeType === 1) {
+        var container = trigger.closest('.export-actions-bar') || trigger;
+        var rect = container.getBoundingClientRect();
+        var winScroll = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+        return Math.max(0, Math.round(rect.top + winScroll - 80));
+      }
+
+      if (window.lenis && typeof window.lenis.scroll === 'number' && window.lenis.scroll > 0) {
+        return Math.round(window.lenis.scroll);
+      }
+      return Math.round(window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
     }
 
     function getPreviousPage() {
@@ -223,17 +261,26 @@
       isNavigatingTo404 = true;
 
       var fromTarget = currentClean || 'index.html';
-      var scrollY = Math.round(window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
+      var scrollY = getCurrentScrollPosition(trigger);
 
       var sectionId = '';
       if (trigger && trigger.nodeType === 1) {
-        if (trigger.id && trigger.id !== 'app' && trigger.id !== 'root') {
+        var exportBar = trigger.closest('.export-actions-bar');
+        if (exportBar && exportBar.id) {
+          sectionId = exportBar.id;
+        } else if (trigger.dataset && trigger.dataset.section) {
+          sectionId = trigger.dataset.section;
+        } else if (trigger.id && trigger.id !== 'app' && trigger.id !== 'root') {
           sectionId = trigger.id;
         } else {
-          var container = trigger.closest('section[id], [id]');
+          var container = trigger.closest('[id]');
           if (container && container.id && container.id !== 'app' && container.id !== 'root') {
             sectionId = container.id;
           }
+        }
+        if (!sectionId && exportBar) {
+          sectionId = 'exportActionsBar';
+          exportBar.id = sectionId;
         }
       }
 
@@ -300,8 +347,13 @@
       }
       setSessionItem(STORAGE_BYPASS_PRELOADER, 'true');
 
-      // Navigate directly to targetPage ensuring 100% accurate page return
-      window.location.href = targetPage;
+      // Navigate directly to targetPage with anchor hash
+      var returnUrl = targetPage;
+      if (targetSection) {
+        returnUrl += '#' + targetSection;
+      }
+
+      window.location.href = returnUrl;
     }
 
     function applyScrollRestoration() {
@@ -309,7 +361,10 @@
       if (isCurrent404) return;
 
       var isRestoreActive = getSessionItem(STORAGE_RESTORE_ACTIVE) === 'true';
-      if (!isRestoreActive) return;
+      var hashSection = window.location.hash ? window.location.hash.replace('#', '') : '';
+      var storedSection = getSessionItem('stackly_restore_section') || hashSection;
+
+      if (!isRestoreActive && !hashSection) return;
 
       var restorePage = getSessionItem('stackly_restore_page');
       var currentClean = getCleanPageName(window.location.pathname);
@@ -317,10 +372,10 @@
       var isMatch = !restorePage || restorePage === currentClean ||
                     (restorePage === 'index.html' && (currentClean === '' || currentClean === 'index.html'));
 
-      if (!isMatch) return;
+      if (!isMatch && !hashSection) return;
 
       var targetScroll = parseInt(getSessionItem('stackly_restore_scroll') || '0', 10);
-      var targetSection = getSessionItem('stackly_restore_section');
+      var targetSection = storedSection;
 
       // Fast-track and suppress preloader immediately
       var preloader = document.getElementById('preloader');
@@ -336,20 +391,63 @@
         } catch (e) {}
       }
 
-      // Disable CSS smooth scroll temporarily so instant scrollTo is not delayed or cancelled by reflow
       var docEl = document.documentElement;
       var origBehavior = docEl.style.scrollBehavior;
       docEl.style.scrollBehavior = 'auto';
 
       function performScroll() {
-        if (!isNaN(targetScroll) && targetScroll > 0) {
+        var dashMain = document.querySelector('.dashboard-main');
+        var targetEl = null;
+
+        if (targetSection) {
+          targetEl = document.getElementById(targetSection) ||
+                     document.querySelector('#' + targetSection) ||
+                     document.querySelector('[data-section="' + targetSection + '"]');
+        }
+
+        if (!targetEl && (targetSection.indexOf('export') !== -1 || targetSection.indexOf('Export') !== -1 || targetSection.indexOf('bundle') !== -1)) {
+          targetEl = document.querySelector('.export-actions-bar');
+        }
+
+        if (dashMain) {
+          dashMain.style.scrollBehavior = 'auto';
+          if (targetEl) {
+            var dashRect = dashMain.getBoundingClientRect();
+            var elRect = targetEl.getBoundingClientRect();
+            var offset = elRect.top - dashRect.top + dashMain.scrollTop;
+            var finalTop = Math.max(0, Math.round(offset - 80));
+            dashMain.scrollTop = finalTop;
+
+            if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+              try {
+                window.lenis.scrollTo(targetEl, { immediate: true, offset: -80 });
+              } catch (e) {}
+            }
+          } else if (!isNaN(targetScroll) && targetScroll > 0) {
+            dashMain.scrollTop = targetScroll;
+            if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+              try {
+                window.lenis.scrollTo(targetScroll, { immediate: true });
+              } catch (e) {}
+            }
+          }
+        }
+
+        // Standard window scroll restoration
+        if (targetEl) {
+          var winTop = targetEl.getBoundingClientRect().top + (window.pageYOffset || docEl.scrollTop || 0);
+          window.scrollTo(0, Math.max(0, Math.round(winTop - 80)));
+          if (window.lenis && !dashMain && typeof window.lenis.scrollTo === 'function') {
+            try {
+              window.lenis.scrollTo(targetEl, { immediate: true, offset: -80 });
+            } catch (e) {}
+          }
+        } else if (!isNaN(targetScroll) && targetScroll > 0) {
           window.scrollTo(0, targetScroll);
-        } else if (targetSection) {
-          var el = document.getElementById(targetSection);
-          if (el) {
-            var rect = el.getBoundingClientRect();
-            var top = rect.top + (window.pageYOffset || docEl.scrollTop || 0);
-            window.scrollTo(0, Math.max(0, top - 80));
+          if (window.lenis && !dashMain && typeof window.lenis.scrollTo === 'function') {
+            try {
+              window.lenis.scrollTo(targetScroll, { immediate: true });
+            } catch (e) {}
           }
         }
       }
@@ -358,11 +456,11 @@
       performScroll();
       requestAnimationFrame(performScroll);
       setTimeout(performScroll, 20);
-      setTimeout(performScroll, 80);
-      setTimeout(performScroll, 200);
-      setTimeout(performScroll, 400);
-      setTimeout(performScroll, 700);
-      setTimeout(performScroll, 1100);
+      setTimeout(performScroll, 60);
+      setTimeout(performScroll, 150);
+      setTimeout(performScroll, 300);
+      setTimeout(performScroll, 600);
+      setTimeout(performScroll, 1000);
 
       window.addEventListener('load', function () {
         performScroll();
@@ -370,22 +468,24 @@
         setTimeout(performScroll, 300);
       }, { once: true });
 
-      // Clean up restoration flags after the page has fully stabilized (1400ms)
+      // Clean up restoration flags after the page has fully stabilized (1500ms)
       setTimeout(function () {
         docEl.style.scrollBehavior = origBehavior;
+        var dashMain = document.querySelector('.dashboard-main');
+        if (dashMain) dashMain.style.scrollBehavior = '';
         removeSessionItem(STORAGE_RESTORE_ACTIVE);
         removeSessionItem('stackly_restore_page');
         removeSessionItem('stackly_restore_scroll');
         removeSessionItem('stackly_restore_section');
         removeSessionItem(STORAGE_BYPASS_PRELOADER);
-      }, 1400);
+      }, 1500);
     }
 
     function enhance404Links() {
       var currentClean = getCleanPageName(window.location.pathname);
       if (is404Page(currentClean)) return;
 
-      var links = document.querySelectorAll('a[href="404.html"], a[href*="404.html"]');
+      var links = document.querySelectorAll('a[href="404.html"], a[href*="404.html"], .btn-export-item');
       links.forEach(function (link) {
         link.addEventListener('click', function (e) {
           e.preventDefault();
@@ -427,6 +527,14 @@
           return;
         }
 
+        var exportItem = e.target.closest('.btn-export-item');
+        if (exportItem) {
+          e.preventDefault();
+          e.stopPropagation();
+          navigateTo404(exportItem);
+          return;
+        }
+
         var link = e.target.closest('a');
         if (link) {
           var href = link.getAttribute('href');
@@ -463,6 +571,12 @@
 
   window.addEventListener('pageshow', function () {
     StacklyNavigation.recordCurrentPage();
+    StacklyNavigation.applyScrollRestoration();
+  });
+  window.addEventListener('hashchange', function () {
+    StacklyNavigation.applyScrollRestoration();
+  });
+  window.addEventListener('popstate', function () {
     StacklyNavigation.applyScrollRestoration();
   });
 

@@ -205,6 +205,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 6px;
       margin-bottom: 24px;
       position: relative;
       z-index: 2;
@@ -218,10 +219,26 @@
     }
 
     .error-logo-img {
-      height: 48px;
-      max-height: 52px;
+      height: 42px;
+      max-height: 46px;
       width: auto;
       object-fit: contain;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .error-logo-text {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      color: #0038c8;
+      line-height: 1;
+      text-transform: uppercase;
+      display: inline-block;
+      user-select: none;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .error-actions-group .btn-secondary-white {
@@ -241,7 +258,10 @@
 
     @media (max-width: 600px) {
       .error-logo-img {
-        height: 40px;
+        height: 34px;
+      }
+      .error-logo-text {
+        font-size: 20px;
       }
       .error-actions-group {
         flex-direction: column;
@@ -282,7 +302,8 @@
 
     <!-- Stackly Logo at the top of Disrupted Waybill -->
     <a href="index.html" class="error-logo-link" aria-label="Stackly Home">
-      <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="error-logo-img">
+      <img src="assets/stackly_s_logo.webp" alt="Stackly S Symbol" class="error-logo-img">
+      <span class="error-logo-text">STACKLY</span>
     </a>
 
     <span class="error-badge">Disrupted Waybill</span>
