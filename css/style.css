@@ -3949,17 +3949,17 @@ body.loaded .preloader {
 }
 
 .footer-logo-text {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: 1.2px;
-  color: #ffffff;
-  line-height: 1;
-  text-transform: uppercase;
-  display: inline-block;
-  user-select: none;
-  white-space: nowrap;
-  flex-shrink: 0;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.5px !important;
+  color: #0038c8 !important;
+  line-height: 1 !important;
+  text-transform: uppercase !important;
+  display: inline-block !important;
+  user-select: none !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
   transition: opacity 0.2s ease;
 }
 
