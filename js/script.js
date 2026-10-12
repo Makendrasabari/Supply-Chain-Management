@@ -648,8 +648,66 @@
     }, 2500);
   }
 
+  // Synchronize enlightened active navigation link across mobile and desktop
+  function syncActiveNavLinks() {
+    var rawPath = window.location.pathname.toLowerCase();
+    var page = 'index.html';
+    if (rawPath.indexOf('services.html') !== -1) {
+      page = 'services.html';
+    } else if (rawPath.indexOf('about.html') !== -1) {
+      page = 'about.html';
+    } else if (rawPath.indexOf('blog.html') !== -1) {
+      page = 'blog.html';
+    } else if (rawPath.indexOf('contact.html') !== -1) {
+      page = 'contact.html';
+    } else if (rawPath.indexOf('login.html') !== -1) {
+      page = 'login.html';
+    } else if (rawPath.indexOf('signup.html') !== -1) {
+      page = 'signup.html';
+    } else {
+      page = 'index.html';
+    }
+
+    // Update mobile drawer navigation links
+    var drawerLinks = document.querySelectorAll('.mobile-drawer-links a, .mobile-drawer-link:not(.mobile-drawer-logo)');
+    drawerLinks.forEach(function (link) {
+      var href = link.getAttribute('href') || '';
+      var isTarget = false;
+      if (page === 'index.html') {
+        isTarget = (href === 'index.html' || href === './' || href === '/' || href.indexOf('index.html') !== -1);
+      } else {
+        isTarget = (href.indexOf(page) !== -1);
+      }
+
+      if (isTarget) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+
+    // Update desktop navbar links
+    var desktopLinks = document.querySelectorAll('.nav-link, .services-nav-item a, .about-nav-item a, .blog-nav-item a, .contact-nav-item a');
+    desktopLinks.forEach(function (link) {
+      var href = link.getAttribute('href') || '';
+      var isTarget = false;
+      if (page === 'index.html') {
+        isTarget = (href === 'index.html' || href === './' || href === '/' || href.indexOf('index.html') !== -1);
+      } else {
+        isTarget = (href.indexOf(page) !== -1);
+      }
+
+      if (isTarget) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+
   // --- 2. FULL-SCREEN MOBILE NAVIGATION OVERLAY ---
   function initMobileMenu() {
+    syncActiveNavLinks();
     var toggleBtn = document.getElementById('mobileMenuToggle');
     var drawer = document.getElementById('mobileNavDrawer');
     if (!drawer) return;
@@ -657,6 +715,7 @@
     function openMenu() {
       // Only open when at mobile viewport (768px and below)
       if (window.innerWidth > 768) return;
+      syncActiveNavLinks();
       drawer.classList.add('open');
       if (toggleBtn) {
         toggleBtn.classList.add('open');

@@ -6,7 +6,8 @@
   <title>Contact Us | Stackly Supply Chain</title>
   <meta name="description" content="Let's stack your supply chain. Tell us where the friction is. A logistics analyst replies within one working day with a plan, not a sales script.">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" type="image/webp" href="assets/stackly_logo.webp">
+  <link rel="icon" type="image/webp" href="assets/stackly_favicon.webp">
+  <link rel="apple-touch-icon" href="assets/stackly_favicon.webp">
   <style>
     /* ==========================================================================
        STACKLY CONTACT PAGE - PIXEL-PERFECT STYLING
@@ -79,20 +80,33 @@
     .contact-brand-link {
       display: flex;
       align-items: center;
+      gap: 6px;
       text-decoration: none;
     }
 
     .contact-brand-img {
-      height: 42px;
-      max-height: 46px;
+      height: 38px;
+      max-height: 42px;
       width: auto;
       object-fit: contain;
       display: block;
       transition: transform 0.2s ease;
     }
 
-    .contact-brand-img:hover {
-      transform: scale(1.03);
+    .contact-brand-link:hover .contact-brand-img {
+      transform: scale(1.05);
+    }
+
+    .contact-brand-text {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: #0038c8;
+      line-height: 1;
+      text-transform: uppercase;
+      display: inline-block;
+      user-select: none;
     }
 
     .contact-nav-links {
@@ -112,10 +126,13 @@
       transition: color 0.2s ease;
     }
 
-    .contact-nav-item a:hover,
+    .contact-nav-item a:hover {
+      color: #1a56db;
+    }
+
     .contact-nav-item a.active {
-      color: #0f172a;
-      font-weight: 700;
+      color: #1a56db !important;
+      font-weight: 800 !important;
     }
 
     .contact-nav-actions {
@@ -2183,7 +2200,8 @@
     <nav class="contact-navbar-pill" aria-label="Main Navigation">
       <!-- Stackly Logo from assets (transparent, directly from assets) -->
       <a href="index.html" class="contact-brand-link" aria-label="Stackly Home">
-        <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="contact-brand-img">
+        <img src="assets/stackly_s_logo.webp" alt="Stackly S Symbol" class="contact-brand-img">
+        <span class="contact-brand-text">STACKLY</span>
       </a>
 
       <!-- Center Navigation Links -->
@@ -2211,7 +2229,8 @@
     <div class="contact-mobile-drawer mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
       <div class="mobile-drawer-header">
         <a href="index.html" class="mobile-drawer-logo" aria-label="Stackly Home">
-          <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="mobile-drawer-logo-img">
+          <img src="assets/stackly_s_logo.webp" alt="Stackly S Symbol" class="mobile-drawer-logo-img">
+          <span class="mobile-drawer-brand-text">STACKLY</span>
         </a>
         <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close navigation menu">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -2707,8 +2726,8 @@
           <div class="office-card" id="officeCardSalem">
             <div class="office-img-wrap">
               <img 
-                src="assets/salem_hq_building.jpg" 
-                onerror="this.src='assets/hero_warehouse_hd.jpg';"
+                src="assets/salem_hq_building.webp" 
+                onerror="this.src='assets/hero_warehouse_hd.webp';"
                 alt="Stackly Headquarters Salem Modern Campus Facility" 
                 class="office-img"
               >
@@ -2744,7 +2763,7 @@
           <div class="office-card" id="officeCardHyderabad">
             <div class="office-img-wrap">
               <img 
-                src="assets/hyderabad_tech_tower.jpg" 
+                src="assets/hyderabad_tech_tower.webp" 
                 onerror="this.src='assets/meridian_tech.webp';"
                 alt="Stackly Hyderabad Phase II Modern Technology Tower Branch" 
                 class="office-img"
@@ -2868,7 +2887,8 @@
         <!-- Col 1: Brand & Caption (NO white background box on logo, directly from assets) -->
         <div class="footer-brand-col">
           <a href="index.html" class="footer-logo-wrap" aria-label="Stackly Home">
-            <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="footer-logo-img">
+            <img src="assets/stackly_s_logo.webp" alt="Stackly S Symbol" class="footer-logo-img">
+            <span class="footer-logo-text">STACKLY</span>
           </a>
           <p class="footer-caption">
             Stackly connects suppliers, warehouses, carriers and stores in one unified live view, so planners spot disruptions before they impact shelves.

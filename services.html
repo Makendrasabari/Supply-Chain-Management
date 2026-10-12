@@ -6,7 +6,8 @@
   <title>Services &amp; Modules | Stackly Supply Chain</title>
   <meta name="description" content="One platform for the whole flow. Explore Stackly's 6 freight modules: shipment visibility, inventory control, demand forecasting, supplier management, risk alerts, and freight audit.">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" type="image/webp" href="assets/stackly_logo.webp">
+  <link rel="icon" type="image/webp" href="assets/stackly_favicon.webp">
+  <link rel="apple-touch-icon" href="assets/stackly_favicon.webp">
   <style>
     /* ==========================================================================
        SERVICES PAGE STYLES - PIXEL PERFECT TO DESIGN SPEC
@@ -76,20 +77,33 @@
     .services-brand-link {
       display: flex;
       align-items: center;
+      gap: 6px;
       text-decoration: none;
     }
 
     .services-brand-img {
-      height: 42px;
-      max-height: 46px;
+      height: 38px;
+      max-height: 42px;
       width: auto;
       object-fit: contain;
       display: block;
       transition: transform 0.2s ease;
     }
 
-    .services-brand-img:hover {
-      transform: scale(1.03);
+    .services-brand-link:hover .services-brand-img {
+      transform: scale(1.05);
+    }
+
+    .services-brand-text {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: #0038c8;
+      line-height: 1;
+      text-transform: uppercase;
+      display: inline-block;
+      user-select: none;
     }
 
     .services-nav-links {
@@ -109,10 +123,13 @@
       transition: color 0.2s ease;
     }
 
-    .services-nav-item a:hover,
+    .services-nav-item a:hover {
+      color: #1a56db;
+    }
+
     .services-nav-item a.active {
-      color: #0f172a;
-      font-weight: 700;
+      color: #1a56db !important;
+      font-weight: 800 !important;
     }
 
     .services-nav-actions {
@@ -2079,7 +2096,8 @@
     <nav class="services-navbar-pill" aria-label="Main Navigation">
       <!-- Stackly Logo from assets -->
       <a href="index.html" class="services-brand-link" aria-label="Stackly Home">
-        <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="services-brand-img">
+        <img src="assets/stackly_s_logo.webp" alt="Stackly S Symbol" class="services-brand-img">
+        <span class="services-brand-text">STACKLY</span>
       </a>
 
       <!-- Center Navigation Links -->
@@ -2107,7 +2125,8 @@
     <div class="services-mobile-drawer mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
       <div class="mobile-drawer-header">
         <a href="index.html" class="mobile-drawer-logo" aria-label="Stackly Home">
-          <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="mobile-drawer-logo-img">
+          <img src="assets/stackly_s_logo.webp" alt="Stackly S Symbol" class="mobile-drawer-logo-img">
+          <span class="mobile-drawer-brand-text">STACKLY</span>
         </a>
         <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close navigation menu">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -2173,7 +2192,7 @@
           <!-- Top-Left Diagonal Half -->
           <div class="visual-slice slice-top">
             <img 
-              src="assets/services_hero_platform.png" 
+              src="assets/services_hero_platform.webp" 
               alt="Stackly 3D SaaS Freight Flow Platform Visualization" 
               class="visual-slice-img"
             >
@@ -2181,7 +2200,7 @@
           <!-- Bottom-Right Diagonal Half -->
           <div class="visual-slice slice-bottom">
             <img 
-              src="assets/services_hero_platform.png" 
+              src="assets/services_hero_platform.webp" 
               alt="Stackly 3D SaaS Freight Flow Platform Visualization" 
               class="visual-slice-img"
             >
@@ -2356,7 +2375,7 @@
           <div class="deepdive-wrap-shimmer"></div>
           <img 
             src="assets/service_container_ship.webp" 
-            onerror="this.src='assets/service_container_ship.jpg';" 
+            onerror="this.src='assets/service_container_ship.webp';" 
             alt="Commercial container ship loaded with cargo docked at ocean port" 
             class="deepdive-visual-img"
             loading="lazy"
@@ -2880,7 +2899,8 @@
         <!-- Col 1: Brand & Caption (NO white background box on logo, directly from assets) -->
         <div class="footer-brand-col">
           <a href="index.html" class="footer-logo-wrap" aria-label="Stackly Home">
-            <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="footer-logo-img">
+            <img src="assets/stackly_s_logo.webp" alt="Stackly S Symbol" class="footer-logo-img">
+            <span class="footer-logo-text">STACKLY</span>
           </a>
           <p class="footer-caption">
             Stackly connects suppliers, warehouses, carriers and stores in one unified live view, so planners spot disruptions before they impact shelves.

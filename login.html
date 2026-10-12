@@ -6,7 +6,8 @@
   <title>Login | Stackly Supply Chain</title>
   <meta name="description" content="Sign in to your Stackly Supply Chain portal to see where your shipments are right now.">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" type="image/webp" href="assets/stackly_logo.webp">
+  <link rel="icon" type="image/webp" href="assets/stackly_favicon.webp">
+  <link rel="apple-touch-icon" href="assets/stackly_favicon.webp">
   <style>
     /* ==========================================================================
        LOGIN PAGE SPECIFIC STYLES - PIXEL PERFECT TO DESIGN
@@ -82,20 +83,33 @@
     .login-brand-link {
       display: flex;
       align-items: center;
+      gap: 6px;
       text-decoration: none;
     }
 
     .login-brand-img {
-      height: 42px;
-      max-height: 46px;
+      height: 38px;
+      max-height: 42px;
       width: auto;
       object-fit: contain;
       display: block;
       transition: transform 0.2s ease;
     }
 
-    .login-brand-img:hover {
-      transform: scale(1.03);
+    .login-brand-link:hover .login-brand-img {
+      transform: scale(1.05);
+    }
+
+    .login-brand-text {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: #0038c8;
+      line-height: 1;
+      text-transform: uppercase;
+      display: inline-block;
+      user-select: none;
     }
 
     .login-nav-links {
@@ -785,7 +799,8 @@
     <nav class="login-navbar-pill" aria-label="Main Navigation">
       <!-- Stackly Logo from assets (as instructed) -->
       <a href="index.html" class="login-brand-link" aria-label="Stackly Home">
-        <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="login-brand-img">
+        <img src="assets/stackly_s_logo.webp" alt="Stackly S Symbol" class="login-brand-img">
+        <span class="login-brand-text">STACKLY</span>
       </a>
 
       <!-- Center Nav Links -->
@@ -813,7 +828,8 @@
     <div class="login-mobile-drawer mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
       <div class="mobile-drawer-header">
         <a href="index.html" class="mobile-drawer-logo" aria-label="Stackly Home">
-          <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="mobile-drawer-logo-img">
+          <img src="assets/stackly_s_logo.webp" alt="Stackly S Symbol" class="mobile-drawer-logo-img">
+          <span class="mobile-drawer-brand-text">STACKLY</span>
         </a>
         <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close navigation menu">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -986,7 +1002,8 @@
         <!-- Col 1: Brand Logo, Caption & 4 Social Media Icons -->
         <div class="footer-brand-col">
           <a href="index.html" class="footer-logo-wrap" aria-label="Stackly Home">
-            <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="footer-logo-img">
+            <img src="assets/stackly_s_logo.webp" alt="Stackly S Symbol" class="footer-logo-img">
+            <span class="footer-logo-text">STACKLY</span>
           </a>
           <p class="footer-caption">
             Stackly connects suppliers, warehouses, carriers and stores in one unified live view, so planners spot disruptions before they impact shelves.

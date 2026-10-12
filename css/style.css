@@ -359,21 +359,33 @@ body.loaded .preloader {
   display: flex;
   align-items: center;
   text-decoration: none;
-  gap: 12px;
+  gap: 6px;
 }
 
-/* Extended flexible Stackly logo */
+/* Original blue S symbol logo */
 .navbar-logo-img {
-  height: 48px;
-  max-height: 52px;
+  height: 38px;
+  max-height: 42px;
   width: auto;
   object-fit: contain;
   display: block;
   transition: transform 0.2s ease;
 }
 
-.navbar-logo-img:hover {
-  transform: scale(1.04);
+.navbar-brand:hover .navbar-logo-img {
+  transform: scale(1.05);
+}
+
+.navbar-brand-text {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #0038c8;
+  line-height: 1;
+  text-transform: uppercase;
+  display: inline-block;
+  user-select: none;
 }
 
 .nav-links {
@@ -396,10 +408,13 @@ body.loaded .preloader {
   padding: 6px 0;
 }
 
-.nav-link:hover,
+.nav-link:hover {
+  color: #1a56db;
+}
+
 .nav-link.active {
-  color: #0f172a;
-  font-weight: 700;
+  color: #1a56db !important;
+  font-weight: 800 !important;
 }
 
 .navbar-actions {
@@ -608,17 +623,47 @@ body.loaded .preloader {
 }
 
 .mobile-drawer-logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  gap: 6px !important;
+  text-decoration: none !important;
+  width: auto !important;
+  max-width: none !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .mobile-drawer-logo-img {
-  height: 42px;
-  max-height: 46px;
-  width: auto;
-  object-fit: contain;
-  display: block;
+  height: 34px !important;
+  max-height: 38px !important;
+  width: auto !important;
+  flex-shrink: 0 !important;
+  object-fit: contain !important;
+  display: inline-block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.mobile-drawer-brand-text {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.2px !important;
+  color: #0038c8 !important;
+  line-height: 1 !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .mobile-drawer-close {
@@ -659,30 +704,64 @@ body.loaded .preloader {
   margin: 0 0 24px 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 4px;
+}
+
+.mobile-drawer-links li {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .mobile-drawer-link,
 .mobile-nav-drawer .nav-link,
-.about-mobile-drawer a:not(.btn-pill-signin):not(.btn-pill-signup),
-.services-mobile-drawer a:not(.btn-pill-signin):not(.btn-pill-signup),
-.blog-mobile-drawer a:not(.btn-pill-signin):not(.btn-pill-signup),
-.contact-mobile-drawer a:not(.btn-pill-signin):not(.btn-pill-signup),
-.login-mobile-drawer a:not(.btn-pill-signin):not(.btn-pill-signup),
-.signup-mobile-drawer a:not(.btn-pill-signin):not(.btn-pill-signup) {
+.about-mobile-drawer a:not(.btn-pill-signin):not(.btn-pill-signup):not(.mobile-drawer-logo),
+.services-mobile-drawer a:not(.btn-pill-signin):not(.btn-pill-signup):not(.mobile-drawer-logo),
+.blog-mobile-drawer a:not(.btn-pill-signin):not(.btn-pill-signup):not(.mobile-drawer-logo),
+.contact-mobile-drawer a:not(.btn-pill-signin):not(.btn-pill-signup):not(.mobile-drawer-logo),
+.login-mobile-drawer a:not(.btn-pill-signin):not(.btn-pill-signup):not(.mobile-drawer-logo),
+.signup-mobile-drawer a:not(.btn-pill-signin):not(.btn-pill-signup):not(.mobile-drawer-logo) {
   font-size: 17px;
   font-weight: 600;
-  color: #1e293b;
-  padding: 14px 4px;
+  color: #334155;
+  padding: 13px 20px;
   border-bottom: 1px solid #f1f5f9;
   text-decoration: none;
-  display: block;
-  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  border-radius: 12px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .mobile-drawer-link:hover,
-.mobile-drawer-link.active {
-  color: #0f172a;
-  font-weight: 700;
+.mobile-nav-drawer a:hover:not(.btn-pill-signin):not(.btn-pill-signup):not(.mobile-drawer-logo) {
+  color: #1a56db;
+  background: rgba(26, 86, 219, 0.05);
+}
+
+/* Enlightened Active State for Mobile Navigation Drawer */
+.mobile-drawer-link.active,
+.mobile-nav-drawer a.active:not(.btn-pill-signin):not(.btn-pill-signup):not(.mobile-drawer-logo),
+.about-mobile-drawer a.active:not(.btn-pill-signin):not(.btn-pill-signup):not(.mobile-drawer-logo),
+.services-mobile-drawer a.active:not(.btn-pill-signin):not(.btn-pill-signup):not(.mobile-drawer-logo),
+.blog-mobile-drawer a.active:not(.btn-pill-signin):not(.btn-pill-signup):not(.mobile-drawer-logo),
+.contact-mobile-drawer a.active:not(.btn-pill-signin):not(.btn-pill-signup):not(.mobile-drawer-logo),
+.login-mobile-drawer a.active:not(.btn-pill-signin):not(.btn-pill-signup):not(.mobile-drawer-logo),
+.signup-mobile-drawer a.active:not(.btn-pill-signin):not(.btn-pill-signup):not(.mobile-drawer-logo) {
+  color: #1a56db !important;
+  font-weight: 800 !important;
+  background: #eff6ff !important;
+  border-bottom: 1px solid rgba(26, 86, 219, 0.2) !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 4px 14px rgba(26, 86, 219, 0.14) !important;
+  transform: scale(1.02);
 }
 
 .mobile-drawer-actions,
@@ -3846,22 +3925,46 @@ body.loaded .preloader {
   padding: 0 !important;
   box-shadow: none !important;
   border: none !important;
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 6px !important;
+  text-decoration: none !important;
   width: fit-content;
+  white-space: nowrap !important;
 }
 
 .footer-logo-img {
-  height: 42px;
+  height: 38px;
+  max-height: 42px;
   width: auto;
   object-fit: contain;
-  display: block;
+  display: inline-block;
+  flex-shrink: 0;
   transition: transform 0.25s ease;
 }
 
-.footer-logo-img:hover {
-  transform: scale(1.04);
+.footer-logo-wrap:hover .footer-logo-img {
+  transform: scale(1.05);
+}
+
+.footer-logo-text {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #ffffff;
+  line-height: 1;
+  text-transform: uppercase;
+  display: inline-block;
+  user-select: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+
+.footer-logo-wrap:hover .footer-logo-text {
+  opacity: 0.9;
 }
 
 .footer-caption {
@@ -4285,13 +4388,19 @@ body.loaded .preloader {
   .navbar-brand {
     display: flex;
     align-items: center;
+    gap: 6px;
     margin-right: auto;
   }
 
   .navbar-logo-img {
-    height: 38px;
-    max-height: 40px;
+    height: 32px;
+    max-height: 36px;
     width: auto;
+  }
+
+  .navbar-brand-text {
+    font-size: 19px;
+    letter-spacing: 1.2px;
   }
 
   .nav-links,

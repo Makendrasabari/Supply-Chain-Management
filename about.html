@@ -6,7 +6,8 @@
   <title>About Us | Stackly Supply Chain</title>
   <meta name="description" content="Built by people who have run a dock. Stackly connects your ERP, carriers, and warehouses into one live plan everyone can trust.">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" type="image/webp" href="assets/stackly_logo.webp">
+  <link rel="icon" type="image/webp" href="assets/stackly_favicon.webp">
+  <link rel="apple-touch-icon" href="assets/stackly_favicon.webp">
   <style>
     /* ==========================================================================
        ABOUT PAGE SPECIFIC STYLES - PIXEL PERFECT TO DESIGN SPEC
@@ -76,20 +77,33 @@
     .about-brand-link {
       display: flex;
       align-items: center;
+      gap: 6px;
       text-decoration: none;
     }
 
     .about-brand-img {
-      height: 42px;
-      max-height: 46px;
+      height: 38px;
+      max-height: 42px;
       width: auto;
       object-fit: contain;
       display: block;
       transition: transform 0.2s ease;
     }
 
-    .about-brand-img:hover {
-      transform: scale(1.03);
+    .about-brand-link:hover .about-brand-img {
+      transform: scale(1.05);
+    }
+
+    .about-brand-text {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: #0038c8;
+      line-height: 1;
+      text-transform: uppercase;
+      display: inline-block;
+      user-select: none;
     }
 
     .about-nav-links {
@@ -109,10 +123,13 @@
       transition: color 0.2s ease;
     }
 
-    .about-nav-item a:hover,
+    .about-nav-item a:hover {
+      color: #1a56db;
+    }
+
     .about-nav-item a.active {
-      color: #0f172a;
-      font-weight: 700;
+      color: #1a56db !important;
+      font-weight: 800 !important;
     }
 
     .about-nav-actions {
@@ -1916,7 +1933,8 @@
     <nav class="about-navbar-pill" aria-label="Main Navigation">
       <!-- Stackly Logo from assets -->
       <a href="index.html" class="about-brand-link" aria-label="Stackly Home">
-        <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="about-brand-img">
+        <img src="assets/stackly_s_logo.webp" alt="Stackly S Symbol" class="about-brand-img">
+        <span class="about-brand-text">STACKLY</span>
       </a>
 
       <!-- Center Navigation Links -->
@@ -1944,7 +1962,8 @@
     <div class="about-mobile-drawer mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
       <div class="mobile-drawer-header">
         <a href="index.html" class="mobile-drawer-logo" aria-label="Stackly Home">
-          <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="mobile-drawer-logo-img">
+          <img src="assets/stackly_s_logo.webp" alt="Stackly S Symbol" class="mobile-drawer-logo-img">
+          <span class="mobile-drawer-brand-text">STACKLY</span>
         </a>
         <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close navigation menu">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -2025,8 +2044,8 @@
         <!-- Right: Automated Logistics Dock Facility Visual (No humans) -->
         <div class="about-hero-visual-card">
           <img 
-            src="assets/about_dock_facility.jpg" 
-            onerror="this.src='assets/hero_warehouse_hd.jpg';"
+            src="assets/about_dock_facility.webp" 
+            onerror="this.src='assets/hero_warehouse_hd.webp';"
             alt="Stackly Automated Logistics Distribution Center and Loading Dock" 
             class="about-hero-visual-img"
           >
@@ -2099,7 +2118,7 @@
             <!-- Top-Left Diagonal Half -->
             <div class="story-slice slice-diag-tl">
               <img 
-                src="assets/about_founders.png" 
+                src="assets/about_founders.webp" 
                 onerror="this.src='assets/about_dock_team.webp';" 
                 alt="Stackly Three Founders Standing Together" 
                 class="story-slice-img"
@@ -2108,7 +2127,7 @@
             <!-- Bottom-Right Diagonal Half -->
             <div class="story-slice slice-diag-br">
               <img 
-                src="assets/about_founders.png" 
+                src="assets/about_founders.webp" 
                 onerror="this.src='assets/about_dock_team.webp';" 
                 alt="Stackly Three Founders Standing Together" 
                 class="story-slice-img"
@@ -2625,7 +2644,8 @@
         <!-- Col 1: Brand & Caption (NO white background box on logo, directly from assets) -->
         <div class="footer-brand-col">
           <a href="index.html" class="footer-logo-wrap" aria-label="Stackly Home">
-            <img src="assets/stackly_logo.webp" alt="Stackly Logo" class="footer-logo-img">
+            <img src="assets/stackly_s_logo.webp" alt="Stackly S Symbol" class="footer-logo-img">
+            <span class="footer-logo-text">STACKLY</span>
           </a>
           <p class="footer-caption">
             Stackly connects suppliers, warehouses, carriers and stores in one unified live view, so planners spot disruptions before they impact shelves.
